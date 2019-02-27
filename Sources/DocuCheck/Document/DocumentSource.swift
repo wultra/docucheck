@@ -16,6 +16,7 @@
 
 import Foundation
 
+/// Protocol defines arbitrary source of the document.
 protocol DocumentSource {
     
     /// Name of the document
@@ -36,6 +37,8 @@ protocol DocumentSource {
 }
 
 extension DocumentSource {
+    
+    /// Returns source identifier, which can be defined by `fileName` or `name` property.
     var sourceIdentifier: String {
         return fileName ?? name
     }

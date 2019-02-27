@@ -16,6 +16,10 @@
 
 import Foundation
 
+/// The `StringDocument` class implements `DocumentSource` protocol and allows you
+/// to initialize document with given string content. It's expected that such document
+/// will be used for string operations. If the raw data is requested from the object, then
+/// the conversion to UTF-8 string is performed.
 class StringDocument: DocumentSource {
     
     let name: String
@@ -33,6 +37,11 @@ class StringDocument: DocumentSource {
     
     let isValid: Bool = true
     
+    /// Initializes document with given name and string content.
+    ///
+    /// - Parameters:
+    ///   - name: String with formal name of the document.
+    ///   - string: String with document's content.
     init(name: String, string: String) {
         self.name = name
         self.contentString = string

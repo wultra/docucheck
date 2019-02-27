@@ -40,6 +40,9 @@ class Console {
     
     /// If true, then most of sub-commands will exit on error immediately.
     static var exitOnError: Bool = false
+    
+    /// Closure called when Console exits on error.
+    static var onExitCallback: (()->Never)?
 
     /// If true, then the last log was dashed line. The flag is used to prevent printing
     /// two or more dashed lines consecutively.
@@ -50,10 +53,10 @@ class Console {
     static func messageHeader(_ message: @autoclosure ()->String) {
         if verboseLevel != .off {
             if !lastWasLine {
-                fputs("\(logPrefix) ================================================================================\n", stdout)
+                fputs("================================================================================\n", stdout)
             }
-            fputs("\(logPrefix) \(message())\n", stdout)
-            fputs("\(logPrefix) ================================================================================\n", stdout)
+            fputs("\(message())\n", stdout)
+            fputs("================================================================================\n", stdout)
             lastWasLine = true
         }
     }
@@ -62,7 +65,7 @@ class Console {
     static func messageLine() {
         if verboseLevel != .off {
             if !lastWasLine {
-                fputs("\(logPrefix) --------------------------------------------------------------------------------\n", stdout)
+                fputs("--------------------------------------------------------------------------------\n", stdout)
                 lastWasLine = true
             }
         }
@@ -70,8 +73,18 @@ class Console {
 
     /// Prints simple message to the stdout.
     static func message(_ message: @autoclosure ()->String) {
-        fputs("\(logPrefix) \(message())\n", stdout)
-        lastWasLine = false
+        if verboseLevel != .off {
+            fputs("\(message())\n", stdout)
+            lastWasLine = false
+        }
+    }
+
+    /// Prints simple message to the stdout, but only if verboseLevel is not "off"
+    static func info(_ message: @autoclosure ()->String) {
+        if verboseLevel != .off {
+            fputs("\(logPrefix) \(message())\n", stdout)
+            lastWasLine = false
+        }
     }
     
     /// Prints simple message to the stdout, but only if verboseLevel is "all"
@@ -98,13 +111,39 @@ class Console {
         }
     }
     
+    /// Prints given Error exception to the stderr, but only if verboseLevel is set to "all".
+    static func error(_ exception: Error) {
+        if verboseLevel != .all {
+            fputs("\(logPrefix) ERROR Exception: \(exception)\n", stderr)
+            lastWasLine = false
+        }
+    }
+    
+    /// Prints error message to the stderr, but only if verboseLevel is not "off". Exits application immediately.
+    static func exitError(_ message: @autoclosure ()->String) -> Never {
+        error(message)
+        onExit()
+    }
+    
+    /// Prints given Error exception to the stderr, but only if verboseLevel is set to "all". Exits application immediately.
+    static func exitError(_ exception: Error) -> Never {
+        error(exception)
+        onExit()
+    }
+    
+    /// Function is called from "exit...()" methods, to exit the application.
+    static func onExit() -> Never {
+        onExitCallback?()
+        exit(1)
+    }
+    
     /// Unconditionally prints a given message and stops execution
     ///
     /// - Parameters:
-    ///   - message: The string to print. The default is an empty string.
+    ///   - message: The string to print.
     ///   - file: The file name to print with message. The default is file path where fatalError is called for DEBUG configuration, empty string for other
     ///   - line: The line number to print along with message. The default is the line number where fatalError is called.
-    static func fatalError(_ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) -> Never {
+    static func fatalError(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) -> Never {
         Swift.fatalError(message, file: file, line: line)
     }
 }

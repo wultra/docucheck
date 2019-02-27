@@ -23,11 +23,17 @@ class FS {
     ///
     /// - Parameters:
     ///   - path: Path to document to be loaded.
+    ///   - name: If provided, then FileDocument will be created with given name.
     ///   - description: If provided, then the provided string will be used in error message.
     ///   - exitOnError: if true then failure causes an immediate exit. Default value is `Console.exitOnError`
     /// - Returns: `DocumentSource` object created from the file
-    static func document(at path: String, description: String? = nil, exitOnError: Bool = Console.exitOnError) -> DocumentSource? {
-        let document = FileDocument(path: path)
+    static func document(at path: String, name: String? = nil, description: String? = nil, exitOnError: Bool = Console.exitOnError) -> DocumentSource? {
+        let document: FileDocument
+        if let name = name {
+            document = FileDocument(path: path, name: name)
+        } else {
+            document = FileDocument(path: path)
+        }
         if !document.isValid {
             if let description = description {
                 Console.error("Cannot load \(description) at: \"\(path)\"")
@@ -42,6 +48,25 @@ class FS {
         return document
     }
     
+    /// Validates whether file or directory exists at path.
+    ///
+    /// - Parameter path: String with path to validate
+    /// - Returns: true if file exists on the path
+    @discardableResult
+    static func fileExists(at path: String) -> Bool {
+        return FileManager.default.fileExists(atPath: path)
+    }
+    
+    /// Returns true if given path points to a directory.
+    ///
+    /// - Parameter path: String with path to investigate
+    /// - Returns: true if path points to a directory
+    static func isDirectory(at path: String) -> Bool {
+        var isDirectory:ObjCBool = false
+        let result = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+        return result && isDirectory.boolValue
+    }
+    
     /// Makes a directory with all intermediate directories at given path
     ///
     /// - Parameters:
@@ -53,7 +78,8 @@ class FS {
         do {
             try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
         } catch {
-            Console.error("Cannot create directory at \"\(path)\". Error: \(error.localizedDescription)")
+            Console.error("Cannot create directory at \"\(path)\".")
+            Console.error(error)
             if exitOnError {
                 exit(1)
             }
@@ -75,7 +101,8 @@ class FS {
         do {
             try FileManager.default.removeItem(atPath: path)
         } catch {
-            Console.error("Cannot remove item at \"\(path)\". Error: \(error.localizedDescription)")
+            Console.error("Cannot remove item at \"\(path)\".")
+            Console.error(error)
             if exitOnError {
                 exit(1)
             }
@@ -93,6 +120,37 @@ class FS {
     /// - Returns: true if content has been copied
     @discardableResult
     static func copy(from: String, to: String, exitOnError: Bool = Console.exitOnError) -> Bool {
+        do {
+            try FileManager.default.copyItem(atPath: from, toPath: to)
+        } catch {
+            Console.error("Cannot copy item from \"\(from)\" to \"\(to)\".")
+            Console.error(error)
+            if exitOnError {
+                exit(1)
+            }
+            return false
+        }
         return true
+    }
+    
+    
+    /// Returns contents of directory at given path.
+    ///
+    /// - Parameters:
+    ///   - path: Path to list the content
+    ///   - exitOnError: if true then failure causes an immediate exit. Default value is `Console.exitOnError`
+    /// - Returns: An array of strings, each of which identifies a file, directory, or symbolic link contained in path.
+    ///            Returns an empty array if the directory exists but has no contents, or nil in case of error.
+    static func directoryList(at path: String, exitOnError: Bool = Console.exitOnError) -> [String]? {
+        do {
+            return try FileManager.default.subpathsOfDirectory(atPath: path)
+        } catch {
+            Console.error("Cannot list content of directory at \"\(path)\".")
+            Console.error(error)
+            if exitOnError {
+                exit(1)
+            }
+        }
+        return nil
     }
 }

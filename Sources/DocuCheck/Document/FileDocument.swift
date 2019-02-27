@@ -51,12 +51,22 @@ class FileDocument: DocumentSource {
     private var realContentData: Data?
     
     
+    /// Initializes `FileDocument` with path to file and name, which may be an unique identifier.
+    ///
+    /// - Parameters:
+    ///   - path: Full file path to document's content
+    ///   - name: Additional file identifier
+    init(path: String, name: String) {
+        self.fileName = path
+        self.name = name
+    }
+    
+    
     /// Initializes `FileDocument`
     ///
     /// - Parameter path: A path to file
-    init(path: String) {
-        self.fileName = path
-        self.name = (path as NSString).lastPathComponent
+    convenience init(path: String) {
+        self.init(path: path, name: path.fileNameFromPath())
     }
     
     
@@ -78,7 +88,8 @@ class FileDocument: DocumentSource {
             realContentString = try String(contentsOf: fileURL, encoding: .utf8)
             
         } catch {
-            Console.error("Failed to load document at: \"\(fileName!)\". Error: \(error)")
+            Console.error("Failed to load document at: \"\(fileName!)\".")
+            Console.error(error)
         }
     }
 }

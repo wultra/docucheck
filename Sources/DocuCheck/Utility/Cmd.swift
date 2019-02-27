@@ -53,7 +53,7 @@ class Cmd {
         if task.terminationStatus != 0 {
             Console.error("Command \"\(commandPath)\" execution failed with error \(task.terminationStatus)")
             if exitOnFailure {
-                exit(task.terminationStatus)
+                Console.onExit()
             }
             return false
         }
@@ -64,9 +64,6 @@ class Cmd {
 
 /// The `CmdPathResolver` is a helper class which helps to translate command to a full path.
 fileprivate class CmdPathResolver {
-    
-    // Thread lock
-    private let lock = NSLock()
     
     // Dictionary with an already resolved commands
     private var resolvedPaths = [String:String]()
@@ -87,12 +84,9 @@ fileprivate class CmdPathResolver {
         }
         
         // Look for an already resolved value in the cache
-        lock.lock()
         if let resolved = resolvedPaths[command] {
-            lock.unlock()
             return resolved
         }
-        lock.unlock()
         
         // Run "/usr/bin/which {command}" task
         let task = Process()
@@ -107,20 +101,16 @@ fileprivate class CmdPathResolver {
         task.waitUntilExit()
         let status = task.terminationStatus
         if status != 0 {
-            Console.error("Cannot resolve path for command \"\(command)\". Command \(whichCommand) failed with error \(status)")
-            exit(1)
+            Console.exitError("Cannot resolve path for command \"\(command)\". Command \(whichCommand) failed with error \(status)")
         }
         // Convert result data to the string
         guard var resolved = String(data: data, encoding: .utf8) else {
-            Console.error("Cannot convert path for command \"\(command)\" to UTF-8.")
-            exit(1)
+            Console.exitError("Cannot convert path for command \"\(command)\" to UTF-8.")
         }
         resolved = resolved.replacingOccurrences(of: "\n", with: "")
 
-        // Store result to the cache        
-        lock.lock()
+        // Store result to the cache
         resolvedPaths[command] = resolved
-        lock.unlock()
         
         return resolved
     }

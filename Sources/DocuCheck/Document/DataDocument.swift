@@ -16,6 +16,11 @@
 
 import Foundation
 
+/// The `DataDocument` class implements `DocumentSource` protocol and allows you
+/// to initialize document with given data content. It's expected that such document
+/// will be used for binary operations (like conversion to JSON representation).
+/// If the string representation is requested from the object, then the conversion
+/// from UTF-8 binary representation, to String, is performed.
 class DataDocument: DocumentSource {
     
     let name: String
@@ -26,13 +31,18 @@ class DataDocument: DocumentSource {
         if let string = String(bytes: contentData, encoding: .utf8) {
             return string
         }
-        Console.fatalError("Cannot convert data document \"\(name)\" to UTF-8 encoded string.")
+        Console.fatalError("Cannot convert document \"\(name)\" from UTF-8 encoded data into string.")
     }()
     
     let contentData: Data
     
     let isValid: Bool = true
     
+    /// Initializes document with given name and data.
+    ///
+    /// - Parameters:
+    ///   - name: String with formal name of the document.
+    ///   - data: Data with document's content.
     init(name: String, data: Data) {
         self.name = name
         self.contentData = data

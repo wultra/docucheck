@@ -21,6 +21,38 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		BF5B8762222581AB002FA7A8 /* SaveAllDocuments.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5B8761222581AB002FA7A8 /* SaveAllDocuments.swift */; };
+		BF5B87642225BFF8002FA7A8 /* LinkStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5B87632225BFF8002FA7A8 /* LinkStatistics.swift */; };
+		BF8053A32214556C006E2171 /* DocuCheckApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053A22214556C006E2171 /* DocuCheckApplication.swift */; };
+		BF8053A522146568006E2171 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053A422146568006E2171 /* CommandArguments.swift */; };
+		BF8053A722159AA0006E2171 /* StringPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053A622159AA0006E2171 /* StringPathExtensions.swift */; };
+		BF8053AD2215D8B3006E2171 /* MarkdownEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053AC2215D8B3006E2171 /* MarkdownEntities.swift */; };
+		BF8053AF22170FC0006E2171 /* MarkdownLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053AE22170FC0006E2171 /* MarkdownLine.swift */; };
+		BF8053B3221AF39F006E2171 /* EntityIdGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053B2221AF39F006E2171 /* EntityIdGenerator.swift */; };
+		BF8053B5221B1712006E2171 /* DocumentationDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053B4221B1712006E2171 /* DocumentationDatabase.swift */; };
+		BF8053B7221B2335006E2171 /* DocumentationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053B6221B2335006E2171 /* DocumentationItem.swift */; };
+		BF8053B9221B2F93006E2171 /* RepositoryContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053B8221B2F93006E2171 /* RepositoryContent.swift */; };
+		BF8053BB221DB2D9006E2171 /* MarkdownLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053BA221DB2D9006E2171 /* MarkdownLineTests.swift */; };
+		BF8053BC221DB8A8006E2171 /* MarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F2220C70A800F2AF69 /* MarkdownDocument.swift */; };
+		BF8053BD221DB8A8006E2171 /* MarkdownLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053AE22170FC0006E2171 /* MarkdownLine.swift */; };
+		BF8053BE221DB8A8006E2171 /* MarkdownEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053AC2215D8B3006E2171 /* MarkdownEntities.swift */; };
+		BF8053BF221DB8A8006E2171 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F5220C71C300F2AF69 /* MarkdownParser.swift */; };
+		BF8053C0221DB8A8006E2171 /* EntityIdGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053B2221AF39F006E2171 /* EntityIdGenerator.swift */; };
+		BF8053C1221DB8B5006E2171 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050D220C99C100F2AF69 /* Cmd.swift */; };
+		BF8053C2221DB8B5006E2171 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00517220D955B00F2AF69 /* Console.swift */; };
+		BF8053C3221DB8B5006E2171 /* FS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050F220C9E6200F2AF69 /* FS.swift */; };
+		BF8053C4221DB8B5006E2171 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053A422146568006E2171 /* CommandArguments.swift */; };
+		BF8053C5221DB8B5006E2171 /* StringPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053A622159AA0006E2171 /* StringPathExtensions.swift */; };
+		BF8053C6221DB8C1006E2171 /* DocumentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F7220C729700F2AF69 /* DocumentSource.swift */; };
+		BF8053C7221DB8C1006E2171 /* FileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F9220C732500F2AF69 /* FileDocument.swift */; };
+		BF8053C8221DB8C1006E2171 /* StringDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004FB220C734D00F2AF69 /* StringDocument.swift */; };
+		BF8053C9221DB8C1006E2171 /* DataDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050A220C8BB300F2AF69 /* DataDocument.swift */; };
+		BF8053CA221DB8C4006E2171 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00505220C7C1200F2AF69 /* Config.swift */; };
+		BF8053CB221DB8C4006E2171 /* ConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00500220C7A2F00F2AF69 /* ConfigLoader.swift */; };
+		BF8053CD221EC2DD006E2171 /* MarkdownDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053CC221EC2DD006E2171 /* MarkdownDocumentTests.swift */; };
+		BF8053CF221EE199006E2171 /* UpdateRepositoryLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053CE221EE199006E2171 /* UpdateRepositoryLinks.swift */; };
+		BF8053D2221EE341006E2171 /* UpdateDocumentTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053D1221EE341006E2171 /* UpdateDocumentTitles.swift */; };
+		BF8053D422203C23006E2171 /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053D322203C23006E2171 /* StringHelpers.swift */; };
 		BFB004F3220C70A800F2AF69 /* MarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F2220C70A800F2AF69 /* MarkdownDocument.swift */; };
 		BFB004F6220C71C300F2AF69 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F5220C71C300F2AF69 /* MarkdownParser.swift */; };
 		BFB004F8220C729800F2AF69 /* DocumentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F7220C729700F2AF69 /* DocumentSource.swift */; };
@@ -35,7 +67,6 @@
 		BFB00518220D955B00F2AF69 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00517220D955B00F2AF69 /* Console.swift */; };
 		OBJ_22 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* main.swift */; };
 		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-		OBJ_40 /* DocuCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* DocuCheckTests.swift */; };
 		OBJ_41 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +88,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF5B8761222581AB002FA7A8 /* SaveAllDocuments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAllDocuments.swift; sourceTree = "<group>"; };
+		BF5B87632225BFF8002FA7A8 /* LinkStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStatistics.swift; sourceTree = "<group>"; };
+		BF8053A22214556C006E2171 /* DocuCheckApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocuCheckApplication.swift; sourceTree = "<group>"; };
+		BF8053A422146568006E2171 /* CommandArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandArguments.swift; sourceTree = "<group>"; };
+		BF8053A622159AA0006E2171 /* StringPathExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringPathExtensions.swift; sourceTree = "<group>"; };
+		BF8053AC2215D8B3006E2171 /* MarkdownEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEntities.swift; sourceTree = "<group>"; };
+		BF8053AE22170FC0006E2171 /* MarkdownLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLine.swift; sourceTree = "<group>"; };
+		BF8053B2221AF39F006E2171 /* EntityIdGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityIdGenerator.swift; sourceTree = "<group>"; };
+		BF8053B4221B1712006E2171 /* DocumentationDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationDatabase.swift; sourceTree = "<group>"; };
+		BF8053B6221B2335006E2171 /* DocumentationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationItem.swift; sourceTree = "<group>"; };
+		BF8053B8221B2F93006E2171 /* RepositoryContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryContent.swift; sourceTree = "<group>"; };
+		BF8053BA221DB2D9006E2171 /* MarkdownLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLineTests.swift; sourceTree = "<group>"; };
+		BF8053CC221EC2DD006E2171 /* MarkdownDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocumentTests.swift; sourceTree = "<group>"; };
+		BF8053CE221EE199006E2171 /* UpdateRepositoryLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRepositoryLinks.swift; sourceTree = "<group>"; };
+		BF8053D1221EE341006E2171 /* UpdateDocumentTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDocumentTitles.swift; sourceTree = "<group>"; };
+		BF8053D322203C23006E2171 /* StringHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelpers.swift; sourceTree = "<group>"; };
 		BFB004F2220C70A800F2AF69 /* MarkdownDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocument.swift; sourceTree = "<group>"; usesTabs = 0; };
 		BFB004F5220C71C300F2AF69 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
 		BFB004F7220C729700F2AF69 /* DocumentSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSource.swift; sourceTree = "<group>"; };
@@ -69,9 +116,8 @@
 		BFB0050D220C99C100F2AF69 /* Cmd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cmd.swift; sourceTree = "<group>"; };
 		BFB0050F220C9E6200F2AF69 /* FS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FS.swift; sourceTree = "<group>"; };
 		BFB00517220D955B00F2AF69 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
-		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; lastKnownFileType = text; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
-		"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DocuCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_12 /* DocuCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocuCheckTests.swift; sourceTree = "<group>"; };
+		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
+		"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = DocuCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		OBJ_9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -95,11 +141,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF8053D0221EE2AB006E2171 /* DatabaseOperations */ = {
+			isa = PBXGroup;
+			children = (
+				BF8053CE221EE199006E2171 /* UpdateRepositoryLinks.swift */,
+				BF8053D1221EE341006E2171 /* UpdateDocumentTitles.swift */,
+				BF5B8761222581AB002FA7A8 /* SaveAllDocuments.swift */,
+				BF5B87632225BFF8002FA7A8 /* LinkStatistics.swift */,
+			);
+			path = DatabaseOperations;
+			sourceTree = "<group>";
+		};
 		BFB004F4220C71AB00F2AF69 /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
 				BFB004F2220C70A800F2AF69 /* MarkdownDocument.swift */,
+				BF8053AE22170FC0006E2171 /* MarkdownLine.swift */,
+				BF8053AC2215D8B3006E2171 /* MarkdownEntities.swift */,
 				BFB004F5220C71C300F2AF69 /* MarkdownParser.swift */,
+				BF8053B2221AF39F006E2171 /* EntityIdGenerator.swift */,
 			);
 			path = Markdown;
 			sourceTree = "<group>";
@@ -127,7 +187,12 @@
 		BFB00507220C875E00F2AF69 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				BF8053D0221EE2AB006E2171 /* DatabaseOperations */,
+				BF8053A22214556C006E2171 /* DocuCheckApplication.swift */,
 				BFB00508220C883800F2AF69 /* DocumentationLoader.swift */,
+				BF8053B4221B1712006E2171 /* DocumentationDatabase.swift */,
+				BF8053B6221B2335006E2171 /* DocumentationItem.swift */,
+				BF8053B8221B2F93006E2171 /* RepositoryContent.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -138,6 +203,9 @@
 				BFB0050D220C99C100F2AF69 /* Cmd.swift */,
 				BFB00517220D955B00F2AF69 /* Console.swift */,
 				BFB0050F220C9E6200F2AF69 /* FS.swift */,
+				BF8053A422146568006E2171 /* CommandArguments.swift */,
+				BF8053A622159AA0006E2171 /* StringPathExtensions.swift */,
+				BF8053D322203C23006E2171 /* StringHelpers.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -153,7 +221,8 @@
 		OBJ_11 /* DocuCheckTests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_12 /* DocuCheckTests.swift */,
+				BF8053BA221DB2D9006E2171 /* MarkdownLineTests.swift */,
+				BF8053CC221EC2DD006E2171 /* MarkdownDocumentTests.swift */,
 				OBJ_13 /* XCTestManifests.swift */,
 			);
 			name = DocuCheckTests;
@@ -285,19 +354,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				BF8053AD2215D8B3006E2171 /* MarkdownEntities.swift in Sources */,
+				BF8053B3221AF39F006E2171 /* EntityIdGenerator.swift in Sources */,
 				BFB00509220C883800F2AF69 /* DocumentationLoader.swift in Sources */,
 				BFB004F3220C70A800F2AF69 /* MarkdownDocument.swift in Sources */,
+				BF8053CF221EE199006E2171 /* UpdateRepositoryLinks.swift in Sources */,
 				BFB0050E220C99C100F2AF69 /* Cmd.swift in Sources */,
 				BFB004FC220C734D00F2AF69 /* StringDocument.swift in Sources */,
 				BFB00510220C9E6200F2AF69 /* FS.swift in Sources */,
 				BFB00506220C7C1200F2AF69 /* Config.swift in Sources */,
+				BF8053D2221EE341006E2171 /* UpdateDocumentTitles.swift in Sources */,
 				OBJ_22 /* main.swift in Sources */,
+				BF8053B9221B2F93006E2171 /* RepositoryContent.swift in Sources */,
+				BF8053B5221B1712006E2171 /* DocumentationDatabase.swift in Sources */,
+				BF8053A522146568006E2171 /* CommandArguments.swift in Sources */,
+				BF8053A722159AA0006E2171 /* StringPathExtensions.swift in Sources */,
 				BFB004F6220C71C300F2AF69 /* MarkdownParser.swift in Sources */,
+				BF5B87642225BFF8002FA7A8 /* LinkStatistics.swift in Sources */,
+				BF8053A32214556C006E2171 /* DocuCheckApplication.swift in Sources */,
+				BF8053AF22170FC0006E2171 /* MarkdownLine.swift in Sources */,
 				BFB0050B220C8BB300F2AF69 /* DataDocument.swift in Sources */,
 				BFB004FA220C732500F2AF69 /* FileDocument.swift in Sources */,
+				BF8053D422203C23006E2171 /* StringHelpers.swift in Sources */,
 				BFB00518220D955B00F2AF69 /* Console.swift in Sources */,
+				BF8053B7221B2335006E2171 /* DocumentationItem.swift in Sources */,
 				BFB004F8220C729800F2AF69 /* DocumentSource.swift in Sources */,
 				BFB00501220C7A2F00F2AF69 /* ConfigLoader.swift in Sources */,
+				BF5B8762222581AB002FA7A8 /* SaveAllDocuments.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,8 +396,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_40 /* DocuCheckTests.swift in Sources */,
+				BF8053C1221DB8B5006E2171 /* Cmd.swift in Sources */,
+				BF8053C8221DB8C1006E2171 /* StringDocument.swift in Sources */,
+				BF8053BD221DB8A8006E2171 /* MarkdownLine.swift in Sources */,
 				OBJ_41 /* XCTestManifests.swift in Sources */,
+				BF8053CB221DB8C4006E2171 /* ConfigLoader.swift in Sources */,
+				BF8053CA221DB8C4006E2171 /* Config.swift in Sources */,
+				BF8053BE221DB8A8006E2171 /* MarkdownEntities.swift in Sources */,
+				BF8053C2221DB8B5006E2171 /* Console.swift in Sources */,
+				BF8053C9221DB8C1006E2171 /* DataDocument.swift in Sources */,
+				BF8053C5221DB8B5006E2171 /* StringPathExtensions.swift in Sources */,
+				BF8053BB221DB2D9006E2171 /* MarkdownLineTests.swift in Sources */,
+				BF8053C6221DB8C1006E2171 /* DocumentSource.swift in Sources */,
+				BF8053BC221DB8A8006E2171 /* MarkdownDocument.swift in Sources */,
+				BF8053BF221DB8A8006E2171 /* MarkdownParser.swift in Sources */,
+				BF8053C4221DB8B5006E2171 /* CommandArguments.swift in Sources */,
+				BF8053CD221EC2DD006E2171 /* MarkdownDocumentTests.swift in Sources */,
+				BF8053C3221DB8B5006E2171 /* FS.swift in Sources */,
+				BF8053C7221DB8C1006E2171 /* FileDocument.swift in Sources */,
+				BF8053C0221DB8A8006E2171 /* EntityIdGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +437,7 @@
 		OBJ_19 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -358,6 +459,7 @@
 		OBJ_20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -437,6 +539,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -458,6 +561,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_TESTABILITY = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",

@@ -45,7 +45,8 @@ extension Config {
             let decoder = JSONDecoder()
             config = try decoder.decode(Config.self, from: source.contentData)
         } catch {
-            Console.error("Config JSON file \"\(source.sourceIdentifier)\" is not valid. Error: \(error)")
+            Console.error("Config JSON file \"\(source.sourceIdentifier)\" is not valid.")
+            Console.error(error)
             return nil
         }
         let errors = config.validate()
@@ -69,7 +70,7 @@ extension Config {
         }
         // Validate global params
         if let globalParameters = globalParameters {
-            errors.append(contentsOf: globalParameters.validate(inContext: "Config.globalParameters"))
+            errors.append(contentsOf: globalParameters.validate())
         }
         // Validate params per repository
         repositoryParameters?.forEach { (repoIdentifier: String, param: Config.Parameters) in
@@ -79,6 +80,10 @@ extension Config {
             }
             errors.append(contentsOf: param.validate(inContext: "repositoryParameters[\(repoIdentifier)]"))
         }
+        // Paths
+        if let paths = globalParameters?.paths {
+            errors.append(contentsOf: paths.validate())
+        }
         return errors
     }
 }
@@ -86,6 +91,34 @@ extension Config {
 //
 // File private validators
 //
+
+fileprivate extension Config.GlobalParameters {
+    
+    /// Validates content of `Config.GlobalParameters` structure
+    ///
+    /// - Returns: Array with error messages
+    func validate() -> [String] {
+        var errors = [String]()
+        // Validate global params
+        if let globalParameters = parameters {
+            errors.append(contentsOf: globalParameters.validate(inContext: "Config.globalParameters"))
+        }
+        if let file = targetHomeFile {
+            if file.isEmpty {
+                errors.append("Config.globalParameters.targetHomeFile is empty.")
+            }
+        }
+        // Extensions
+        let wrongExtension = markdownExtensions?.filter({ ext -> Bool in
+            return ext.isEmpty || ext.contains(".")
+        }).isEmpty == false
+        if wrongExtension {
+            errors.append("Config.globalParameters.markdownExtensions contains invalid extension.")
+        }
+        // TODO: Ignored files validation
+        return errors
+    }
+}
 
 fileprivate extension Config.Parameters {
     
@@ -119,6 +152,22 @@ fileprivate extension Config.Repository {
     func validate(repoIdentifier: String) -> [String] {
         var errors = [String]()
         // TODO: better validations for "branch", "tag" and "path"
+        let rp = remoteProvider
+        if rp == .gitlab || rp == .github {
+            let noSeparator = remote.split(separator: "/").count != 2
+            let wrongChars = remote.filter { (c) -> Bool in
+                if c == "/" || c == "_" || c == "-" {
+                    return false
+                }
+                if (c >= "0" && c <= "9") || (c >= "A" && c <= "Z") || (c >= "a" && c <= "z") {
+                    return false
+                }
+                return true
+            }.count > 0
+            if remote.isEmpty || noSeparator || wrongChars {
+                errors.append("Repository.remote parameter in repository \"\(repoIdentifier)\" is invalid for \(rp) provider.")
+            }
+        }
         if let branch = branch {
             if branch.isEmpty {
                 errors.append("Repository.branch parameter in repository \"\(repoIdentifier)\" is empty.")
@@ -132,6 +181,31 @@ fileprivate extension Config.Repository {
         if let path = path {
             if path.isEmpty {
                 errors.append("Repository.path parameter in repository \"\(repoIdentifier)\" is empty.")
+            }
+        }
+        return errors
+    }
+}
+
+fileprivate extension Config.Paths {
+    /// Validates `Paths` structure whether it contains an invalid data.
+    ///
+    /// - Returns: Array with error messages
+    func validate() -> [String] {
+        var errors = [String]()
+        if let path = outputPath {
+            if path.isEmpty {
+                errors.append("Config.paths.outputPath parameter is empty.")
+            }
+        }
+        if let path = repositoriesPath {
+            if path.isEmpty {
+                errors.append("Config.paths.repositoriesPath parameter is empty.")
+            }
+        }
+        if let path = temporaryPath {
+            if path.isEmpty {
+                errors.append("Config.paths.temporaryPath parameter is empty.")
             }
         }
         return errors
