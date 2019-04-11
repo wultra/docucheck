@@ -56,11 +56,22 @@ extension DocumentationDatabase {
         if line > 0 {
             Console.warning(document, title, "Header with page title is not located at first line of document.")
         }
+        // Prepare link to original source
+        var pageFileName = document.source.name.fileNameFromPath()
+        if pageFileName == config.effectiveGlobalParameters.targetHomeFile! {
+            pageFileName = repo.params.homeFile!
+        }
+        var baseSourcesPath = repo.repository.baseSourcesPath
+        baseSourcesPath.appendPathComponent(repo.params.docsFolder!)
+        baseSourcesPath.appendPathComponent(pageFileName)
+        
+        // Modify document
         document.remove(linesFrom: 0, count: line + 1)
         let newLines = [
             "---",
             "layout: page",
             "title: \(title.title)",
+            "source: \(baseSourcesPath.absoluteString)",
             "---",
         ]
         document.add(lines: newLines, at: 0)
