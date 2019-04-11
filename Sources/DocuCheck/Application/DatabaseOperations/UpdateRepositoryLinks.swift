@@ -45,6 +45,8 @@ extension DocumentationDatabase {
         let path = link.path
         if path.hasPrefix("https://") || link.path.hasPrefix("http://") {
             patchExternalLink(document: document, link: link)
+        } else if path.hasPrefix("mailto:") {
+            keepExternalLink(document: document, link: link)
         } else if path.hasPrefix("#") {
             patchAnchorLink(document: document, link: link)
         } else if path.hasPrefix("../") {
@@ -100,6 +102,15 @@ extension DocumentationDatabase {
         return LinkInfo(repoIdentifier: repoIdentifier, documentPath: documentPath, anchorName: anchorName)
     }
 
+    /// Keeps external link as is.
+    ///
+    /// - Parameters:
+    ///   - document: Currently processed document
+    ///   - link: Link to be kept
+    private func keepExternalLink(document: MarkdownDocument, link: MarkdownLink) {
+        externalLinks.append((document, link))
+    }
+    
     /// Validates and patches link to an external document (e.g. document in another documentation repository)
     ///
     /// - Parameters:
@@ -110,7 +121,7 @@ extension DocumentationDatabase {
         // We matched another repository
         guard let linkInfo = parseLink(link: link.path) else {
             // Do nothing, it's link to another internet resource.
-            externalLinks.append((document, link))
+            keepExternalLink(document: document, link: link)
             return
         }
         guard let repo = repositoryContent(for: linkInfo.repoIdentifier) else {
