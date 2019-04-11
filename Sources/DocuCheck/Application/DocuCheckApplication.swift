@@ -133,7 +133,7 @@ class DocuCheckApplication {
         _ = database.updateRepositoryLinks()
         _ = database.updateDocumentTitles()
         _ = database.saveAllChanges()
-        database.printAllExternalLinks()
+        //database.printAllExternalLinks()
         //database.printAllUnreferencedFiles()
     }
     

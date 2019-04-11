@@ -78,8 +78,10 @@ class DocumentationDatabase {
         
         // Put all files to the database
         for (repoId, _) in config.repositories {
-            let repo = self.repositoryContent(for: repoId)
-            repo?.allFiles.forEach { filePath in
+            guard let repo = self.repositoryContent(for: repoId) else {
+                Console.fatalError("Cannot find repository \(repoId).")
+            }
+            repo.allFiles.forEach { filePath in
                 // For all files in repo
                 let ext = filePath.fileExtensionFromPath().lowercased()
                 var item: DocumentationItem
@@ -87,7 +89,7 @@ class DocumentationDatabase {
                     item = MarkdownDocument.documentationItem(repoIdentifier: repoId, localPath: filePath, basePath: sourcePath)
                     Console.debug("   * doc: \(filePath)")
                     let fileName = filePath.fileNameFromPath()
-                    if repo?.params.auxiliaryDocuments?.contains(fileName) ?? false {
+                    if repo.params.auxiliaryDocuments?.contains(fileName) ?? false {
                         item.referenceCount += 1
                     }
                 } else {

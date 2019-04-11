@@ -213,6 +213,16 @@ class DocumentationLoader {
             }
             FS.copy(from: homeFilePath, to: newHomeFilePath)
             FS.remove(at: homeFilePath)
+
+            // Patch all home files in repo
+            FS.directoryList(at: repoPath)?.filter({ $0.fileNameFromPath() == repoParams.homeFile! }).forEach { oldHomeFilePath in
+                let newHomeFilePath = oldHomeFilePath.removingLastPathComponent().addingPathComponent(targetName)
+                if FS.fileExists(at: newHomeFilePath) {
+                    Console.exitError("Repository \"\(repoIdentifier)\" contains two home files: \"\(oldHomeFilePath)\" and \"\(newHomeFilePath)\".")
+                }
+                FS.copy(from: oldHomeFilePath, to: newHomeFilePath)
+                FS.remove(at: oldHomeFilePath)
+            }
         }
         return true
     }

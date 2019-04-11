@@ -46,7 +46,7 @@ extension DocumentationDatabase {
         if path.hasPrefix("https://") || link.path.hasPrefix("http://") {
             patchExternalLink(document: document, link: link)
         } else if path.hasPrefix("#") {
-            patchDocumentLink(document: document, link: link)
+            patchAnchorLink(document: document, link: link)
         } else if path.hasPrefix("../") {
             patchLocalSourceLink(document: document, link: link)
         } else {
@@ -190,6 +190,15 @@ extension DocumentationDatabase {
         link.path = newRelativePath
     }
     
+    /// Calculates relative path from one document to another. For example:
+    /// - From "folder1/document.md", to "folder1/target.md", will return "target.md"
+    /// - From "folder1/document.md", to "folder2/target.md", will return "../folder2/target.md"
+    /// - From "folder1/document.md", to "folder1/sub/target.md", will return "sub/target.md"
+    ///
+    /// - Parameters:
+    ///   - fromDocument: Path to source, document
+    ///   - toDocument: Path to destination document
+    /// - Returns: Relative link from source to destination document
     private func relativePath(fromDocument: String, toDocument: String) -> String {
         var fromComponents = fromDocument.split(separator: "/").map { String($0) }
         var toComponents = toDocument.split(separator: "/").map { String($0) }
@@ -223,7 +232,7 @@ extension DocumentationDatabase {
     /// - Parameters:
     ///   - document: Document which suppose to have anchor
     ///   - link: Link object containing only the anchor link
-    private func patchDocumentLink(document: MarkdownDocument, link: MarkdownLink) {
+    private func patchAnchorLink(document: MarkdownDocument, link: MarkdownLink) {
         let anchorName = String(link.path[link.path.index(offsetBy: 1)..<link.path.endIndex])
         validateAnchor(linkedDocument: document, link: link, anchorName: anchorName)
     }
@@ -282,6 +291,16 @@ extension DocumentationDatabase {
             return
         }
         if var referencedItem = self.findDocumentationItem(path: document.repoIdentifier.addingPathComponent(destinationFile)) {
+            // Check local link to directory
+            if referencedItem.isDirectory {
+                destinationFile = destinationFile.addingPathComponent(targetHomeFile)
+                if let indexInFolder = self.findDocumentationItem(path: destinationFile) {
+                    referencedItem = indexInFolder
+                } else {
+                    Console.warning(document, link, "Link \(link.toString()) point to folder in repository, but \"\(repo.params.homeFile!)\" is missing in that folder.")
+                    return
+                }
+            }
             referencedItem.referenceCount += 1
             if let linkedDocument = referencedItem.document, let anchorName = anchorName {
                 validateAnchor(linkedDocument: linkedDocument, sourceDocument: document, link: link, anchorName: anchorName)
