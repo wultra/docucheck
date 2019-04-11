@@ -53,6 +53,7 @@
 		BF8053CF221EE199006E2171 /* UpdateRepositoryLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053CE221EE199006E2171 /* UpdateRepositoryLinks.swift */; };
 		BF8053D2221EE341006E2171 /* UpdateDocumentTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053D1221EE341006E2171 /* UpdateDocumentTitles.swift */; };
 		BF8053D422203C23006E2171 /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053D322203C23006E2171 /* StringHelpers.swift */; };
+		BF9489C3225F872D00B3D9BE /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053D322203C23006E2171 /* StringHelpers.swift */; };
 		BFB004F3220C70A800F2AF69 /* MarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F2220C70A800F2AF69 /* MarkdownDocument.swift */; };
 		BFB004F6220C71C300F2AF69 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F5220C71C300F2AF69 /* MarkdownParser.swift */; };
 		BFB004F8220C729800F2AF69 /* DocumentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F7220C729700F2AF69 /* DocumentSource.swift */; };
@@ -334,6 +335,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = OBJ_5;
@@ -396,6 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				BF9489C3225F872D00B3D9BE /* StringHelpers.swift in Sources */,
 				BF8053C1221DB8B5006E2171 /* Cmd.swift in Sources */,
 				BF8053C8221DB8C1006E2171 /* StringDocument.swift in Sources */,
 				BF8053BD221DB8A8006E2171 /* MarkdownLine.swift in Sources */,

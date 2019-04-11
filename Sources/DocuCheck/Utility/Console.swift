@@ -32,14 +32,14 @@ class Console {
         case all = 3
     }
     
-    /// Current verbose level.
-    static var verboseLevel: VerboseLevel = .warnings
-    
     /// Prefix to all log messages.
     static var logPrefix: String = "DocuCheck:"
     
     /// If true, then most of sub-commands will exit on error immediately.
     static var exitOnError: Bool = false
+
+    /// If true, then at the end of process execution, application will exit with error code, when warning occured.
+    static var exitWithErrorOnWarning: Bool = false
     
     /// Closure called when Console exits on error.
     static var onExitCallback: (()->Never)?
@@ -95,11 +95,22 @@ class Console {
         }
     }
     
+    /// Tracks number of warnings occured during the process execution
+    private static var warningCount: Int = 0
+    
     /// Prints warning message to the stderr, but only if verboseLevel is greater or equal to "warnings"
     static func warning(_ message: @autoclosure ()->String) {
         if verboseLevel.rawValue >= VerboseLevel.warnings.rawValue {
             fputs("\(logPrefix) WARNING: \(message())\n", stderr)
             lastWasLine = false
+        }
+        warningCount += 1
+    }
+    
+    /// Exits with error when some warning occured and this behavior is requested.
+    static func exitWithErrorWhenWarningOccured() {
+        if warningCount > 0 && exitWithErrorOnWarning {
+            exitError("'\(warningCount)' warnings occured. Exiting process with error as requested.")
         }
     }
     
@@ -145,6 +156,48 @@ class Console {
     ///   - line: The line number to print along with message. The default is the line number where fatalError is called.
     static func fatalError(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) -> Never {
         Swift.fatalError(message, file: file, line: line)
+    }
+    
+    /// Contains stack of verbose levels
+    private static var verboseLevelStack = [ VerboseLevel.warnings ]
+    
+    /// Contains current verbose level
+    public static var verboseLevel: VerboseLevel {
+        return verboseLevelStack.last ?? .warnings
+    }
+    
+    /// Sets verbose level to desired value. The value is changed on the top of verbose level stack.
+    ///
+    /// - Parameter level: Verbose level to be set.
+    public static func setVerboseLevel(_ level: VerboseLevel) {
+        _ = verboseLevelStack.popLast()
+        verboseLevelStack.append(level)
+    }
+    
+    /// Pushes a new value to the verbose level stack.
+    ///
+    /// - Parameter level: Level to be pushed to verbose level stack.
+    public static func pushVerboseLevel(_ level: VerboseLevel) {
+        verboseLevelStack.append(verboseLevel)
+    }
+    
+    /// Pops verbose level from the stack.
+    /// If number of push-pop operations doesn't match, then raises a fatal exception.
+    public static func popVerboseLevel() {
+        if verboseLevelStack.popLast() == nil {
+            Console.fatalError("Verbose level stack is empty.")
+        }
+    }
+    
+    /// Executes block with log verbose level temporarily changed to a given value.
+    ///
+    /// - Parameters:
+    ///   - level: Verbose level to be set during the block execution
+    ///   - block: Block to be executed with required verbose log level
+    public static func doWithVerboseLevel(_ level: VerboseLevel, block: ()->Void) {
+        pushVerboseLevel(level)
+        block()
+        popVerboseLevel()
     }
 }
 

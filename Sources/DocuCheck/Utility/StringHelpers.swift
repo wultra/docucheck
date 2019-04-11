@@ -16,7 +16,7 @@
 
 import Foundation
 
-extension String {
+public extension String {
     
     /// Compares substring starting at given offset to provided string
     ///
@@ -31,7 +31,7 @@ extension String {
         return self[index(offsetBy: offset)..<index(offsetBy: offset + needle.count)] == needle
     }
     
-    /// Returns safe character at
+    /// Returns safe character at given offset or nil.
     ///
     /// - Parameter offset: Offset to character
     /// - Returns: Character at given offset or nil if offset is out of bounds

@@ -30,6 +30,9 @@ class DocuCheckApplication {
     private var config: Config!
     private var database: DocumentationDatabase!
     
+    private var optShowExternalLinks = false
+    private var optShowUnusedDocs = false
+    
     /// Initializes application with command line arguments.
     ///
     /// - Parameter arguments: Array with command line arguments
@@ -66,11 +69,11 @@ class DocuCheckApplication {
                 self.printUsage(exitWithError: false)
             }
             .add(option: "--verbose", alias: "-v2") {
-                Console.verboseLevel = .all
+                Console.setVerboseLevel(.all)
                 MarkdownParser.showWarnings = .all
             }
             .add(option: "--quiet", alias: "-v0") {
-                Console.verboseLevel = .off
+                Console.setVerboseLevel(.off)
                 MarkdownParser.showWarnings = .off
             }
             .add(option: "--config", shortcut: "-c") { (option) in
@@ -84,6 +87,15 @@ class DocuCheckApplication {
             }
             .add(option: "--tempDir", shortcut: "-t") { (option) in
                 self.tempDir = option
+            }
+            .add(option: "--show-external-links", alias: "-sel") {
+                self.optShowExternalLinks = true
+            }
+            .add(option: "--show-unused-docs", alias: "-sud") {
+                self.optShowUnusedDocs = true
+            }
+            .add(option: "--fail-on-warning") {
+                Console.exitWithErrorOnWarning = true
             }
             .afterAll {
                 guard self.configPath != nil else {
@@ -133,8 +145,14 @@ class DocuCheckApplication {
         _ = database.updateRepositoryLinks()
         _ = database.updateDocumentTitles()
         _ = database.saveAllChanges()
-        //database.printAllExternalLinks()
-        //database.printAllUnreferencedFiles()
+        
+        if optShowExternalLinks {
+            Console.doWithVerboseLevel(.all) { database.printAllExternalLinks() }
+        }
+        if optShowUnusedDocs {
+            Console.doWithVerboseLevel(.all) { database.printAllUnreferencedFiles() }
+        }
+        Console.exitWithErrorWhenWarningOccured()
     }
     
     /// Prints usage help for the application and exits the application with success, or failure.
@@ -142,26 +160,32 @@ class DocuCheckApplication {
     /// - Parameter exitWithError: If true, application will exit with an error code.
     private func printUsage(exitWithError: Bool) -> Never {
         
-        Console.messageLine()
-
-        Console.message("Usage:  \(applicationName)  options")
-        Console.message("")
-        Console.message("options:")
-        Console.message("")
-        Console.message(" --config=path  | -c path    to set path to JSON configuration file")
-        Console.message(" --repoDir=path | -r path    to set path to directory, where documentation")
-        Console.message("                             will be cloned")
-        Console.message(" --outputDir=path | -o path  to set path to directory, where all markdown")
-        Console.message("                             files will be copied.")
-        Console.message(" --tempDir=path | -t path    to change temporary directory")
-        Console.message("")
-        Console.message(" --help    | -h              prints this help information")
-        Console.message(" --verbose | -v2             turns on more information printed to the console")
-        Console.message(" --quiet   | -v0             turns off all information printed to the console")
-        Console.message("")
-
-        Console.messageLine()
-        
+        Console.doWithVerboseLevel(.all) {
+    
+            Console.messageLine()
+            
+            Console.message("Usage:  \(applicationName)  options")
+            Console.message("")
+            Console.message("options:")
+            Console.message("")
+            Console.message(" --config=path  | -c path       to set path to JSON configuration file")
+            Console.message(" --repoDir=path | -r path       to set path to directory, where documentation")
+            Console.message("                                will be cloned")
+            Console.message(" --outputDir=path | -o path     to set path to directory, where all markdown")
+            Console.message("                                files will be copied.")
+            Console.message(" --tempDir=path | -t path       to change temporary directory")
+            Console.message("")
+            Console.message(" --show-external-links | -sel   prints all external links found in docs")
+            Console.message(" --show-unused-docs | -sud      prints all unreferenced documents")
+            Console.message(" --fail-on-warning              process will fail when warning is reported")
+            Console.message("")
+            Console.message(" --help    | -h                 prints this help information")
+            Console.message(" --verbose | -v2                turns on more information printed to the console")
+            Console.message(" --quiet   | -v0                turns off all information printed to the console")
+            Console.message("")
+            
+            Console.messageLine()
+        }
         // Exit the application
         onExit(exitWithError: exitWithError)
     }

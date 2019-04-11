@@ -52,7 +52,7 @@ In next chapter, we will try to escape characters
     }
     
     func testHeaders() {
-        let doc = MarkdownDocument(source: self.documentSource1)
+        let doc = MarkdownDocument(source: self.documentSource1, repoIdentifier: "test")
         XCTAssertTrue(doc.load())
         
         let allHeaders = doc.allEntities(ofType: .header)
@@ -91,7 +91,7 @@ In next chapter, we will try to escape characters
     }
     
     func testLinks() {
-        let doc = MarkdownDocument(source: self.documentSource1)
+        let doc = MarkdownDocument(source: self.documentSource1, repoIdentifier: "test")
         XCTAssertTrue(doc.load())
         
         let links = doc.allEntities(ofType: .link)
