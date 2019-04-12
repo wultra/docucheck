@@ -26,6 +26,8 @@ class MarkdownDocumentTests: XCTestCase {
  ## This should produce warning
 ###   This is header 3
 
+<!--   comment1 -->
+
 - [Google](https://google.com) & [Wultra's github](https://github.com/wultra)
 - [Link to header](#this-is-header1), `another code # xxx`
 #  Another header
@@ -37,9 +39,14 @@ class MarkdownDocumentTests: XCTestCase {
   ```
 - [File and anchor](File.md#some-anchor)
 
+<!--
+ this comment should be ignored
+ -->
 
+<!-- comment with spaces -->
 In next chapter, we will try to escape characters
 \\#\\`\\_\\\\\\*\\{\\}\\[\\]\\(\\)\\+\\-\\.\\!
+<!--comment2-->
 """
     
     var documentSource1: DocumentSource {
@@ -152,5 +159,31 @@ In next chapter, we will try to escape characters
         XCTAssertTrue(link7.title == "File and anchor")
         XCTAssertTrue(link7.path  == "File.md#some-anchor")
         XCTAssertFalse(link7.isImageLink)
+    }
+    
+    func testInlineComments() {
+        let doc = MarkdownDocument(source: self.documentSource1, repoIdentifier: "test")
+        XCTAssertTrue(doc.load())
+        
+        let comments = doc.allEntities(ofType: .inlineComment)
+        XCTAssertTrue(comments.count == 3)
+        
+        guard let comment1 = comments[0] as? MarkdownInlineComment else {
+            XCTFail()
+            return
+        }
+        XCTAssertTrue(comment1.content == "comment1")
+        
+        guard let comment2 = comments[1] as? MarkdownInlineComment else {
+            XCTFail()
+            return
+        }
+        XCTAssertTrue(comment2.content == "comment with spaces")
+
+        guard let comment3 = comments[2] as? MarkdownInlineComment else {
+            XCTFail()
+            return
+        }
+        XCTAssertTrue(comment3.content == "comment2")
     }
 }

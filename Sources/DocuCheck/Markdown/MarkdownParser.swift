@@ -143,6 +143,12 @@ class MarkdownParser {
                         // The rest of the line is not important
                         return .none
                     }
+                case "<":
+                    // Match inline comment
+                    if let comment = matchInlineComment(in: lc, at: offset) {
+                        line.add(entity: comment)
+                        nextValidOffset = lc.offset(toIndex: comment.range.upperBound)
+                    }
                     
                 default:
                     continue
@@ -275,6 +281,39 @@ class MarkdownParser {
         let range = Range(uncheckedBounds: (lc.index(offsetBy: offset), lc.index(offsetBy: matchStart)))
         return MarkdownLink(id: entityIdGenerator.entityId(), range: range, title: title, path: path, isImageLink: isImage)
     }
+    
+    /// Matches inline comment in current line string. Ignores if comment is not terminated at the end of line.
+    ///
+    /// - Parameters:
+    ///   - lc: Line content
+    ///   - offset: Offset in line
+    /// - Returns: Comment entity or nil, if inline comment cannot be matched
+    private func matchInlineComment(in lc: String, at offset: Int) -> MarkdownEditableEntity? {
+        if !lc.hasSubstring("<!--", at: offset) {
+            return nil
+        }
+        let matchStart = offset + 4
+        var matchEnd = 0
+        // Capture content
+        var content = ""
+        for (i, c) in lc[lc.index(offsetBy: matchStart)..<lc.endIndex].enumerated() {
+            let cOffset = matchStart + i
+            if c == "-" {
+                if lc.hasSubstring("-->", at: cOffset) {
+                    matchEnd = cOffset
+                    content = lc[lc.index(offsetBy: matchStart)..<lc.index(offsetBy: matchEnd)].trimmingCharacters(in: .whitespaces)
+                    break
+                }
+            }
+        }
+        if matchEnd == 0 {
+            return nil
+        }
+        // Construct entity
+        let range = Range(uncheckedBounds: (lc.index(offsetBy: matchEnd), lc.index(offsetBy: matchStart)))
+        return MarkdownInlineComment(id: entityIdGenerator.entityId(), range: range, content: content)
+    }
+    
     
     /// Returns true if given character can be escaped with backslash.
     ///

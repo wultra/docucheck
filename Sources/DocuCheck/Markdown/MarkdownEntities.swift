@@ -23,6 +23,7 @@ enum EntityType {
     case error
     case header
     case link
+    case inlineComment
 }
 
 protocol MarkdownEntity {
@@ -150,5 +151,23 @@ class MarkdownError: MarkdownBaseEntity {
     
     override func toString() -> String {
         return originalContent
+    }
+}
+
+class MarkdownInlineComment: MarkdownBaseEntity {
+    
+    /// Content encapsulated in comment.
+    /// Inline comment is a comment which begins and ends on the same line.
+    var content: String {
+        didSet { setModifiedFlag() }
+    }
+    
+    init(id: EntityId, range: StringRange, content: String) {
+        self.content = content
+        super.init(type: .inlineComment, id: id, range: range)
+    }
+    
+    override func toString() -> String {
+        return "<!-- \(content) -->"
     }
 }
