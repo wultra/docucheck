@@ -132,7 +132,7 @@ class Console {
     
     /// Prints error message to the stderr, but only if verboseLevel is not "off". Exits application immediately.
     static func exitError(_ message: @autoclosure ()->String) -> Never {
-        error(message)
+        error(message())
         onExit()
     }
     
@@ -155,7 +155,7 @@ class Console {
     ///   - file: The file name to print with message. The default is file path where fatalError is called for DEBUG configuration, empty string for other
     ///   - line: The line number to print along with message. The default is the line number where fatalError is called.
     static func fatalError(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) -> Never {
-        Swift.fatalError(message, file: file, line: line)
+        Swift.fatalError(message(), file: file, line: line)
     }
     
     /// Contains stack of verbose levels
