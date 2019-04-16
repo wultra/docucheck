@@ -48,10 +48,30 @@ In next chapter, we will try to escape characters
 \\#\\`\\_\\\\\\*\\{\\}\\[\\]\\(\\)\\+\\-\\.\\!
 <!--comment2-->
 """
-    
     var documentSource1: DocumentSource {
         return StringDocument(name: "Test1.md", string: self.source1)
     }
+
+    let source2 =
+    """
+# This is header1
+###   This is header 3
+
+<!-- begin TOC -->
+This is simple table of content
+- Content 1
+- Content 2
+<!-- begin inner-toc with params -->
+<!-- end -->
+<!-- end TOC -->
+In next chapter, we will try to escape characters
+\\#\\`\\_\\\\\\*\\{\\}\\[\\]\\(\\)\\+\\-\\.\\!
+<!-- document-id   543  -->
+"""
+    var documentSource2: DocumentSource {
+        return StringDocument(name: "Test2.md", string: self.source2)
+    }
+
    
     override func setUp() {
         super.setUp()
@@ -185,5 +205,43 @@ In next chapter, we will try to escape characters
             return
         }
         XCTAssertTrue(comment3.content == "comment2")
+    }
+    
+    func testMetadataComments() {
+        
+        let doc = MarkdownDocument(source: self.documentSource2, repoIdentifier: "test")
+        XCTAssertTrue(doc.load())
+        
+        guard let toc = doc.firstMetadata(withName: "TOC") else {
+            XCTFail()
+            return
+        }
+        XCTAssertTrue(toc.isMultiline)
+        guard let toc_lines = doc.allLinesForMetadata(metadata: toc, includeMarkers: false)?.map({ $0.toString() }) else {
+            XCTFail()
+            return
+        }
+        XCTAssertTrue(toc_lines.count == 5)
+        XCTAssertTrue(toc_lines[0] == "This is simple table of content")
+        XCTAssertTrue(toc_lines[1] == "- Content 1")
+        XCTAssertTrue(toc_lines[2] == "- Content 2")
+        XCTAssertTrue(toc_lines[3] == "<!-- begin inner-toc with params -->")
+        XCTAssertTrue(toc_lines[4] == "<!-- end -->")
+  
+        guard let inner_toc = doc.firstMetadata(withName: "inner-toc") else {
+            XCTFail()
+            return
+        }
+        XCTAssertTrue(inner_toc.isMultiline)
+        XCTAssertTrue(inner_toc.parameters?.count == 2)
+        XCTAssertTrue(inner_toc.parameters?[0] == "with")
+        XCTAssertTrue(inner_toc.parameters?[1] == "params")
+        
+        guard let doc_id = doc.firstMetadata(withName: "document-id") else {
+            XCTFail()
+            return
+        }
+        XCTAssertFalse(doc_id.isMultiline)
+        XCTAssertTrue(doc_id.parameters?[0] == "543")
     }
 }

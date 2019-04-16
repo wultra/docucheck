@@ -306,7 +306,7 @@ class MarkdownParser {
                 }
             }
         }
-        if matchEnd == 0 {
+        if matchEnd == 0 || content.isEmpty {
             return nil
         }
         // Construct entity

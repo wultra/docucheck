@@ -37,6 +37,9 @@ class MarkdownDocument {
     /// Contains mapping from anchor to header title.
     fileprivate var anchors = [String:Int]()
     
+    /// Contains array with metadata information found in the document.
+    fileprivate var metadata = [MarkdownMetadata]()
+    
     /// Initializes document with document source and optional generator for entity identifiers.
     ///
     /// - Parameters:
@@ -86,6 +89,7 @@ extension MarkdownDocument {
             Console.warning("\(source.name): Document ended in multiline state (\(lastState)).")
         }
         updateAnchors()
+        updateMetadata()
         return true
     }
     
@@ -141,6 +145,7 @@ extension MarkdownDocument {
         lines.insert(contentsOf: lineObjects, at: at)
         isModifiedFlag = true
         updateAnchors()
+        updateMetadata()
     }
     
     /// Removes multiple lines from document
@@ -163,6 +168,7 @@ extension MarkdownDocument {
         }
         isModifiedFlag = true
         updateAnchors()
+        updateMetadata()
     }
     
     /// Returns line object at given position, or nil if position is out of bounds.
@@ -174,6 +180,32 @@ extension MarkdownDocument {
             return nil
         }
         return lines[at]
+    }
+    
+    /// Returns line object for given entity identifier, or nil if such object doesn't exist.
+    ///
+    /// - Parameter identifier: Number identifying the requested line object
+    /// - Returns: Object representing line in document or nil, if no such object was found.
+    func lineObject(forLineIdentifier identifier: EntityId) -> MarkdownLine? {
+        for lineObject in lines {
+            if lineObject.identifier == identifier {
+                return lineObject
+            }
+        }
+        return nil
+    }
+    
+    /// Translates line identifier into current line number, or nil if line with such identifier doesn't exist.
+    ///
+    /// - Parameter identifier: Number identifying the requested line object
+    /// - Returns: 
+    func lineNumber(forLineIdentifier identifier: EntityId) -> Int? {
+        for (ln, lineObject) in lines.enumerated() {
+            if lineObject.identifier == identifier {
+                return ln
+            }
+        }
+        return nil
     }
 }
 
@@ -244,7 +276,7 @@ extension MarkdownDocument {
     
     /// Function updates all anchors in the document
     fileprivate func updateAnchors() {
-        anchors.removeAll()
+        anchors.removeAll(keepingCapacity: true)
         allHeaders.forEach { (header) in
             let anchorName = header.anchorName
             if let count = self.anchors[anchorName] {
@@ -255,6 +287,162 @@ extension MarkdownDocument {
         }
     }
 }
+
+// MARK: - Metadata
+
+extension MarkdownDocument {
+    
+    /// Returns all occurences of metadata objects with given name in the document.
+    ///
+    /// - Parameter name: Name of metadata tag to be found
+    /// - Returns: Array of objects with metadata information.
+    func allMetadata(withName name: String) -> [MarkdownMetadata] {
+        return metadata.filter { $0.name == name }
+    }
+    
+    /// Returns first metadata object with given name or nil if no such information is in document.
+    ///
+    /// - Parameter name: Name of metadata tag to be found
+    /// - Returns: Object representing metadata information or nil if no such information is in document.
+    func firstMetadata(withName name: String) -> MarkdownMetadata? {
+        return metadata.first { $0.name == name }
+    }
+    
+    
+    /// Returns MarkdownLine objects for all lines captured in metadata structure. Returns nil in following cases:
+    /// - If provided metadata structure doesn't cover multiple lines
+    /// - If line numbers cannot be determined from identifiers from metadata structure.
+    ///
+    /// - Parameters:
+    ///   - metadata: Metadata information covering required lines
+    ///   - includeMarkers: If true, then also begin-end HTML metadata markers will be included in the lines.
+    /// - Returns: Array of lines or nil, in case that metadata is not multiline, or lines cannot be determined.
+    func allLinesForMetadata(metadata: MarkdownMetadata, includeMarkers: Bool = true) -> [MarkdownLine]? {
+        guard metadata.isMultiline else {
+            return nil
+        }
+        guard var begin = lineNumber(forLineIdentifier: metadata.beginLine),
+            var end = lineNumber(forLineIdentifier: metadata.endLine) else {
+                return nil
+        }
+        if !includeMarkers {
+            begin += 1
+            end -= 1
+        }
+        if begin > end {
+            return nil
+        }
+        return Array(lines[begin ... end])
+    }
+    
+    /// Helper structure representing metadata information parsed from HTML comment.
+    private struct MetadataInfo {
+        /// Name of metadata entity.
+        let name: String
+        /// Optional parameters
+        let params: [String]?
+        /// Is true if entity is multiline
+        let isMultiline: Bool
+        /// Is true if metadata information is multiline and this is the end of it.
+        let isEnd: Bool
+        /// Contains line identifier for metadata information
+        let lineIdentifier: EntityId
+        /// Is true if metadata information is multiline and this is the begin of it.
+        var isBegin: Bool { return !isEnd }
+        
+        /// Converts this information structure into public MarkdownMetadata structure
+        func toMetadata(endLineIdentifier: EntityId? = nil) -> MarkdownMetadata {
+            return MarkdownMetadata(
+                name: name,
+                parameters: params,
+                beginLine: lineIdentifier,
+                endLine: endLineIdentifier ?? lineIdentifier
+            )
+        }
+    }
+    
+    /// Function updates all metadata information in the document
+    fileprivate func updateMetadata() {
+        // Remove all entries from metadata array
+        metadata.removeAll(keepingCapacity: true)
+        
+        // Keeping stack of opened multiline metadata
+        var stack = [MetadataInfo]()
+
+        lines.forEach { lineObject in
+            lineObject.entities.forEach { entity in
+                // Skip other than "inline comments" entity
+                guard let comment = entity as? MarkdownInlineComment else { return }
+                // Try to parse HTML comment into metadata information
+                guard let info = self.parseMetadataString(fromComment: comment, lineId: lineObject.identifier) else { return }
+                if info.isMultiline {
+                    if info.isBegin {
+                        // Opening multiline metadata. Push that value to the stack.
+                        stack.append(info)
+                        //
+                    } else {
+                        // Closing multiline metadata
+                        guard let onTop = stack.last else {
+                            Console.warning(self, entity, "Ending metadata without the beginning comment.")
+                            return
+                        }
+                        if !info.name.isEmpty && info.name != onTop.name {
+                            Console.warning(self, entity, "Ending metadata comment is closing different metadata information. HTML comment `<!-- end \(onTop.name) -->` is expected.")
+                            return
+                        }
+                        _ = stack.popLast()
+                        if onTop.lineIdentifier == info.lineIdentifier {
+                            Console.warning(self, entity, "Beginning and ending metadata comment should be placed on different lines.")
+                            return
+                        }
+                        // Multiline metadata has been successfully closed
+                        metadata.append(onTop.toMetadata(endLineIdentifier: info.lineIdentifier))
+                    }
+                } else {
+                    // Simple metadata, without begin - end marking
+                    metadata.append(info.toMetadata())
+                }
+            }
+        }
+        
+        if let onTop = stack.last {
+            Console.warning("\(source.name): Metadata entity `<!-- begin \(onTop.name) -->` was not closed at the end of document.")
+        }
+    }
+    
+    /// Parses metadata from given inline comment entity.
+    ///
+    /// - Parameter comment: Comment to parse
+    /// - Parameter lineId: Current line's identifier
+    /// - Returns: Metadata information structure or nil in case of failure.
+    private func parseMetadataString(fromComment comment: MarkdownInlineComment, lineId: EntityId) -> MetadataInfo? {
+        let components = comment.content.split(separator: " ")
+        if components.count > 0 {
+            if components[0] == "end" {
+                let name = components.count > 1 ? components[1] : ""
+                return MetadataInfo(name: String(name), params: nil, isMultiline: true, isEnd: true, lineIdentifier: lineId)
+            }
+            let isMultiline = components[0] == "begin"
+            let nameOffset = isMultiline ? 1 : 0
+            let paramOffset = isMultiline ? 2 : 1
+            if components.count < nameOffset + 1 {
+                Console.warning(self, comment, "Insufficient information in HTML comment to create a metadata.")
+                return nil
+            }
+            let name = String(components[nameOffset])
+            let params: [String]?
+            if components.count >= paramOffset + 1 {
+                params = components[paramOffset..<components.endIndex].map { String($0) }
+            } else {
+                params = nil
+            }
+            return MetadataInfo(name: name, params: params, isMultiline: isMultiline, isEnd: false, lineIdentifier: lineId)
+        }
+        Console.warning(self, comment, "Cannot parse metadata information.")
+        return nil
+    }
+}
+
 
 extension MarkdownHeader {
     

@@ -66,6 +66,8 @@
 		BFB0050E220C99C100F2AF69 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050D220C99C100F2AF69 /* Cmd.swift */; };
 		BFB00510220C9E6200F2AF69 /* FS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050F220C9E6200F2AF69 /* FS.swift */; };
 		BFB00518220D955B00F2AF69 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00517220D955B00F2AF69 /* Console.swift */; };
+		BFBEF26D2266085F0096B8AB /* MarkdownMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */; };
+		BFBEF26E22660D800096B8AB /* MarkdownMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */; };
 		OBJ_22 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* main.swift */; };
 		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_41 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
@@ -117,6 +119,7 @@
 		BFB0050D220C99C100F2AF69 /* Cmd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cmd.swift; sourceTree = "<group>"; };
 		BFB0050F220C9E6200F2AF69 /* FS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FS.swift; sourceTree = "<group>"; };
 		BFB00517220D955B00F2AF69 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
+		BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownMetadata.swift; sourceTree = "<group>"; };
 		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = DocuCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
@@ -159,6 +162,7 @@
 				BFB004F2220C70A800F2AF69 /* MarkdownDocument.swift */,
 				BF8053AE22170FC0006E2171 /* MarkdownLine.swift */,
 				BF8053AC2215D8B3006E2171 /* MarkdownEntities.swift */,
+				BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */,
 				BFB004F5220C71C300F2AF69 /* MarkdownParser.swift */,
 				BF8053B2221AF39F006E2171 /* EntityIdGenerator.swift */,
 			);
@@ -373,6 +377,7 @@
 				BFB004FC220C734D00F2AF69 /* StringDocument.swift in Sources */,
 				BFB00510220C9E6200F2AF69 /* FS.swift in Sources */,
 				BFB00506220C7C1200F2AF69 /* Config.swift in Sources */,
+				BFBEF26D2266085F0096B8AB /* MarkdownMetadata.swift in Sources */,
 				BF8053D2221EE341006E2171 /* UpdateDocumentTitles.swift in Sources */,
 				OBJ_22 /* main.swift in Sources */,
 				BF8053B9221B2F93006E2171 /* RepositoryContent.swift in Sources */,
@@ -408,6 +413,7 @@
 			files = (
 				BF9489C3225F872D00B3D9BE /* StringHelpers.swift in Sources */,
 				BF8053C1221DB8B5006E2171 /* Cmd.swift in Sources */,
+				BFBEF26E22660D800096B8AB /* MarkdownMetadata.swift in Sources */,
 				BF8053C8221DB8C1006E2171 /* StringDocument.swift in Sources */,
 				BF8053BD221DB8A8006E2171 /* MarkdownLine.swift in Sources */,
 				OBJ_41 /* XCTestManifests.swift in Sources */,
