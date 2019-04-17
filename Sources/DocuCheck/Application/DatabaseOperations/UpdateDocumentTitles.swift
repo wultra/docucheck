@@ -62,8 +62,14 @@ extension DocumentationDatabase {
             pageFileName = repo.params.homeFile!
         }
         var baseSourcesPath = repo.repository.baseSourcesPath
-        baseSourcesPath.appendPathComponent(repo.params.docsFolder!)
-        baseSourcesPath.appendPathComponent(pageFileName)
+        if !repo.params.hasSingleDocument {
+            // Regular documentation
+            baseSourcesPath.appendPathComponent(repo.params.docsFolder!)
+            baseSourcesPath.appendPathComponent(pageFileName)
+        } else {
+            // Single file documentation
+            baseSourcesPath.appendPathComponent(repo.params.singleDocumentFile!)
+        }
         
         // Modify document
         document.remove(linesFrom: 0, count: line + 1)

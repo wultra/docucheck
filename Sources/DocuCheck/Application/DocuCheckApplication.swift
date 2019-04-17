@@ -142,6 +142,8 @@ class DocuCheckApplication {
         }
         self.database = database
         
+        _ = database.patchSingleFileDocumentation()
+        _ = database.removeUnwantedSections()
         _ = database.updateRepositoryLinks()
         _ = database.updateDocumentTitles()
         _ = database.saveAllChanges()

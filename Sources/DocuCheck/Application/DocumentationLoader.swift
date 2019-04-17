@@ -61,11 +61,11 @@ class DocumentationLoader {
     /// - Returns: true in case of success
     private func prepareDirs() -> Bool {
         if FS.fileExists(at: destinationDir) {
-            Console.warning("Destination directory exists. Removing all content at: \(destinationDir)")
+            Console.info("Destination directory exists. Removing all content at: \(destinationDir)")
             FS.remove(at: destinationDir)
         }
         if FS.fileExists(at: repositoryDir) {
-            Console.warning("Directory for repositories exists. Removing all content at: \(repositoryDir)")
+            Console.info("Directory for repositories exists. Removing all content at: \(repositoryDir)")
             FS.remove(at: repositoryDir)
         }
         FS.makeDir(at: destinationDir)
@@ -102,14 +102,29 @@ class DocumentationLoader {
     ///
     /// - Returns: true if operation succeeds
     private func copyDocumentationDirs() -> Bool {
+        let effectiveGP = config.effectiveGlobalParameters
         config.repositories.forEach { repoIdentifier, repoConfig in
             Console.info("Copying content for \"\(repoIdentifier)\"...")
             // Prepare destination folder in output directory
             let fullOutPath = destinationDir.addingPathComponent(repoIdentifier)
             // Prepare repo paths
             let repoParams = config.parameters(repo: repoIdentifier)
-            let fullDocsPath = config.path(repo: repoIdentifier, basePath: repositoryDir).addingPathComponent(repoParams.docsFolder!)
-            FS.copy(from: fullDocsPath, to: fullOutPath)
+            if repoParams.hasSingleDocument {
+                // Documentation in single markdown file.
+                // We need to copy that file and optionaly, copy content of "docs" folder in case that there are
+                // image resources or other files referenced from the main documentation file.
+                guard let singleDocument = repoParams.singleDocumentFile else {
+                    Console.fatalError("hasSingleDocument is true, but singleDocumentFile is not set")
+                }
+                let sourcePath = config.path(repo: repoIdentifier, basePath: repositoryDir).addingPathComponent(singleDocument)
+                let destinationPath = fullOutPath.addingPathComponent(effectiveGP.targetHomeFile!)
+                FS.makeDir(at: fullOutPath)
+                FS.copy(from: sourcePath, to: destinationPath)
+            } else {
+                // Documentation in "docs" folder, copy that folder
+                let sourcePath = config.path(repo: repoIdentifier, basePath: repositoryDir).addingPathComponent(repoParams.docsFolder!)
+                FS.copy(from: sourcePath, to: fullOutPath)
+            }
         }
         return true
     }
@@ -134,6 +149,10 @@ class DocumentationLoader {
                 repoId = String(path[path.startIndex..<range.lowerBound])
             } else {
                 repoId = path   // full path is repo identifier
+            }
+            // Ignore hidden files (typically ".DS_Store"
+            if repoId.hasPrefix(".") {
+                return
             }
             // Update list of ignored files if repo identifier has been changed
             if lastRepoIdentifier != repoId {
@@ -199,6 +218,9 @@ class DocumentationLoader {
         let targetName = config.globalParameters?.targetHomeFile ?? Config.GlobalParameters.default.targetHomeFile!
         config.repositories.forEach { repoIdentifier, repoConfig in
             let repoParams = config.parameters(repo: repoIdentifier)
+            if repoParams.hasSingleDocument {
+                return
+            }
             let repoPath = config.path(repo: repoIdentifier, basePath: destinationDir)
             let homeFilePath = repoPath.addingPathComponent(repoParams.homeFile!)
             if !FS.fileExists(at: homeFilePath) {

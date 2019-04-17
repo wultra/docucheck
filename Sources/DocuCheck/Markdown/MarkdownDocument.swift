@@ -316,8 +316,9 @@ extension MarkdownDocument {
     /// - Parameters:
     ///   - metadata: Metadata information covering required lines
     ///   - includeMarkers: If true, then also begin-end HTML metadata markers will be included in the lines.
+    ///   - removeLines: If true, then function also removes selected lines from document.
     /// - Returns: Array of lines or nil, in case that metadata is not multiline, or lines cannot be determined.
-    func allLinesForMetadata(metadata: MarkdownMetadata, includeMarkers: Bool = true) -> [MarkdownLine]? {
+    func getLinesForMetadata(metadata: MarkdownMetadata, includeMarkers: Bool = true, removeLines: Bool = false) -> [MarkdownLine]? {
         guard metadata.isMultiline else {
             return nil
         }
@@ -332,7 +333,33 @@ extension MarkdownDocument {
         if begin > end {
             return nil
         }
-        return Array(lines[begin ... end])
+        let result = Array(lines[begin ... end])
+        if removeLines {
+            remove(linesFrom: begin, count: end - begin + 1)
+        }
+        return result
+    }
+    
+    /// Removes all lines defined in metadata object. Note that if metadata structure defines a non-multiline
+    /// object, then fucntion does nothing.
+    ///
+    /// - Parameter metadata: Metadata information covering lines to remove
+    func removeLinesForMetadata(metadata: MarkdownMetadata, includeMarkers: Bool = true) {
+        guard metadata.isMultiline else {
+            return
+        }
+        guard var begin = lineNumber(forLineIdentifier: metadata.beginLine),
+            var end = lineNumber(forLineIdentifier: metadata.endLine) else {
+                return
+        }
+        if !includeMarkers {
+            begin += 1
+            end -= 1
+        }
+        if begin > end {
+            return
+        }
+        remove(linesFrom: begin, count: end - begin + 1)
     }
     
     /// Helper structure representing metadata information parsed from HTML comment.
@@ -418,6 +445,10 @@ extension MarkdownDocument {
     private func parseMetadataString(fromComment comment: MarkdownInlineComment, lineId: EntityId) -> MetadataInfo? {
         let components = comment.content.split(separator: " ")
         if components.count > 0 {
+            if components[0] == "!!" {
+                // Not an error, just ignore metadata comments which begins with "!!"
+                return nil
+            }
             if components[0] == "end" {
                 let name = components.count > 1 ? components[1] : ""
                 return MetadataInfo(name: String(name), params: nil, isMultiline: true, isEnd: true, lineIdentifier: lineId)
@@ -491,7 +522,6 @@ extension Console {
         }
     }
     
-    
     /// Prints warning related to document, in form "FileName: message"
     ///
     /// - Parameters:
@@ -499,5 +529,28 @@ extension Console {
     ///   - message: Message about the problem.
     static func warning(_ doc: MarkdownDocument, _ message: String) {
         warning("\(doc.source.name): \(message)")
+    }
+    
+    /// Prints error about entity, stored in the document, in form "FileName:Line: message"
+    ///
+    /// - Parameters:
+    ///   - doc: Document containing issue
+    ///   - entity: Related markdown element causing the issue
+    ///   - message: Message about the problem.
+    static func error(_ doc: MarkdownDocument, _ entity: MarkdownEntity, _ message: String) {
+        if let line = doc.line(of: entity) {
+            error("\(doc.source.name):\(line + 1): \(message)")
+        } else {
+            error(doc, message)
+        }
+    }
+    
+    /// Prints error related to document, in form "FileName: message"
+    ///
+    /// - Parameters:
+    ///   - doc: Document containing issue
+    ///   - message: Message about the problem.
+    static func error(_ doc: MarkdownDocument, _ message: String) {
+        error("\(doc.source.name): \(message)")
     }
 }

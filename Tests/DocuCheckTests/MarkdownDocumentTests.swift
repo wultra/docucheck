@@ -217,7 +217,7 @@ In next chapter, we will try to escape characters
             return
         }
         XCTAssertTrue(toc.isMultiline)
-        guard let toc_lines = doc.allLinesForMetadata(metadata: toc, includeMarkers: false)?.map({ $0.toString() }) else {
+        guard let toc_lines = doc.getLinesForMetadata(metadata: toc, includeMarkers: false)?.map({ $0.toString() }) else {
             XCTFail()
             return
         }

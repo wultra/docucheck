@@ -24,7 +24,7 @@ class StringDocument: DocumentSource {
     
     let name: String
     
-    let fileName: String? = nil
+    let fileName: String?
     
     let contentString: String
     
@@ -42,9 +42,10 @@ class StringDocument: DocumentSource {
     /// - Parameters:
     ///   - name: String with formal name of the document.
     ///   - string: String with document's content.
-    init(name: String, string: String) {
+    init(name: String, string: String, fileName: String? = nil) {
         self.name = name
         self.contentString = string
+        self.fileName = fileName
     }
     
 }

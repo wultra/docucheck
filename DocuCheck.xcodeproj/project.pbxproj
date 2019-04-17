@@ -68,6 +68,8 @@
 		BFB00518220D955B00F2AF69 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00517220D955B00F2AF69 /* Console.swift */; };
 		BFBEF26D2266085F0096B8AB /* MarkdownMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */; };
 		BFBEF26E22660D800096B8AB /* MarkdownMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */; };
+		BFBEF2702267350F0096B8AB /* PatchSingleFileDocumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBEF26F2267350F0096B8AB /* PatchSingleFileDocumentation.swift */; };
+		BFBEF2722267581D0096B8AB /* RemoveUnwantedSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBEF2712267581D0096B8AB /* RemoveUnwantedSections.swift */; };
 		OBJ_22 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* main.swift */; };
 		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_41 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
@@ -120,6 +122,8 @@
 		BFB0050F220C9E6200F2AF69 /* FS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FS.swift; sourceTree = "<group>"; };
 		BFB00517220D955B00F2AF69 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownMetadata.swift; sourceTree = "<group>"; };
+		BFBEF26F2267350F0096B8AB /* PatchSingleFileDocumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSingleFileDocumentation.swift; sourceTree = "<group>"; };
+		BFBEF2712267581D0096B8AB /* RemoveUnwantedSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveUnwantedSections.swift; sourceTree = "<group>"; };
 		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = DocuCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 				BF8053CE221EE199006E2171 /* UpdateRepositoryLinks.swift */,
 				BF8053D1221EE341006E2171 /* UpdateDocumentTitles.swift */,
 				BF5B8761222581AB002FA7A8 /* SaveAllDocuments.swift */,
+				BFBEF26F2267350F0096B8AB /* PatchSingleFileDocumentation.swift */,
+				BFBEF2712267581D0096B8AB /* RemoveUnwantedSections.swift */,
 				BF5B87632225BFF8002FA7A8 /* LinkStatistics.swift */,
 			);
 			path = DatabaseOperations;
@@ -370,9 +376,11 @@
 			files = (
 				BF8053AD2215D8B3006E2171 /* MarkdownEntities.swift in Sources */,
 				BF8053B3221AF39F006E2171 /* EntityIdGenerator.swift in Sources */,
+				BFBEF2702267350F0096B8AB /* PatchSingleFileDocumentation.swift in Sources */,
 				BFB00509220C883800F2AF69 /* DocumentationLoader.swift in Sources */,
 				BFB004F3220C70A800F2AF69 /* MarkdownDocument.swift in Sources */,
 				BF8053CF221EE199006E2171 /* UpdateRepositoryLinks.swift in Sources */,
+				BFBEF2722267581D0096B8AB /* RemoveUnwantedSections.swift in Sources */,
 				BFB0050E220C99C100F2AF69 /* Cmd.swift in Sources */,
 				BFB004FC220C734D00F2AF69 /* StringDocument.swift in Sources */,
 				BFB00510220C9E6200F2AF69 /* FS.swift in Sources */,

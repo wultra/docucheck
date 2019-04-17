@@ -148,7 +148,27 @@ extension DocumentationDatabase {
     }
     
     
+    /// Returns documentation item at given path.
+    ///
+    /// - Parameter path: Path to item object to be returned
+    /// - Returns: DocumentationItem object at given path or nil if such item doesn't exist.
     func findDocumentationItem(path: String) -> DocumentationItem? {
         return fileItems[path]
+    }
+    
+
+    /// Adds a new documentation item into the repository.
+    ///
+    /// - Parameters:
+    ///   - item: Item to be added
+    ///   - repo: RepositoryContent object where item belongs to
+    func add(item: DocumentationItem, intoRepo repo: RepositoryContent) {
+        let path = item.localPath
+        if fileItems[path] != nil {
+            Console.exitError("Item at path `\(path)` is already in the documentation database.")
+        }
+        fileItems[path] = item
+        repo.allFiles.append(path)
+        repo.allFilesSet.insert(path)
     }
 }

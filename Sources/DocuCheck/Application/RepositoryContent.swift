@@ -18,8 +18,11 @@ import Foundation
 
 class RepositoryContent {
     
+    /// Repository identifier
     let repoIdentifier: String
+    /// Repository configuration
     let repository: Config.Repository
+    /// Effective parameters (e.g. with resolved optional values)
     let params: Config.Parameters
     
     var allFiles = [String]()

@@ -72,12 +72,17 @@ struct Config: Decodable {
         ///  - `*.bin` - file or directory name ending with ".bin" extension
         let ignoredFiles: [String]?
         
+        /// If set, then the documentation is composed from a single markdown document. The documentation
+        /// processing is little bit different than usual, for this case.
+        let singleDocumentFile: String?
+        
         /// Default values for "Parameters" structure
         static let `default` = Parameters(
             docsFolder: "docs",
             homeFile: "Readme.md",
             auxiliaryDocuments: [ "_Footer.md", "_Sidebar.md" ],
-            ignoredFiles: [ ".git", ".gitignore", ".DS_Store" ]
+            ignoredFiles: [ ".git", ".gitignore", ".DS_Store" ],
+            singleDocumentFile: nil
         )
     }
     
@@ -173,7 +178,8 @@ extension Config {
             docsFolder: p?.docsFolder ?? gp?.docsFolder ?? dp.docsFolder!,
             homeFile: p?.homeFile ?? gp?.homeFile ?? dp.homeFile!,
             auxiliaryDocuments: p?.auxiliaryDocuments ?? gp?.auxiliaryDocuments ?? dp.auxiliaryDocuments!,
-            ignoredFiles: ignoredFiles.sorted()
+            ignoredFiles: ignoredFiles.sorted(),
+            singleDocumentFile: p?.singleDocumentFile
         )
     }
     
@@ -316,3 +322,10 @@ extension Config.Repository {
     }
 }
 
+extension Config.Parameters {
+    
+    /// Contains true if repository's documentation is composed only from one single document.
+    var hasSingleDocument: Bool {
+        return singleDocumentFile != nil
+    }
+}

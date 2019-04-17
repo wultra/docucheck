@@ -110,7 +110,7 @@ class Console {
     /// Exits with error when some warning occured and this behavior is requested.
     static func exitWithErrorWhenWarningOccured() {
         if warningCount > 0 && exitWithErrorOnWarning {
-            exitError("'\(warningCount)' warnings occured. Exiting process with error as requested.")
+            exitError("\(warningCount) warnings occured. Exiting process with error as requested.")
         }
     }
     
