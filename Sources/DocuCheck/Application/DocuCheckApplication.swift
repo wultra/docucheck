@@ -32,6 +32,7 @@ class DocuCheckApplication {
     
     private var optShowExternalLinks = false
     private var optShowUnusedDocs = false
+    private var optFastMode = false
     
     /// Initializes application with command line arguments.
     ///
@@ -97,6 +98,9 @@ class DocuCheckApplication {
             .add(option: "--fail-on-warning") {
                 Console.exitWithErrorOnWarning = true
             }
+            .add(option: "--fast") {
+                self.optFastMode = true
+            }
             .afterAll {
                 guard self.configPath != nil else {
                     Console.exitError("You have to specify path to a configuration file.")
@@ -136,7 +140,7 @@ class DocuCheckApplication {
         guard let outputDir = outputDir else {
             Console.exitError("You have to specify path to directory, where output documentation will be stored.")
         }
-        let loader = DocumentationLoader(config: config, destinationDir: outputDir, repositoryDir: repositoriesDir)
+        let loader = DocumentationLoader(config: config, destinationDir: outputDir, repositoryDir: repositoriesDir, fastMode: optFastMode)
         guard let database = loader.loadDocumentation() else {
             onExit(exitWithError: true)
         }
@@ -180,6 +184,8 @@ class DocuCheckApplication {
             Console.message(" --show-external-links | -sel   prints all external links found in docs")
             Console.message(" --show-unused-docs | -sud      prints all unreferenced documents")
             Console.message(" --fail-on-warning              process will fail when warning is reported")
+            Console.message(" --fast                         if used, then some slow tasks will be ommited,")
+            Console.message("                                like pulling changes from git branch.")
             Console.message("")
             Console.message(" --help    | -h                 prints this help information")
             Console.message(" --verbose | -v2                turns on more information printed to the console")

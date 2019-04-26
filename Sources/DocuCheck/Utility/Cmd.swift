@@ -21,7 +21,6 @@ import Foundation
 class Cmd {
     
     let commandPath: String
-    let exitOnFailure: Bool
     
     fileprivate static let pathResolver = CmdPathResolver()
     
@@ -29,35 +28,77 @@ class Cmd {
     ///
     /// - Parameters:
     ///   - command: Command to execute. You can simply use command without a full path.
-    ///   - exitOnError: If true, then command execution will cause an immediate exit. The detault value is `Console.exitOnError`
-    init(_ command: String, exitOnError: Bool = Console.exitOnError) {
+    init(_ command: String) {
         self.commandPath = Cmd.pathResolver.resolveCommandPath(command: command)
-        self.exitOnFailure = exitOnError
     }
 
     /// Executes command with given arguments
     ///
-    /// - Parameter arguments: Array with command arguments
+    /// - Parameters:
+    ///   - arguments: Array with command arguments
+    ///   - exitOnError: If true, then command execution will cause an immediate exit. The detault value is `Console.exitOnError`
+    ///   - ignoreOutput: If true, then both output and error output will be swallowed
     /// - Returns: true if execution succeeded
     @discardableResult
-    func run(with arguments: [String]) -> Bool {
+    func run(with arguments: [String], exitOnError: Bool = Console.exitOnError, ignoreOutput: Bool = false) -> Bool {
         
         Console.debug("Running: \(commandPath) \(arguments.joined(separator: " "))")
         
         let task = Process()
+        if ignoreOutput {
+            let pipe = Pipe()
+            task.standardOutput = pipe
+            task.standardError = pipe
+        }
         task.launchPath = commandPath
         task.arguments = arguments
         task.launch()
         task.waitUntilExit()
         
         if task.terminationStatus != 0 {
-            Console.error("Command \"\(commandPath)\" execution failed with error \(task.terminationStatus)")
-            if exitOnFailure {
-                Console.onExit()
+            if exitOnError {
+                Console.exitError("Command \"\(commandPath)\" execution failed with error \(task.terminationStatus)")
             }
             return false
         }
         return true
+    }
+    
+    /// Executes command with given arguments and captures its output.
+    ///
+    /// - Parameters:
+    ///   - arguments: Array with command arguments
+    ///   - exitOnError: If true, then command execution will cause an immediate exit. The detault value is `Console.exitOnError`
+    ///   - ignoreErrorOutput: If true, then no error will be printed.
+    /// - Returns: Tuple where first parameter is true when operation succeeds and second is captured content.
+    @discardableResult
+    func runAndCapture(with arguments: [String], exitOnError: Bool = Console.exitOnError, ignoreErrorOutput: Bool = false) -> (result: Bool, content: String) {
+        
+        Console.debug("Running: \(commandPath) \(arguments.joined(separator: " "))")
+        
+        let pipe = Pipe()
+        let task = Process()
+        task.launchPath = commandPath
+        task.arguments = arguments
+        task.standardOutput = pipe
+        if ignoreErrorOutput {
+            let errPipe = Pipe()
+            task.standardError = errPipe
+        }
+        task.launch()
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        task.waitUntilExit()
+        
+        if task.terminationStatus != 0 {
+            if exitOnError {
+                Console.exitError("Command \"\(commandPath)\" execution failed with error \(task.terminationStatus)")
+            }
+            return (false, "")
+        }
+        guard let result = String(data: data, encoding: .utf8) else {
+            Console.exitError("Cannot convert data received from pipe from \"\(commandPath)\".")
+        }
+        return (true, result)
     }
 }
 

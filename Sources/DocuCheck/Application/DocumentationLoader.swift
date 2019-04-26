@@ -23,6 +23,9 @@ class DocumentationLoader {
     let config: Config
     let destinationDir: String
     let repositoryDir: String
+    let fastMode: Bool
+    
+    private var cmdGit: Cmd!
     
     /// Initializes object with configuration and directories required for operation.
     ///
@@ -30,11 +33,15 @@ class DocumentationLoader {
     ///   - config: `Config` structure
     ///   - destinationDir: folder where all "repo/docs" folders will be placed
     ///   - repositoryDir: folder where all required git repositories will be placed
-    init(config: Config, destinationDir: String, repositoryDir: String) {
+    init(config: Config, destinationDir: String, repositoryDir: String, fastMode: Bool) {
         self.config = config
         self.destinationDir = destinationDir
         self.repositoryDir = repositoryDir
+        self.fastMode = fastMode
     }
+    
+    
+    // MARK: - Main task
     
     /// Loads documentation from remote sources and copies all "docs" folders to destination
     /// directory.
@@ -64,10 +71,6 @@ class DocumentationLoader {
             Console.info("Destination directory exists. Removing all content at: \(destinationDir)")
             FS.remove(at: destinationDir)
         }
-        if FS.fileExists(at: repositoryDir) {
-            Console.info("Directory for repositories exists. Removing all content at: \(repositoryDir)")
-            FS.remove(at: repositoryDir)
-        }
         FS.makeDir(at: destinationDir)
         FS.makeDir(at: repositoryDir)
         return true
@@ -78,25 +81,120 @@ class DocumentationLoader {
     /// - Returns: true if operation succeeds
     private func downloadAllRepos() -> Bool {
         // Clone all repos
-        let git = Cmd("git")
+        if cmdGit == nil {
+            cmdGit = Cmd("git")
+        }
         config.repositories.forEach { repoIdentifier, repoConfig in
-            Console.info("Downloading \"\(repoIdentifier)\"...")
             let fullRepoPath = config.path(repo: repoIdentifier, basePath: repositoryDir)
-            if FS.fileExists(at: fullRepoPath) {
-                Console.warning("Removing previous content of repository: \"\(repoIdentifier)\"")
-                FS.remove(at: fullRepoPath)
-            }
             if let localPath = repoConfig.localFiles {
                 // Just copy files from local directory
+                Console.info("Copying local \"\(repoIdentifier)\"...")
+                if FS.fileExists(at: fullRepoPath) {
+                    FS.remove(at: fullRepoPath)
+                }
                 FS.copy(from: localPath, to: repositoryDir.addingPathComponent(repoIdentifier))
             } else {
-                // Clone repository
-                let cloneParams = config.gitCloneCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir)
-                git.run(with: cloneParams)
+                // Download repository
+                self.cloneOrUpdateGitRepository(repoIdentifier: repoIdentifier, repoConfig: repoConfig, fullRepoPath: fullRepoPath)
             }
         }
         return true
     }
+    
+    // MARK: - Clone or Update
+    
+    /// Clones or updates a git repository.
+    private func cloneOrUpdateGitRepository(repoIdentifier: String, repoConfig: Config.Repository, fullRepoPath: String) {
+        var doClone = true
+        if FS.isDirectory(at: fullRepoPath) {
+            if FS.isDirectory(at: fullRepoPath.addingPathComponent(".git")) {
+                // git directory exists
+                doClone = false
+            } else {
+                // Some unknown copy, just remove data and clone from scratch
+                FS.remove(at: fullRepoPath)
+            }
+        }
+        if doClone {
+            cloneGitRepository(repoIdentifier: repoIdentifier, repoConfig: repoConfig, fullRepoPath: fullRepoPath)
+        } else {
+            updateGitRepository(repoIdentifier: repoIdentifier, repoConfig: repoConfig, fullRepoPath: fullRepoPath)
+        }
+    }
+    
+    /// Clones git repository
+    private func cloneGitRepository(repoIdentifier: String, repoConfig: Config.Repository, fullRepoPath: String) {
+        // Clone the repository
+        Console.info("Downloading \"\(repoIdentifier)\"...")
+        let cloneParams = config.gitCloneCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir)
+        cmdGit.run(with: cloneParams, exitOnError: true)
+        if repoConfig.hasTag {
+            // Checkout to one specific tag
+            let checkoutParams = config.gitCheckoutCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, createLocalBranch: true)
+            cmdGit.run(with: checkoutParams, exitOnError: true)
+        }
+    }
+    
+    /// Updates git repository
+    private func updateGitRepository(repoIdentifier: String, repoConfig: Config.Repository, fullRepoPath: String) {
+        // Fetch changes, or just change branch
+        Console.info("Updating \"\(repoIdentifier)\"...")
+        if repoConfig.hasTag {
+            updateForTagInGitRepository(repoIdentifier: repoIdentifier, repoConfig: repoConfig, fullRepoPath: fullRepoPath)
+        } else {
+            updateBranchInGitRepository(repoIdentifier: repoIdentifier, repoConfig: repoConfig, fullRepoPath: fullRepoPath)
+        }
+    }
+    
+    /// Updates repository and checkouts to a given tag.
+    private func updateForTagInGitRepository(repoIdentifier: String, repoConfig: Config.Repository, fullRepoPath: String) {
+        // Update for tag
+        let localBranchName = repoConfig.localBranchForTag
+        let verifyBranchParams = config.gitVerifyBranchCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, ref: localBranchName)
+        if cmdGit.run(with: verifyBranchParams, exitOnError: false, ignoreOutput: true) {
+            // Tag's branch exists, just checkout
+            let checkoutParams = config.gitCheckoutCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, createLocalBranch: false)
+            cmdGit.run(with: checkoutParams, exitOnError: true)
+            return
+        }
+        let verifyTagParams = config.gitVerifyBranchCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, ref: repoConfig.tag!)
+        if cmdGit.run(with: verifyTagParams, exitOnError: false, ignoreOutput: true) {
+            // Tag exists, but has no local branch
+            let checkoutParams = config.gitCheckoutCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, createLocalBranch: true)
+            cmdGit.run(with: checkoutParams, exitOnError: true)
+            return
+        }
+        let fetchParams = config.gitFetchCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir)
+        cmdGit.run(with: fetchParams, exitOnError: true)
+        let checkoutParams = config.gitCheckoutCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, createLocalBranch: true)
+        cmdGit.run(with: checkoutParams, exitOnError: true)
+    }
+    
+    /// Updates branch in git repository
+    private func updateBranchInGitRepository(repoIdentifier: String, repoConfig: Config.Repository, fullRepoPath: String) {
+        // Update for branch
+        let branchName = repoConfig.branchName
+        let verifyBranchParams = config.gitVerifyBranchCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, ref: branchName)
+        if !cmdGit.run(with: verifyBranchParams, exitOnError: false, ignoreOutput: true) {
+            // Branch doesn't exist locally, fetch changes
+            let fetchParams = config.gitFetchCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, branch: branchName)
+            cmdGit.run(with: fetchParams, exitOnError: true)
+            // Checkout and create branch
+            let checkoutParams = config.gitCheckoutCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, createLocalBranch: true)
+            cmdGit.run(with: checkoutParams, exitOnError: true)
+        } else {
+            // Branch exists locally, just checkout the branch and pull changes
+            let checkoutParams = config.gitCheckoutCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, createLocalBranch: false)
+            cmdGit.run(with: checkoutParams, exitOnError: true)
+            // Pull changes
+            if !fastMode {
+                let pullParams = config.gitPullCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir)
+                cmdGit.run(with: pullParams, exitOnError: true)
+            }
+        }
+    }
+    
+    // MARK: - Copy documentation
     
     /// Copies all files from repository's "docs" folder to the output folder.
     ///
@@ -209,6 +307,8 @@ class DocumentationLoader {
         return false
     }
     
+    // MARK: - Patch Home files
+    
     /// Patches home files in repositories. This step typically moves "Home.md" (or any other form of home file)
     /// to common name defined in configuration.
     ///
@@ -250,13 +350,51 @@ class DocumentationLoader {
     }
 }
 
+// MARK: - Private extensions -
+
+fileprivate extension Config.Repository {
+    
+    /// Returns true if Repository structure doesn't points to specific tag or branch, so
+    /// it has to download default branch.
+    var hasDefaultBranch: Bool {
+        return branch == nil && tag == nil
+    }
+    
+    /// Contains true if Repository stucture points to a branch.
+    var hasBranch: Bool {
+        return tag == nil
+    }
+    
+    /// Contains true if Repository structure points to a tag
+    var hasTag: Bool {
+        return tag != nil
+    }
+    
+    /// Returns name of local branch for tag
+    var localBranchForTag: String {
+        guard let tag = tag else {
+            Console.fatalError("Wrong usage of 'localBranchForTag'")
+        }
+        return "localBranchForTag_\(tag)"
+    }
+    
+    /// Returns branch name, defaulting to "develop"
+    var branchName: String {
+        guard hasBranch else {
+            Console.fatalError("Wrong usage of 'branchName'")
+        }
+        return branch ?? "develop"
+    }
+    
+}
 
 fileprivate extension Config {
-    
+
     /// Returns parameters for "git clone" command, based on the content stored in the `Repository`
     /// structure.
     ///
     /// - Parameter repoIdentifier: Repository identifier
+    /// - Parameter reposPath: Path to all repositories
     /// - Returns: Array of strings, representing parameters for "git" command
     func gitCloneCommandParameters(repoIdentifier: String, reposPath: String) -> [String] {
         guard let repoConfig = repositories[repoIdentifier] else {
@@ -267,17 +405,103 @@ fileprivate extension Config {
         if Console.verboseLevel != .all {
             params.append("--quiet")
         }
-        // Configure tag or branch
-        if let tagOrBranch = repoConfig.tag ?? repoConfig.branch {
-            params.append(contentsOf: ["--branch", tagOrBranch])
+        // Configure specific branch
+        if let branch = repoConfig.branch {
+            params.append(contentsOf: ["--branch", branch])
         }
-        // "shallow" clone
-        params.append(contentsOf: ["--depth", "1"])
         // URL
         params.append(repoConfig.downloadSourcesPath.absoluteString)
         // Destination folder
         params.append(path(repo: repoIdentifier, basePath: reposPath))
         
+        return params
+    }
+    
+    /// Returns parameters for "git rev-parse" command to verify whether tag or branch exists locally.
+    ///
+    /// - Parameters:
+    ///   - repoIdentifier: Repository identifier
+    ///   - reposPath: Path to all repositories
+    ///   - ref: Branch or tag to verify
+    /// - Returns: Array of strings, representing parameters for "git" command
+    func gitVerifyBranchCommandParameters(repoIdentifier: String, reposPath: String, ref: String) -> [String] {
+        let repoPath = path(repo: repoIdentifier, basePath: reposPath)
+        var params = [ "-C", repoPath, "rev-parse", "--verify", ref ]
+        if Console.verboseLevel != .all {
+            params.append("--quiet")
+        }
+        return params
+    }
+
+    
+    /// Returns parameters for "git checkout" command, based on the content stored in the `Repository`
+    /// structure.
+    ///
+    /// - Parameters:
+    ///   - repoIdentifier: Repository identifier
+    ///   - reposPath: Path to all repositories
+    ///   - createLocalBranchForTag: If Repository points to a tag and this parameter is true, then creates a new local branch for that tag.
+    /// - Returns: Array of strings, representing parameters for "git" command
+    func gitCheckoutCommandParameters(repoIdentifier: String, reposPath: String, createLocalBranch: Bool) -> [String] {
+        guard let repoConfig = repositories[repoIdentifier] else {
+            Console.fatalError("Unknown repository identifier \"\(repoIdentifier)\".")
+        }
+        let repoPath = path(repo: repoIdentifier, basePath: reposPath)
+        var params = [ "-C", repoPath, "checkout" ]
+        if repoConfig.hasBranch {
+            // Points to a branch
+            if createLocalBranch {
+                params.append(contentsOf: [ "-b", repoConfig.branchName ])
+            } else {
+                params.append(repoConfig.branchName)
+            }
+        } else {
+            // Points to a tag
+            if createLocalBranch {
+                params.append(contentsOf: [ repoConfig.tag!, "-b", repoConfig.localBranchForTag ])
+            } else {
+                params.append(repoConfig.localBranchForTag)
+            }
+        }
+        if Console.verboseLevel != .all {
+            params.append("--quiet")
+        }
+        return params
+    }
+    
+    /// Returns parameters for "git pull" command, based on the content stored in the `Repository`
+    /// structure.
+    ///
+    /// - Parameter repoIdentifier: Repository identifier
+    /// - Parameter reposPath: Path to all repositories
+    /// - Returns: Array of strings, representing parameters for "git" command
+    func gitPullCommandParameters(repoIdentifier: String, reposPath: String) -> [String] {
+        let repoPath = path(repo: repoIdentifier, basePath: reposPath)
+        var params = [ "-C", repoPath, "pull" ]
+        
+        if Console.verboseLevel != .all {
+            params.append("--quiet")
+        }
+        return params
+    }
+    
+    /// Returns parameters for "git fetch" command, based on the content stored in the `Repository`
+    /// structure.
+    ///
+    /// - Parameter repoIdentifier: Repository identifier
+    /// - Parameter reposPath: Path to all repositories
+    /// - Parameter branch: If used, then fetches exact branch.
+    /// - Returns: Array of strings, representing parameters for "git" command
+    func gitFetchCommandParameters(repoIdentifier: String, reposPath: String, branch: String? = nil) -> [String] {
+        let repoPath = path(repo: repoIdentifier, basePath: reposPath)
+        var params = [ "-C", repoPath, "fetch", "--tags" ]
+        
+        if Console.verboseLevel != .all {
+            params.append("--quiet")
+        }
+        if let branch = branch {
+            params.append(contentsOf: [ "origin", branch ])
+        }
         return params
     }
 }
