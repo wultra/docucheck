@@ -451,7 +451,7 @@ fileprivate extension Config {
         if repoConfig.hasBranch {
             // Points to a branch
             if createLocalBranch {
-                params.append(contentsOf: [ "-b", repoConfig.branchName ])
+                params.append(contentsOf: [ "-b", repoConfig.branchName, "--track" ])
             } else {
                 params.append(repoConfig.branchName)
             }

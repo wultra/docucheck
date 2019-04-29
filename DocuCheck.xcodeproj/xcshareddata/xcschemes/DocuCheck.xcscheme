@@ -74,14 +74,30 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "--config=/Users/hvge/Dev/lime/tools/DocuCheck/TestData/test-config.json"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--fast"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--fail-on-warning"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--fast"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--config=/Users/hvge/Dev/lime/wikis/wultra-developers/releases/2018.12.json"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--config=/Users/hvge/Dev/lime/wikis/wultra-developers/releases/develop.json"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-r /Users/hvge/Dev/lime/wikis/wultra-developers/tmp/repos"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-o /Users/hvge/Dev/lime/wikis/wultra-developers/tmp/dev-out"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
