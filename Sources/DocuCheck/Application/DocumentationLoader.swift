@@ -406,8 +406,8 @@ fileprivate extension Config {
             params.append("--quiet")
         }
         // Configure specific branch
-        if let branch = repoConfig.branch {
-            params.append(contentsOf: ["--branch", branch])
+        if repoConfig.hasBranch {
+            params.append(contentsOf: [ "--branch", repoConfig.branchName ])
         }
         // URL
         params.append(repoConfig.downloadSourcesPath.absoluteString)
