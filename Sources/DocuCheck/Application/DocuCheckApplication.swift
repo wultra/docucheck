@@ -25,7 +25,6 @@ class DocuCheckApplication {
     private var configPath: String?
     private var repoDir: String?
     private var outputDir: String?
-    private var tempDir: String?
     
     private var config: Config!
     private var database: DocumentationDatabase!
@@ -87,9 +86,6 @@ class DocuCheckApplication {
             .add(option: "--outputDir", shortcut: "-o") { (option) in
                 self.outputDir = option
             }
-            .add(option: "--tempDir", shortcut: "-t") { (option) in
-                self.tempDir = option
-            }
             .add(option: "--showExternalLinks", alias: "-sel") {
                 self.optShowExternalLinks = true
             }
@@ -127,9 +123,6 @@ class DocuCheckApplication {
         }
         if repoDir == nil {
             repoDir = fixedPaths.repositoriesPath
-        }
-        if tempDir == nil {
-            tempDir = fixedPaths.temporaryPath
         }
         return config
     }
@@ -186,7 +179,6 @@ class DocuCheckApplication {
             Console.message(" --outputDir=path | -o path     To set path to directory, where all markdown")
             Console.message("                                  files will be copied. This is required in case")
             Console.message("                                  that config doesn't specify output dir.")
-            Console.message(" --tempDir=path | -t path         to change temporary directory")
             Console.message("")
             Console.message(" --showExternalLinks | -sel     Prints all external links found in docs")
             Console.message(" --showUnusedDocs | -sud        Prints all unreferenced documents")
