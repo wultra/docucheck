@@ -26,6 +26,24 @@ class DocumentationLoader {
     let fastMode: Bool
     
     private var cmdGit: Cmd!
+    private var repoCache: RepoCache!
+    
+    /// Structure representing information about cached repositories
+    private struct RepoCache: Codable {
+        
+        /// Version of RepoCache manager
+        let version: Int
+        
+        /// Returns instance of default `RepoCache` structure
+        static var `default`: RepoCache {
+            return RepoCache(version: 1)
+        }
+    }
+    
+    /// Contains path to RepoCache file
+    private var repoCachePath: String {
+        return repositoryDir.addingPathComponent("docucheck.json")
+    }
     
     /// Initializes object with configuration and directories required for operation.
     ///
@@ -50,10 +68,12 @@ class DocumentationLoader {
     func loadDocumentation() -> DocumentationDatabase? {
         guard
             prepareDirs() &&
+            loadRepoCache() &&
             downloadAllRepos() &&
             copyDocumentationDirs() &&
             removeIgnoredFiles() &&
-            patchHomeFiles() else {
+            patchHomeFiles() &&
+            storeRepoCache() else {
                 return nil
             }
         let database = DocumentationDatabase(config: config, sourcePath: destinationDir)
@@ -72,7 +92,56 @@ class DocumentationLoader {
             FS.remove(at: destinationDir)
         }
         FS.makeDir(at: destinationDir)
-        FS.makeDir(at: repositoryDir)
+        return true
+    }
+    
+    /// Function loads and validates information about repository cache
+    private func loadRepoCache() -> Bool {
+        var removeCache = true
+        let path = repoCachePath
+        if FS.fileExists(at: path) {
+            if let document = FS.document(at: path, description: "Repository cache") {
+                let cacheInfo: RepoCache
+                do {
+                    let decoder = JSONDecoder()
+                    cacheInfo = try decoder.decode(RepoCache.self, from: document.contentData)
+                    if cacheInfo.version == RepoCache.default.version {
+                        removeCache = false
+                    }
+                    repoCache = cacheInfo
+                } catch {
+                    // Do nothing
+                }
+            }
+        }
+        let hasRepoDir = FS.isDirectory(at: repositoryDir)
+        if hasRepoDir {
+            if removeCache {
+                Console.info("Removing repository cache at: \(repositoryDir)")
+                FS.remove(at: repositoryDir)
+                FS.makeDir(at: repositoryDir)
+            }
+        } else {
+            FS.makeDir(at: repositoryDir)
+        }
+        if repoCache == nil {
+            repoCache = RepoCache.default
+        }
+        return storeRepoCache()
+    }
+    
+    /// Stores `RepoCache` into predefined file
+    private func storeRepoCache() -> Bool {
+        guard let info = repoCache else {
+            Console.fatalError("RepoCache structure is missing.")
+        }
+        do {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(info)
+            try data.write(to: URL(fileURLWithPath: repoCachePath), options: .atomicWrite)
+        } catch {
+            Console.exitError("Failed to write RepoCache information. Error: \(error)")
+        }
         return true
     }
     
@@ -451,7 +520,8 @@ fileprivate extension Config {
         if repoConfig.hasBranch {
             // Points to a branch
             if createLocalBranch {
-                params.append(contentsOf: [ "-b", repoConfig.branchName, "--track" ])
+                let branchName = repoConfig.branchName
+                params.append(contentsOf: [ "-b", branchName, "--track", "origin/\(branchName)" ])
             } else {
                 params.append(repoConfig.branchName)
             }
