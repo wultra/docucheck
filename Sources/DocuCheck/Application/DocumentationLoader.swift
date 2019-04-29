@@ -24,6 +24,7 @@ class DocumentationLoader {
     let destinationDir: String
     let repositoryDir: String
     let fastMode: Bool
+    let fetchRepos: Set<String>
     
     private var cmdGit: Cmd!
     private var repoCache: RepoCache!
@@ -51,13 +52,15 @@ class DocumentationLoader {
     ///   - config: `Config` structure
     ///   - destinationDir: folder where all "repo/docs" folders will be placed
     ///   - repositoryDir: folder where all required git repositories will be placed
-    init(config: Config, destinationDir: String, repositoryDir: String, fastMode: Bool) {
+    ///   - fastMode: If true, then some slow operations will be ommited.
+    ///   - fetchRepos: Optional list of repos to fetch.
+    init(config: Config, destinationDir: String, repositoryDir: String, fastMode: Bool, fetchRepos: [String]) {
         self.config = config
         self.destinationDir = destinationDir
         self.repositoryDir = repositoryDir
         self.fastMode = fastMode
+        self.fetchRepos = Set(fetchRepos)
     }
-    
     
     // MARK: - Main task
     
@@ -172,6 +175,22 @@ class DocumentationLoader {
     
     // MARK: - Clone or Update
     
+    /// Returns information whether the repository can be updated in fast mode.
+    ///
+    /// - Parameter repoIdentifier: Identifier of repository to be queried
+    /// - Returns: true if repository can be updated in fast mode.
+    private func isFastMode(repoIdentifier: String) -> Bool {
+        if fetchRepos.isEmpty {
+            // If fetchRepos has no entries, then fastMode boolean determines
+            // how operations should be performed
+            return fastMode
+        } else {
+            // If set is not empty, then all repos are fast, except that
+            // specified in fetchRepos set.
+            return !fetchRepos.contains(repoIdentifier)
+        }
+    }
+    
     /// Clones or updates a git repository.
     private func cloneOrUpdateGitRepository(repoIdentifier: String, repoConfig: Config.Repository, fullRepoPath: String) {
         var doClone = true
@@ -256,7 +275,7 @@ class DocumentationLoader {
             let checkoutParams = config.gitCheckoutCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir, createLocalBranch: false)
             cmdGit.run(with: checkoutParams, exitOnError: true)
             // Pull changes
-            if !fastMode {
+            if !isFastMode(repoIdentifier: repoIdentifier) {
                 let pullParams = config.gitPullCommandParameters(repoIdentifier: repoIdentifier, reposPath: repositoryDir)
                 cmdGit.run(with: pullParams, exitOnError: true)
             }

@@ -33,6 +33,7 @@ class DocuCheckApplication {
     private var optShowExternalLinks = false
     private var optShowUnusedDocs = false
     private var optFastMode = false
+    private var optFetchRepo = [String]()
     
     /// Initializes application with command line arguments.
     ///
@@ -89,17 +90,20 @@ class DocuCheckApplication {
             .add(option: "--tempDir", shortcut: "-t") { (option) in
                 self.tempDir = option
             }
-            .add(option: "--show-external-links", alias: "-sel") {
+            .add(option: "--showExternalLinks", alias: "-sel") {
                 self.optShowExternalLinks = true
             }
-            .add(option: "--show-unused-docs", alias: "-sud") {
+            .add(option: "--showUnusedDocs", alias: "-sud") {
                 self.optShowUnusedDocs = true
             }
-            .add(option: "--fail-on-warning") {
+            .add(option: "--failOnWarning") {
                 Console.exitWithErrorOnWarning = true
             }
             .add(option: "--fast") {
                 self.optFastMode = true
+            }
+            .add(option: "--fetch", shortcut: "-f") { (option) in
+                self.optFetchRepo.append(option)
             }
             .afterAll {
                 guard self.configPath != nil else {
@@ -140,7 +144,7 @@ class DocuCheckApplication {
         guard let outputDir = outputDir else {
             Console.exitError("You have to specify path to directory, where output documentation will be stored.")
         }
-        let loader = DocumentationLoader(config: config, destinationDir: outputDir, repositoryDir: repositoriesDir, fastMode: optFastMode)
+        let loader = DocumentationLoader(config: config, destinationDir: outputDir, repositoryDir: repositoriesDir, fastMode: optFastMode, fetchRepos: optFetchRepo)
         guard let database = loader.loadDocumentation() else {
             onExit(exitWithError: true)
         }
@@ -174,22 +178,28 @@ class DocuCheckApplication {
             Console.message("")
             Console.message("options:")
             Console.message("")
-            Console.message(" --config=path  | -c path       to set path to JSON configuration file")
-            Console.message(" --repoDir=path | -r path       to set path to directory, where documentation")
-            Console.message("                                will be cloned")
-            Console.message(" --outputDir=path | -o path     to set path to directory, where all markdown")
-            Console.message("                                files will be copied.")
-            Console.message(" --tempDir=path | -t path       to change temporary directory")
+            Console.message(" --config=path  | -c path       To set path to JSON configuration file.")
+            Console.message("                                  This is required parameter.")
+            Console.message(" --repoDir=path | -r path       To set path to directory, where documentation")
+            Console.message("                                  will be cloned. This is required parameter")
+            Console.message("                                  in case that config doesn't specify repo dir.")
+            Console.message(" --outputDir=path | -o path     To set path to directory, where all markdown")
+            Console.message("                                  files will be copied. This is required in case")
+            Console.message("                                  that config doesn't specify output dir.")
+            Console.message(" --tempDir=path | -t path         to change temporary directory")
             Console.message("")
-            Console.message(" --show-external-links | -sel   prints all external links found in docs")
-            Console.message(" --show-unused-docs | -sud      prints all unreferenced documents")
-            Console.message(" --fail-on-warning              process will fail when warning is reported")
-            Console.message(" --fast                         if used, then some slow tasks will be ommited,")
-            Console.message("                                like pulling changes from git branch.")
+            Console.message(" --showExternalLinks | -sel     Prints all external links found in docs")
+            Console.message(" --showUnusedDocs | -sud        Prints all unreferenced documents")
+            Console.message(" --failOnWarning                Process will fail when warning is reported")
+            Console.message(" --fast                           if used, then some slow tasks will be ommited,")
+            Console.message("                                  like pulling changes from git branch.")
+            Console.message(" --fetch=repo | -f repo         If used, only specified repo will be updated")
+            Console.message("                                  from remote repository. Can be used for multiple")
+            Console.message("                                  repo identifiers.")
             Console.message("")
-            Console.message(" --help    | -h                 prints this help information")
-            Console.message(" --verbose | -v2                turns on more information printed to the console")
-            Console.message(" --quiet   | -v0                turns off all information printed to the console")
+            Console.message(" --help    | -h                 Prints this help information")
+            Console.message(" --verbose | -v2                Turns on more information printed to the console")
+            Console.message(" --quiet   | -v0                Turns off all information printed to the console")
             Console.message("")
             
             Console.messageLine()
