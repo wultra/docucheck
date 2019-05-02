@@ -107,7 +107,15 @@ extension DocumentationDatabase {
     /// - Parameters:
     ///   - document: Currently processed document
     ///   - link: Link to be kept
-    private func keepExternalLink(document: MarkdownDocument, link: MarkdownLink) {
+    ///   - removeAnchor: If true, then anchor from link should be removed
+    private func keepExternalLink(document: MarkdownDocument, link: MarkdownLink, removeAnchor: Bool = false) {
+        if removeAnchor {
+            var path = link.path
+            if let range = path.range(of: "#", options: .backwards) {
+                path.removeSubrange(Range(uncheckedBounds: (range.lowerBound, path.endIndex)))
+                link.path = path
+            }
+        }
         externalLinks.append((document, link))
     }
     
@@ -124,6 +132,10 @@ extension DocumentationDatabase {
             keepExternalLink(document: document, link: link)
             return
         }
+        if linkInfo.anchorName == "docucheck-keep-link" {
+            keepExternalLink(document: document, link: link, removeAnchor: true)
+            return
+        }
         guard let repo = repositoryContent(for: linkInfo.repoIdentifier) else {
             Console.fatalError("Invalid repository identifier.")
         }
@@ -136,10 +148,6 @@ extension DocumentationDatabase {
             documentPath.removeSubrange(Range(uncheckedBounds: (documentPath.startIndex, documentPath.index(offsetBy: docsFolder.count))))
         }
         if linkInfo.repoIdentifier == document.repoIdentifier {
-            if linkInfo.documentPath == nil &&  linkInfo.anchorName == "docucheck-keep-link" {
-                link.path = repo.repository.mainRepositoryPromoPath.absoluteString
-                return
-            }
             Console.warning(document, link, "Link \(link.toString()) is using full URL, but points to the same repository. Use relative path or `#docucheck-keep-link` to keep original URL.")
         }
         
