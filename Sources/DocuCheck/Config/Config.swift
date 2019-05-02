@@ -61,7 +61,7 @@ struct Config: Decodable {
         let docsFolder: String?
         
         /// Defines filename in "docsFolder", which contains a root page of the documentation.
-        /// If not present in the configuration, then `"Home.md"` will be used.
+        /// If not present in the configuration, then `"Readme.md"` will be used.
         let homeFile: String?
         
         /// Property contains list of supporting markdown documents. Such documents should not be processed as a regular pages.

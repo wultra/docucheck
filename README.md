@@ -7,7 +7,7 @@ The `DocuCheck` is a command line tool, written in Swift, that collects and vali
 - Validates all links pointing to another documents or to anchors in the documents.
 - Patches all documents to be easily served on Wultra's [developers portal](https://developers.wultra.com).
 
-The tool was developed for Wultra's internal purposes, so it's highly specialized for what we need for our documentation. If you're still interested, then you can go to a [main DocuCheck's documentation](docs/Readme.md).
+The tool was developed for Wultra's internal purposes, so it's highly specialized for what we need for our documentation. If you're still interested, then please visit [DocuCheck's documentation](docs/Readme.md).
 
 
 ## License
