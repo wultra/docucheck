@@ -137,10 +137,19 @@ The `Config.Parameters` defines parameters for source repository, that are requi
 ```
 > Tells `DocuCheck` that documentation of `ssl-pinning-ios` is composed from one single file and that `Schematics.psd` and all files with `bin` extension, should not be copied to final documentation.
 
+### `Config.Paths` structure
+
+This simple structure contains configuration for various paths required by the tool. Following elements are available:
+
+- `outputPath`, optional string, if set, then changes path to `$OUT_DIR`
+  - If value begins with `./`, then the path is interpreted as relative to path to the configuration file.
+- `repositoriesPath`, optional string, if set, then changes path to `$REPO_DIR`
+  - If value begins with `./`, then the path is interpreted as relative to path to the configuration file.
+  
 ### `Config.GlobalParameters` structure
 
 The `Config.GlobalParameters` defines parameters applied globally. You can for example change default parameters of source repositories. Following elements are available:
 
-- ``
-
+- `parameters`, optional [`Config.Parameters`](#configparameters-structure) object, modifies global values for repositories.
+- `paths`, optional [`Config.Paths`](#configpaths-structure) object, defining paths required by `DocuCheck`
 

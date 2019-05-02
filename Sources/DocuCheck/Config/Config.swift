@@ -93,9 +93,6 @@ struct Config: Decodable {
         
         /// Path to folder, where all documentation repositories will be cloned
         let repositoriesPath: String?
-        
-        /// Path to a temporary folder, used for various temporary data.
-        let temporaryPath: String?
     }
     
     /// The `GlobalParameters` structure contains various configurations affecting a global behavior

@@ -24,11 +24,11 @@ Prints embedded command's help to the console.
 
 - `--repoDir=path` or `-r path`
   - Defines `path` to a repository cache directory, where all documentation source repositories will be cloned.
-  - If [JSON configuration](Configuration-File.md) doesn't specify this folder, then the parameter must be **specified**. 
+  - If [JSON configuration](Configuration-File.md) doesn't specify this folder, then the parameter **must be specified**. 
   
 - `--outputDir=path` or `-o path`
   - Defines `path` to output folder, where all final documentation will be prepared.
-  - If [JSON configuration](Configuration-File.md) doesn't specify this folder, then the parameter must be **specified**.
+  - If [JSON configuration](Configuration-File.md) doesn't specify this folder, then the parameter **must be specified**.
   
 - `--showExternalLinks` or `-sel`
   - Tells `DocuCheck` to print all links to external webpages, found in the documentation.
@@ -38,7 +38,7 @@ Prints embedded command's help to the console.
   - Tells `DocuCheck` to print all documents in the documentation which has no reference from another documents. This is useful when you want to find unused parts of your documentation.
 
 - `--failOnWarning`
-  - If set, and some WARNING is reported, then the return code from `DocuCheck` is non-zero. This situation is typically treated as failure in bash scripts.
+  - If set, and some WARNING is reported, then the return code from `DocuCheck` is non-zero. This situation is then typically treated as failure in bash scripts.
 
 - `--fast`
   - Tells `DocuCheck` to omit some slow operations, like pulling changes from a repository branches. 
