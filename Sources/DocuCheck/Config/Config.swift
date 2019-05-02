@@ -189,7 +189,6 @@ extension Config {
     func paths(configPath: String) -> Paths {
         var outputPath: String?
         var repositoriesPath: String?
-        var temporaryPath: String?
         let paths = globalParameters?.paths
         if let path = paths?.outputPath {
             if path.hasPrefix("./") || path.hasPrefix("../") {
@@ -201,15 +200,9 @@ extension Config {
                 repositoriesPath = configPath.addingPathComponent(path)
             }
         }
-        if let path = paths?.temporaryPath {
-            if path.hasPrefix("./") || path.hasPrefix("../") {
-                temporaryPath = configPath.addingPathComponent(path)
-            }
-        }
         return Paths(
             outputPath: outputPath,
-            repositoriesPath: repositoriesPath,
-            temporaryPath: temporaryPath
+            repositoriesPath: repositoriesPath
         )
     }
     

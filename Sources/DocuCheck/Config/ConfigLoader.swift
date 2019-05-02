@@ -203,11 +203,6 @@ fileprivate extension Config.Paths {
                 errors.append("Config.paths.repositoriesPath parameter is empty.")
             }
         }
-        if let path = temporaryPath {
-            if path.isEmpty {
-                errors.append("Config.paths.temporaryPath parameter is empty.")
-            }
-        }
         return errors
     }
 }
