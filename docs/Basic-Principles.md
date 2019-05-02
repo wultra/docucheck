@@ -150,7 +150,7 @@ If documentation is composed from one single document, then meta-data informatio
 <!-- end -->
 ```
 
-A good example is [SSL Pinning for iOS](https://github.com/wultra/ssl-pinning-ios/blob/develop/README.md#docucheck-keep-link). You can see, that document visible at GitHub contains TOC at the beginning, but [version at our portal](https://github.com/wultra/ssl-pinning-ios) has that section available in the sidebar.
+A good example is [SSL Pinning for iOS](https://github.com/wultra/ssl-pinning-ios#docucheck-keep-link). You can see, that document visible at GitHub contains TOC at the beginning, but [version at our portal](https://github.com/wultra/ssl-pinning-ios) has that section available in the sidebar.
  
 
 
