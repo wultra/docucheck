@@ -483,7 +483,7 @@ extension MarkdownHeader {
         var lastWasDash = true  // Ignore dast at the beginning
         title.lowercased().forEach { (c) in
             let destC: Character
-            if c == "." {
+            if c == "." || c == "`" {
                 return
             }
             if (c >= "a" && c <= "z") || (c >= "0" && c <= "9") {

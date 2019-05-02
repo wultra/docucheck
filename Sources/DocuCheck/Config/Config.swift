@@ -61,7 +61,7 @@ struct Config: Decodable {
         let docsFolder: String?
         
         /// Defines filename in "docsFolder", which contains a root page of the documentation.
-        /// If not present in the configuration, then `"Home.md"` will be used.
+        /// If not present in the configuration, then `"Readme.md"` will be used.
         let homeFile: String?
         
         /// Property contains list of supporting markdown documents. Such documents should not be processed as a regular pages.
@@ -93,9 +93,6 @@ struct Config: Decodable {
         
         /// Path to folder, where all documentation repositories will be cloned
         let repositoriesPath: String?
-        
-        /// Path to a temporary folder, used for various temporary data.
-        let temporaryPath: String?
     }
     
     /// The `GlobalParameters` structure contains various configurations affecting a global behavior
@@ -192,7 +189,6 @@ extension Config {
     func paths(configPath: String) -> Paths {
         var outputPath: String?
         var repositoriesPath: String?
-        var temporaryPath: String?
         let paths = globalParameters?.paths
         if let path = paths?.outputPath {
             if path.hasPrefix("./") || path.hasPrefix("../") {
@@ -204,15 +200,9 @@ extension Config {
                 repositoriesPath = configPath.addingPathComponent(path)
             }
         }
-        if let path = paths?.temporaryPath {
-            if path.hasPrefix("./") || path.hasPrefix("../") {
-                temporaryPath = configPath.addingPathComponent(path)
-            }
-        }
         return Paths(
             outputPath: outputPath,
-            repositoriesPath: repositoriesPath,
-            temporaryPath: temporaryPath
+            repositoriesPath: repositoriesPath
         )
     }
     
