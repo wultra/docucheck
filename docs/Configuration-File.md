@@ -98,7 +98,7 @@ The `Config.Parameters` defines parameters for source repository, that are requi
 
 - `docsFolder`, optional string, defines folder inside the cloned repository containing the documentation.
   - `docs` is default value
-- `homeFile`, optional string, defines the name of file containig a initial page of the documentation
+- `homeFile`, optional string, defines the name of file containing an initial page of the documentation
   - `Readme.md` is default value
 - `auxiliaryDocuments`, optional array of strings, defines list of additional file names which are not pages with the documentation, but still must be processed as Markdown files.
   - `[ "_Sidebar.md", "_Footer.md" ]` is default value
@@ -111,6 +111,17 @@ The `Config.Parameters` defines parameters for source repository, that are requi
 **Addional notes:**
 
 - It's not recommended to combine `homeFile` and `singleDocumentFile`. If both values are set, then `homeFile` is ignored.
+
+**Effective values**
+
+The default values for this structure can also be configured in `Config.GlobalParameters`. The effective value is then determined by following order: 
+
+1. Per repository configuration has the highest priority
+1. Global configuration
+1. Default value is the fallback, if no other structure defines the value
+
+This rule is not followed for `ignoredFiles` array. In this situation, the effective array is calculated as a combination from all levels.
+
 
 **Examples:**
 
@@ -142,14 +153,49 @@ The `Config.Parameters` defines parameters for source repository, that are requi
 This simple structure contains configuration for various paths required by the tool. Following elements are available:
 
 - `outputPath`, optional string, if set, then changes path to `$OUT_DIR`
-  - If value begins with `./`, then the path is interpreted as relative to path to the configuration file.
+  - If value begins with `./` or `../`, then the path is interpreted as relative to path to the configuration file.
 - `repositoriesPath`, optional string, if set, then changes path to `$REPO_DIR`
-  - If value begins with `./`, then the path is interpreted as relative to path to the configuration file.
+  - If value begins with `./` or `../`, then the path is interpreted as relative to path to the configuration file.
   
 ### `Config.GlobalParameters` structure
 
 The `Config.GlobalParameters` defines parameters applied globally. You can for example change default parameters of source repositories. Following elements are available:
 
-- `parameters`, optional [`Config.Parameters`](#configparameters-structure) object, modifies global values for repositories.
+- `parameters`, optional [`Config.Parameters`](#configparameters-structure) object, modifies global values for all source repositories. 
 - `paths`, optional [`Config.Paths`](#configpaths-structure) object, defining paths required by `DocuCheck`
+- `markdownExtensions`, optional array of strings, defines file name extensions for Markdown document file types.
+  - `[ "md", "markdown" ]` is default value
+  - If you specify your own Markdown extensions, then the default extensions will be still recognized as a documents.
+- `imageExtensions`, optional array of strings, defines file name extensions for image file types.
+  - `[ "png", "jpg", "jpeg", "gif" ]` is default value
+  - If you specify your own image extensions, then the default extensions will be still recognized as an images.
+- `targetHomeFile`, optional string, defines the name of file containing an initial page of the documentation required by `jekyll`. All home files are automatically renamed to value configured in this property.
+  - `index.md` is default value
+
+
+**Examples:**
+
+```json
+{
+    "repositories": {
+        "powerauth-server": {
+            "remote": "wultra/powerauth-server",
+        }
+    },
+    "repositoryParameters": {
+        "powerauth-server": {
+            "ignoredFiles": [ "Schematics.psd", "*.bin" ]
+        }
+    },
+    "globalParameters": {
+        "parameters": {
+            "homeFile": "Home.md",
+            "ignoredFiles": [ "*.dat" ]
+        },
+        "imageExtensions": [ "jp2" ],
+        "targetHomeFile": "index.html"
+    }
+}
+```
+> Changes default "home file" to `Home.md`, adds new globally ignored files with `.dat` extension, adds new image type `jp2` and changes target home file to `index.html`.
 

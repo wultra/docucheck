@@ -52,7 +52,6 @@ Before you start using the tool, please check following documents:
 
 - [Basic Principles](Basic-Principles.md) page makes an deeper introduction what `DocuCheck` does and how.
 - [Configuration File](Configuration-File.md) page describes configuration file, required by the tool.
-- [Document Processing](Document-Processing.md) page describes what tasks are performed on each Markdown document.
 - [Writing Wultra's Documentation](Writing-Wultras-Documentation.md) page describes how to properly document Wultra's projects.
 - [Story behind DocuCheck](Story-Behind.md) page describes motivations why we developed this tool.
 

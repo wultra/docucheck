@@ -1,6 +1,6 @@
 # The story behind DocuCheck
 
-Despite the fact, that [Wultra](https://wultra.com) is a small company, we suddenly realized, that we wrote a lot of technical documentation about our products. All that Markdown files were placed across multiple repositories, hosted at github's wiki (per source code repository), so it was quite confusing for our customers to get the right information for the right version of the product. At this point, we decided to create a [dedicated portal for developers](https://developers.wultra.com), which supposed to serve all the documentation at one place, for multiple versions. The [jekyll](https://jekyllrb.com) was the right choice as a tool for a static site generation.
+Despite the fact, that [Wultra](https://wultra.com) is a small company, we suddenly realized, that we wrote a lot of technical documentation about our products. All that Markdown files were placed across multiple repositories, hosted at GitHub's wiki (per source code repository), so it was quite confusing for our customers to get the right information for the right version of the product. At this point, we decided to create a [dedicated portal for developers](https://developers.wultra.com), which supposed to serve all the documentation at one place, for multiple versions. The [jekyll](https://jekyllrb.com) was the right choice as a tool for a static site generation.
 
 The first version of the portal was manually created with minimum automation support. We had a script which cloned all that wiki pages into one folder, then ran a few black-magic regexps to fix the links and then, we had to fix all the cross-repository links manually. That's how the documentation for our [2018.06 Release](https://developers.wultra.com/docs/2018.06/) was born :) 
 
@@ -11,8 +11,8 @@ We quickly realized that this is not the way we want to manage our documentation
 
 On top of that, we had a few additional requirements for our new documentation:
 
-- It should work on github as it is. That means that links from one repository to another should work both on github and our portal web-pages.
-- If documentation references a source file from the same repository, then the link at portal should point to the properly versioned source file at github.
+- It should work on GitHub as it is. That means that links from one repository to another should work both on GitHub and our portal web-pages.
+- If documentation references a source file from the same repository, then the link at portal should point to the properly versioned source file at GitHub.
 - We wanted to find and fix all broken links, including links to a specific chapter of the document. 
 
 As you can see, this complex task cannot be achieved by using simple regexps and rename file rules, and that's why we started developing the `DocuCheck`. The `Swift` language was selected as an experiment to test, whether it's possible to build such a tool in a limited time (like in 2-3 weeks total). The next reason for that selection was a reason that no `java` developer was available at the time and we did not want to learn a next language, like `python` or `ruby`. 
