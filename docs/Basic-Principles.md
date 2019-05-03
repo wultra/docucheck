@@ -1,12 +1,14 @@
 # Basic Principles
 
+This chapter explains what functionality `DocuCheck` provides and how it works in detail.
+
 ## General Terminology
 
 We're using the following terminology in this documentation:
 
 - **"Application"** is one particular product which supposes to be documented. For example "PowerAuth Server."
 - **"Source repository"** is a git repository containing source codes and documentation written in Markdown, for one particular application. For example `https://github.com/wultra/powerauth-server.git`
-- Each **"source repository"** has its own unique "repository identifier," for example `powerauth-server`.
+- Each source repository has its own unique **"repository identifier,"** for example `powerauth-server`.
 - Each source repository contains a folder with all files, which has to be collected. This folder is also called as **"documentation"** or **"docs"** folder.
 - Each documentation folder contains **"home file,"** representing a starting page for application's documentation.
 - **"Source repository collection"** is a set of source repositories required to build final documentation. 
@@ -29,7 +31,7 @@ The purpose of this step is to download and prepare all documentation-related fi
    - For example: `git clone https://github.com/wultra/powerauth-server.git $REPO_DIR/powerauth-server`
    - If the repository exists in the cache, then the collection of "git checkout" and "git pull" operations are performed on already cloned data 
 
-1. DocuCheck then looks for "docs" folder in the cloned repository and if the folder exists, then copies its content to the output directory. The destination directory has also the repository identifier in the path.
+1. `DocuCheck` then looks for "docs" folder in the cloned repository and if the folder exists, then copies its content to the output directory. The destination directory has also the repository identifier in the path.
    - So, basically executes `cp $REPO_DIR/powerauth-server/docs $OUT_DIR/powerauth-server`
 
 1. Validates, whether `$OUT_DIR/powerauth-server` contains home file.

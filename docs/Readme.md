@@ -48,7 +48,7 @@ As you can see, `DocuCheck` is using Swift Package Manager to build and execute 
 
 ## Usage
 
-Before you start using the tool, please check following documents:
+Before you start using the tool, please read following documents:
 
 - [Basic Principles](Basic-Principles.md) page makes an deeper introduction what `DocuCheck` does and how.
 - [Configuration File](Configuration-File.md) page describes configuration file, required by the tool.

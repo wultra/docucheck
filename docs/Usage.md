@@ -10,8 +10,8 @@ The basic tool usage is simple. Type `DocuCheck` with a combination of parameter
 $ DocuCheck -h
 ```
 
-Prints embedded command's help to the console.
-
+Prints embedded command's help to the console:
+![Embedded Help](images/embedded-help.png)
 
 ## Command parameters
 

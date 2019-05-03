@@ -1,6 +1,6 @@
 # Writing Wultra's documentation
 
-This document describes how to create proper documentation for Wultra's application.
+This document describes how to create a proper documentation for Wultra's application.
 
 ## Structure of documentation
  
@@ -48,7 +48,7 @@ You have basically two options for making links to another repository:
    - `[iOS documentation](https://github.com/wultra/powerauth-mobile-sdk/blob/develop/docs/PowerAuth-SDK-for-iOS.md)` 
    - Will be translated to a sequence like `[iOS documentation](../powerauth-mobile-sdk/PowerAuth-SDK-for-iOS.md)`
 
-The reason why this will work is that docucheck collects all documentation files into one folder (`$OUT_DIR`) and therefore final links are just relative paths.
+The reason why this will work is that `DocuCheck` collects all documentation files into one folder (`$OUT_DIR`) and therefore final links are just relative paths.
 
 ### Keep link as it is
 

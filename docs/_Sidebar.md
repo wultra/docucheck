@@ -9,3 +9,4 @@
 
 - [Wultra's documentation](Writing-Wultras-Documentation.md)
 - [Story behind DocuCheck](Story-Behind.md)
+- [Known Bugs](Known-Bugs.md)

@@ -1,6 +1,6 @@
 # DocuCheck's Configuration File
 
-This chapter of documentation describes the configuration file used by DocuCheck tool. You can check [Config.swift](../Sources/DocuCheck/Config/Config.swift) file which contains the latest structure representing the configuration. All naming in this document will follow that structure and its nested objects.
+This chapter of documentation describes the configuration file used by `DocuCheck` tool. You can check [Config.swift](../Sources/DocuCheck/Config/Config.swift) file which contains the latest structure representing the configuration. All naming in this document will follow that structure and its nested objects.
 
 ## Basic structure
 
@@ -8,9 +8,9 @@ The configuration file uses JSON format, with following elements at the top most
 
 - `repositories` - dictionary, where the key is `repositoryIdentifier` and value is `Config.Repository` structure.
 - `repositoryParameters` - optional dictionary, where the key is `repositoryIdentifier` and value is `Config.Parameters` structure
-- `globalParameters` - optional `Config.GlobalParameters` structure, defining global parameters for DocuCheck tool, applied to all repositories.
+- `globalParameters` - optional `Config.GlobalParameters` structure, defining global parameters for `DocuCheck` tool, applied to all repositories.
 
-For example:
+**For example:**
 
 ```json
 {
@@ -43,7 +43,7 @@ The configuration above defines two source repositories (`powerauth-server` and 
 
 The `Config.Repository` defines the source of documentation for one particular repository. Following elements are available:
 
-- `provider`, optional string, defines of sources provider. Following constants are available:
+- `provider`, optional string, defines the sources provider. Following constants are available:
   - `github`, is default and applied if no string is specified. 
   - `gitlab`
 - `remote`, required string, defines identifier or URL of remote git repository to acquire sources.
@@ -56,7 +56,7 @@ The `Config.Repository` defines the source of documentation for one particular r
 **Addional notes:**
 
 - If `tag` and `branch` are both specified, then the `tag` has a higher priority.
-- If no `tag` and `branch` is specified, then `develop` branch is 
+- If no `tag` and `branch` is specified, then `develop` branch is applied.
 - It's not recommended to share configurations with `localFiles` parameter set. The full path to other location on filesystem is required and therefore such configuration usually will not work for another developer in your team. 
 
 **Examples:**
