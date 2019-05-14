@@ -149,4 +149,4 @@ If documentation is composed from one single file, then you should:
 - Put "Table of Contents" at the beginning of document
 - Mark "Table of Contents" with a meta-data marker "TOC". See [Meta-data](Basic-Principles.md#generate-toc) in Basic Principles.
 
-If you not specify `TOC` section, then `DocuCheck` will generate `_Sidebar.md` from document's headers, but that may lead to lesser quality navigation. 
+If you not specify `TOC` section, then `DocuCheck` will generate `_Sidebar.md` from document's headers, but that may lead to a less quality navigation.
