@@ -56,13 +56,12 @@ This document describes how to create a proper documentation for Wultra's applic
    - You can keep the local server up and running. It will reflect your changes automatically. Just wait a couple of seconds and then reload the page.
 
 1. After you're done with your changes, then:
-  - Revert the configuration you modified in step #3 
-  - Push updated documentation into that `features/documentation-update` branch
-  - Make a pull request with your changed documentation
-  - Wait for a review...
+   - Revert the configuration you modified in step #3 
+   - Push updated documentation into that `features/documentation-update` branch
+   - Make a pull request with your changed documentation
+   - Wait for a review...
   
 1. If the change is approved and merged to `wultra/ssl-pinning-ios`'s `develop`, then run `./update-develop.sh` for the last time.
-
 
 1. If everything's OK (no DocuCheck WARNING is reported), then you can commit and push the change to `wultra/wultra-developers`'s `master` branch to make it live on the portal.
 
