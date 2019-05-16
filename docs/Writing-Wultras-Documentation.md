@@ -27,7 +27,7 @@ This document describes how to create a proper documentation for Wultra's applic
 ## Recommended workflow
 
 1. Clone [`wultra/wultra-developers`](https://github.com/wultra/wultra-developers)
-   - Run `./update-develop.sh` after that, to get the latest changes for the documentation in the development.
+   - Run `./update-develop.sh` to get the latest changes for the documentation in the development.
    - Let's say, you have cloned that repo into `/Users/johndoe/Dev/docs/wultra-developers`.
 
 1. Clone or pull latest changes for repository you're going to update.
@@ -96,7 +96,7 @@ The reason why this will work is that `DocuCheck` collects all documentation fil
 
 ### Keep link as it is
 
-If you want to keep the link as it is, then add `#docucheck-keep-link` anchor. This is useful in following situations when you want to really redirect user to a GitHub webpage:
+If you want to keep the link as it is, then add `#docucheck-keep-link` anchor. This is useful in situations when you want to really redirect user to a GitHub webpage:
 
 - `[Show file at GitHub](https://github.com/wultra/powerauth-mobile-sdk/blob/develop/docs/PowerAuth-SDK-for-iOS.md#docucheck-keep-link)`
 - The link above will be kept as it is, `DocuCheck` just removes that additional anchor.
@@ -124,7 +124,7 @@ Examples:
 
 ### Email
 
-Our preprocessor cannot automaticaly detect emails in the text, just like GitHub does and therefore you have make full link with email (e.g. link with `mailto:` protocol). For example:
+Our preprocessor cannot automaticaly detect emails in the text, just like GitHub does and therefore you have to make a full link with email (e.g. link with `mailto:` scheme). For example:
 
 ```md
 ## Contact
@@ -149,4 +149,4 @@ If documentation is composed from one single file, then you should:
 - Put "Table of Contents" at the beginning of document
 - Mark "Table of Contents" with a meta-data marker "TOC". See [Meta-data](Basic-Principles.md#generate-toc) in Basic Principles.
 
-If you not specify `TOC` section, then `DocuCheck` will generate `_Sidebar.md` from document's headers, but that may lead to a less quality navigation.
+If you do not specify `TOC` section, then `DocuCheck` will generate `_Sidebar.md` from document's headers, but that may lead to less quality navigation. The good examples are our libraries for dynamic SSL pinning [for iOS](https://github.com/wultra/ssl-pinning-ios) and [for Android](https://github.com/wultra/ssl-pinning-android). Both have the whole documentation in a single page, but unlike the first one, the Android library has auto-generated TOC.
