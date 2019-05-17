@@ -12,6 +12,8 @@ This document describes how to create a proper documentation for Wultra's applic
   
 - `docs/Readme.md` should be a "home" file 
 
+- Create `docs/_Sidebar.md` file with sidebar navigation.
+
 - Use only limited set of characters for file names used in the documentation.
   - It's recommended to use only characters, numbers, hyphen, dot
   - Never use brackets and space character for file names.
