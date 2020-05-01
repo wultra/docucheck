@@ -429,7 +429,7 @@ class DocumentationLoader {
                 let oldHomeFilePathFull = repoPath.addingPathComponent(oldHomeFilePath)
                 let newHomeFilePathFull = oldHomeFilePathFull.removingLastPathComponent().addingPathComponent(targetName)
                 if FS.fileExists(at: newHomeFilePathFull) {
-                    Console.exitError("Repository \"\(repoIdentifier)\" contains two home files: \"\(oldHomeFilePath)\" and \"\(newHomeFilePath)\".")
+                    Console.exitError("Repository \"\(repoIdentifier)\" contains two home files: \"\(oldHomeFilePathFull)\" and \"\(newHomeFilePathFull)\".")
                 }
                 FS.copy(from: oldHomeFilePathFull, to: newHomeFilePathFull)
                 FS.remove(at: oldHomeFilePathFull)
