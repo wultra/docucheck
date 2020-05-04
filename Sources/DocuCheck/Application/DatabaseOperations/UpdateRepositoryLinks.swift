@@ -290,11 +290,12 @@ extension DocumentationDatabase {
     private func patchLocalLink(document: MarkdownDocument, link: MarkdownLink) {
         var path = link.path
         var anchorName: String?
+        let currentDocumentParentDir = document.localParentDir
         if let range = path.range(of: "#", options: .backwards) {
             anchorName = String(path[range.upperBound ..< path.endIndex])
             path.removeSubrange(range.lowerBound ..< path.endIndex)
         }
-        let pathURL = URL(fileURLWithPath: document.localParentDir).appendingPathComponent(path).standardized
+        let pathURL = URL(fileURLWithPath: currentDocumentParentDir).appendingPathComponent(path).standardized
         var destinationFile = pathURL.relativeString
         guard let repo = repositoryContent(for: document.repoIdentifier) else {
             Console.fatalError("Document whith invalid repository identifier.")
@@ -309,7 +310,8 @@ extension DocumentationDatabase {
             Console.warning(document, link, "Link \(link.toString()) points to unknown document in repository.")
             return
         }
-        if var referencedItem = self.findDocumentationItem(path: document.repoIdentifier.addingPathComponent(destinationFile)) {
+        let globalDestinationFile = destinationFile.hasPrefix(document.repoIdentifier) ? destinationFile : document.repoIdentifier.addingPathComponent(destinationFile)
+        if var referencedItem = self.findDocumentationItem(path: globalDestinationFile) {
             // Check local link to directory
             if referencedItem.isDirectory {
                 destinationFile = destinationFile.addingPathComponent(targetHomeFile)
@@ -327,6 +329,10 @@ extension DocumentationDatabase {
         }
         if destinationFile.fileExtensionFromPath() == "md" {
             destinationFile.removeSubrange(Range(uncheckedBounds: (destinationFile.index(offsetBy: destinationFile.count - 3), destinationFile.endIndex)))
+        }
+        if globalDestinationFile.hasPrefix(currentDocumentParentDir + "/") {
+            // Destination is in the same directory, so remove the path component
+            destinationFile = String(globalDestinationFile.suffix(from: globalDestinationFile.index(offsetBy: currentDocumentParentDir.count + 1)))
         }
         let finalNewPath = destinationFile + (anchorName == nil ? "" : "#\(anchorName!)")
         if finalNewPath != link.path {
