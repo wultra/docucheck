@@ -80,7 +80,7 @@ extension DocumentationDatabase {
             "layout: page",
             "title: \(title.title)",
             "source: \(baseSourcesPath.absoluteString)",
-            "timestamp: \(NSDate().timeIntervalSince1970)",
+            "timestamp: \(NSDate().timeIntervalSince1970)"
         ]
 
         // Get the post author
@@ -95,6 +95,9 @@ extension DocumentationDatabase {
         newLines += [
             "---"
         ]
+        
+        // Add the new lines
+        document.add(lines: newLines, at: 0)
     }
     
     private func updateAuxiliaryDocument(document: MarkdownDocument, repo: RepositoryContent) {
