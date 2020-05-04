@@ -73,13 +73,36 @@ extension DocumentationDatabase {
         
         // Modify document
         document.remove(linesFrom: 0, count: line + 1)
-        let newLines = [
+
+        // Add common attributes
+        var newLines = [
             "---",
             "layout: page",
             "title: \(title.title)",
             "source: \(baseSourcesPath.absoluteString)",
-            "---",
+            "timestamp: \(NSDate().timeIntervalSince1970)"
         ]
+
+        // Get the post author
+        if let author = document.firstMetadata(withName: "AUTHOR") {
+            if let params = author.parameters {
+                if (params.count == 2) {
+                    let authorName = params[0];
+                    let publishDate = params[1];
+                    newLines += [
+                        "author: \(authorName)",
+                        "published: \(publishDate)"
+                    ]
+                }
+            }
+        }
+
+        // Close the Front Matter
+        newLines += [
+            "---"
+        ]
+        
+        // Add the new lines
         document.add(lines: newLines, at: 0)
     }
     
