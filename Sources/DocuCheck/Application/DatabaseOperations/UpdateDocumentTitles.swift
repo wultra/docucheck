@@ -85,17 +85,16 @@ extension DocumentationDatabase {
 
         // Get the post author
         if let author = document.firstMetadata(withName: "AUTHOR") {
-            if let authorName = author.parameters?[0] {
-                newLines += [
-                    "author: \(authorName)"
-                ]
+            if let params = author.parameters {
+                if (params.count == 2) {
+                    let authorName = params[0];
+                    let publishDate = params[1];
+                    newLines += [
+                        "author: \(authorName)",
+                        "published: \(publishDate)"
+                    ]
+                }
             }
-            if let publishDate = author.parameters?[2] {
-                newLines += [
-                    "published: \(publishDate)"
-                ]
-            }
-            
         }
 
         // Close the Front Matter
