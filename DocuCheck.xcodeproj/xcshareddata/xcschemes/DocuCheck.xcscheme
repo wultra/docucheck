@@ -27,15 +27,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DocuCheck::DocuCheck"
-            BuildableName = "DocuCheck"
-            BlueprintName = "DocuCheck"
-            ReferencedContainer = "container:DocuCheck.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -48,6 +39,17 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "DocuCheck::DocuCheck"
+            BuildableName = "DocuCheck"
+            BlueprintName = "DocuCheck"
+            ReferencedContainer = "container:DocuCheck.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -71,22 +73,40 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--config=/Users/petrdvorak/Development/git/lime-company.github.io/releases/develop.json"
+            argument = "--config=/Users/hvge/Dev/lime/tools/DocuCheck/TestData/test-config.json"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--fail-on-warning"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--fast"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--config=/Users/hvge/Dev/lime/wikis/wultra-developers/releases/2018.12.json"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-r /Users/petrdvorak/Development/git/lime-company.github.io/tmp/repos"
+            argument = "--config=/Users/hvge/Dev/lime/wikis/wultra-developers/releases/develop.json"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-r /Users/hvge/Dev/lime/wikis/wultra-developers/tmp/repos"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-o /Users/petrdvorak/Development/git/lime-company.github.io/tmp/develop"
+            argument = "-o /Users/hvge/Dev/lime/wikis/wultra-developers/tmp/dev-out"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--verbose"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
