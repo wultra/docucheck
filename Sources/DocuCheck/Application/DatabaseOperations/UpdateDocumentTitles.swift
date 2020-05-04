@@ -78,6 +78,7 @@ extension DocumentationDatabase {
             "layout: page",
             "title: \(title.title)",
             "source: \(baseSourcesPath.absoluteString)",
+            "timestamp: \(NSDate().timeIntervalSince1970)",
             "---",
         ]
         document.add(lines: newLines, at: 0)
