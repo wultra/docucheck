@@ -9,11 +9,11 @@
 /* Begin PBXAggregateTarget section */
 		"DocuCheck::DocuCheckPackageTests::ProductTarget" /* DocuCheckPackageTests */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = OBJ_31 /* Build configuration list for PBXAggregateTarget "DocuCheckPackageTests" */;
+			buildConfigurationList = OBJ_102 /* Build configuration list for PBXAggregateTarget "DocuCheckPackageTests" */;
 			buildPhases = (
 			);
 			dependencies = (
-				OBJ_34 /* PBXTargetDependency */,
+				OBJ_105 /* PBXTargetDependency */,
 			);
 			name = DocuCheckPackageTests;
 			productName = DocuCheckPackageTests;
@@ -21,69 +21,53 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		BF5B8762222581AB002FA7A8 /* SaveAllDocuments.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5B8761222581AB002FA7A8 /* SaveAllDocuments.swift */; };
-		BF5B87642225BFF8002FA7A8 /* LinkStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5B87632225BFF8002FA7A8 /* LinkStatistics.swift */; };
-		BF8053A32214556C006E2171 /* DocuCheckApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053A22214556C006E2171 /* DocuCheckApplication.swift */; };
-		BF8053A522146568006E2171 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053A422146568006E2171 /* CommandArguments.swift */; };
-		BF8053A722159AA0006E2171 /* StringPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053A622159AA0006E2171 /* StringPathExtensions.swift */; };
-		BF8053AD2215D8B3006E2171 /* MarkdownEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053AC2215D8B3006E2171 /* MarkdownEntities.swift */; };
-		BF8053AF22170FC0006E2171 /* MarkdownLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053AE22170FC0006E2171 /* MarkdownLine.swift */; };
-		BF8053B3221AF39F006E2171 /* EntityIdGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053B2221AF39F006E2171 /* EntityIdGenerator.swift */; };
-		BF8053B5221B1712006E2171 /* DocumentationDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053B4221B1712006E2171 /* DocumentationDatabase.swift */; };
-		BF8053B7221B2335006E2171 /* DocumentationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053B6221B2335006E2171 /* DocumentationItem.swift */; };
-		BF8053B9221B2F93006E2171 /* RepositoryContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053B8221B2F93006E2171 /* RepositoryContent.swift */; };
-		BF8053BB221DB2D9006E2171 /* MarkdownLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053BA221DB2D9006E2171 /* MarkdownLineTests.swift */; };
-		BF8053BC221DB8A8006E2171 /* MarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F2220C70A800F2AF69 /* MarkdownDocument.swift */; };
-		BF8053BD221DB8A8006E2171 /* MarkdownLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053AE22170FC0006E2171 /* MarkdownLine.swift */; };
-		BF8053BE221DB8A8006E2171 /* MarkdownEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053AC2215D8B3006E2171 /* MarkdownEntities.swift */; };
-		BF8053BF221DB8A8006E2171 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F5220C71C300F2AF69 /* MarkdownParser.swift */; };
-		BF8053C0221DB8A8006E2171 /* EntityIdGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053B2221AF39F006E2171 /* EntityIdGenerator.swift */; };
-		BF8053C1221DB8B5006E2171 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050D220C99C100F2AF69 /* Cmd.swift */; };
-		BF8053C2221DB8B5006E2171 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00517220D955B00F2AF69 /* Console.swift */; };
-		BF8053C3221DB8B5006E2171 /* FS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050F220C9E6200F2AF69 /* FS.swift */; };
-		BF8053C4221DB8B5006E2171 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053A422146568006E2171 /* CommandArguments.swift */; };
-		BF8053C5221DB8B5006E2171 /* StringPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053A622159AA0006E2171 /* StringPathExtensions.swift */; };
-		BF8053C6221DB8C1006E2171 /* DocumentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F7220C729700F2AF69 /* DocumentSource.swift */; };
-		BF8053C7221DB8C1006E2171 /* FileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F9220C732500F2AF69 /* FileDocument.swift */; };
-		BF8053C8221DB8C1006E2171 /* StringDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004FB220C734D00F2AF69 /* StringDocument.swift */; };
-		BF8053C9221DB8C1006E2171 /* DataDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050A220C8BB300F2AF69 /* DataDocument.swift */; };
-		BF8053CA221DB8C4006E2171 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00505220C7C1200F2AF69 /* Config.swift */; };
-		BF8053CB221DB8C4006E2171 /* ConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00500220C7A2F00F2AF69 /* ConfigLoader.swift */; };
-		BF8053CD221EC2DD006E2171 /* MarkdownDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053CC221EC2DD006E2171 /* MarkdownDocumentTests.swift */; };
-		BF8053CF221EE199006E2171 /* UpdateRepositoryLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053CE221EE199006E2171 /* UpdateRepositoryLinks.swift */; };
-		BF8053D2221EE341006E2171 /* UpdateDocumentTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053D1221EE341006E2171 /* UpdateDocumentTitles.swift */; };
-		BF8053D422203C23006E2171 /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053D322203C23006E2171 /* StringHelpers.swift */; };
-		BF9489C3225F872D00B3D9BE /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8053D322203C23006E2171 /* StringHelpers.swift */; };
-		BFB004F3220C70A800F2AF69 /* MarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F2220C70A800F2AF69 /* MarkdownDocument.swift */; };
-		BFB004F6220C71C300F2AF69 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F5220C71C300F2AF69 /* MarkdownParser.swift */; };
-		BFB004F8220C729800F2AF69 /* DocumentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F7220C729700F2AF69 /* DocumentSource.swift */; };
-		BFB004FA220C732500F2AF69 /* FileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004F9220C732500F2AF69 /* FileDocument.swift */; };
-		BFB004FC220C734D00F2AF69 /* StringDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB004FB220C734D00F2AF69 /* StringDocument.swift */; };
-		BFB00501220C7A2F00F2AF69 /* ConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00500220C7A2F00F2AF69 /* ConfigLoader.swift */; };
-		BFB00506220C7C1200F2AF69 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00505220C7C1200F2AF69 /* Config.swift */; };
-		BFB00509220C883800F2AF69 /* DocumentationLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00508220C883800F2AF69 /* DocumentationLoader.swift */; };
-		BFB0050B220C8BB300F2AF69 /* DataDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050A220C8BB300F2AF69 /* DataDocument.swift */; };
-		BFB0050E220C99C100F2AF69 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050D220C99C100F2AF69 /* Cmd.swift */; };
-		BFB00510220C9E6200F2AF69 /* FS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0050F220C9E6200F2AF69 /* FS.swift */; };
-		BFB00518220D955B00F2AF69 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB00517220D955B00F2AF69 /* Console.swift */; };
-		BFBEF26D2266085F0096B8AB /* MarkdownMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */; };
-		BFBEF26E22660D800096B8AB /* MarkdownMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */; };
-		BFBEF2702267350F0096B8AB /* PatchSingleFileDocumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBEF26F2267350F0096B8AB /* PatchSingleFileDocumentation.swift */; };
-		BFBEF2722267581D0096B8AB /* RemoveUnwantedSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBEF2712267581D0096B8AB /* RemoveUnwantedSections.swift */; };
-		OBJ_22 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* main.swift */; };
-		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-		OBJ_41 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
+		BF0ED21B2461AE89001FDF52 /* DocumentOriginRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ED21A2461AE88001FDF52 /* DocumentOriginRegister.swift */; };
+		OBJ_100 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_111 /* MarkdownDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* MarkdownDocumentTests.swift */; };
+		OBJ_112 /* MarkdownLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* MarkdownLineTests.swift */; };
+		OBJ_113 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_50 /* XCTestManifests.swift */; };
+		OBJ_63 /* LinkStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* LinkStatistics.swift */; };
+		OBJ_64 /* PatchSingleFileDocumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* PatchSingleFileDocumentation.swift */; };
+		OBJ_65 /* RemoveUnwantedSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* RemoveUnwantedSections.swift */; };
+		OBJ_66 /* SaveAllDocuments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* SaveAllDocuments.swift */; };
+		OBJ_67 /* UpdateDocumentTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* UpdateDocumentTitles.swift */; };
+		OBJ_68 /* UpdateRepositoryLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* UpdateRepositoryLinks.swift */; };
+		OBJ_69 /* DocuCheckApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* DocuCheckApplication.swift */; };
+		OBJ_70 /* DocumentationDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* DocumentationDatabase.swift */; };
+		OBJ_71 /* DocumentationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* DocumentationItem.swift */; };
+		OBJ_72 /* DocumentationLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* DocumentationLoader.swift */; };
+		OBJ_73 /* RepositoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* RepositoryCache.swift */; };
+		OBJ_74 /* RepositoryContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* RepositoryContent.swift */; };
+		OBJ_75 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* Config.swift */; };
+		OBJ_76 /* ConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* ConfigLoader.swift */; };
+		OBJ_77 /* DataDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* DataDocument.swift */; };
+		OBJ_78 /* DocumentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* DocumentSource.swift */; };
+		OBJ_79 /* FileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* FileDocument.swift */; };
+		OBJ_80 /* StringDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* StringDocument.swift */; };
+		OBJ_81 /* EntityIdGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* EntityIdGenerator.swift */; };
+		OBJ_82 /* MarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* MarkdownDocument.swift */; };
+		OBJ_83 /* MarkdownEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* MarkdownEntities.swift */; };
+		OBJ_84 /* MarkdownLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* MarkdownLine.swift */; };
+		OBJ_85 /* MarkdownMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* MarkdownMetadata.swift */; };
+		OBJ_86 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* MarkdownParser.swift */; };
+		OBJ_87 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* Cmd.swift */; };
+		OBJ_88 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* CommandArguments.swift */; };
+		OBJ_89 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* Console.swift */; };
+		OBJ_90 /* FS.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* FS.swift */; };
+		OBJ_91 /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* StringHelpers.swift */; };
+		OBJ_92 /* StringPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* StringPathExtensions.swift */; };
+		OBJ_93 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BFB004F0220C6F3600F2AF69 /* PBXContainerItemProxy */ = {
+		BF0ED20B246173E8001FDF52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = "DocuCheck::DocuCheck";
 			remoteInfo = DocuCheck;
 		};
-		BFB004F1220C6F3900F2AF69 /* PBXContainerItemProxy */ = {
+		BF0ED2192461A574001FDF52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
@@ -93,53 +77,59 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BF5B8761222581AB002FA7A8 /* SaveAllDocuments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAllDocuments.swift; sourceTree = "<group>"; };
-		BF5B87632225BFF8002FA7A8 /* LinkStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStatistics.swift; sourceTree = "<group>"; };
-		BF8053A22214556C006E2171 /* DocuCheckApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocuCheckApplication.swift; sourceTree = "<group>"; };
-		BF8053A422146568006E2171 /* CommandArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandArguments.swift; sourceTree = "<group>"; };
-		BF8053A622159AA0006E2171 /* StringPathExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringPathExtensions.swift; sourceTree = "<group>"; };
-		BF8053AC2215D8B3006E2171 /* MarkdownEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEntities.swift; sourceTree = "<group>"; };
-		BF8053AE22170FC0006E2171 /* MarkdownLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLine.swift; sourceTree = "<group>"; };
-		BF8053B2221AF39F006E2171 /* EntityIdGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityIdGenerator.swift; sourceTree = "<group>"; };
-		BF8053B4221B1712006E2171 /* DocumentationDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationDatabase.swift; sourceTree = "<group>"; };
-		BF8053B6221B2335006E2171 /* DocumentationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationItem.swift; sourceTree = "<group>"; };
-		BF8053B8221B2F93006E2171 /* RepositoryContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryContent.swift; sourceTree = "<group>"; };
-		BF8053BA221DB2D9006E2171 /* MarkdownLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLineTests.swift; sourceTree = "<group>"; };
-		BF8053CC221EC2DD006E2171 /* MarkdownDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocumentTests.swift; sourceTree = "<group>"; };
-		BF8053CE221EE199006E2171 /* UpdateRepositoryLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRepositoryLinks.swift; sourceTree = "<group>"; };
-		BF8053D1221EE341006E2171 /* UpdateDocumentTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDocumentTitles.swift; sourceTree = "<group>"; };
-		BF8053D322203C23006E2171 /* StringHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelpers.swift; sourceTree = "<group>"; };
-		BFB004F2220C70A800F2AF69 /* MarkdownDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocument.swift; sourceTree = "<group>"; usesTabs = 0; };
-		BFB004F5220C71C300F2AF69 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
-		BFB004F7220C729700F2AF69 /* DocumentSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSource.swift; sourceTree = "<group>"; };
-		BFB004F9220C732500F2AF69 /* FileDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDocument.swift; sourceTree = "<group>"; };
-		BFB004FB220C734D00F2AF69 /* StringDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringDocument.swift; sourceTree = "<group>"; };
-		BFB00500220C7A2F00F2AF69 /* ConfigLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigLoader.swift; sourceTree = "<group>"; };
-		BFB00505220C7C1200F2AF69 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		BFB00508220C883800F2AF69 /* DocumentationLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationLoader.swift; sourceTree = "<group>"; };
-		BFB0050A220C8BB300F2AF69 /* DataDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDocument.swift; sourceTree = "<group>"; };
-		BFB0050D220C99C100F2AF69 /* Cmd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cmd.swift; sourceTree = "<group>"; };
-		BFB0050F220C9E6200F2AF69 /* FS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FS.swift; sourceTree = "<group>"; };
-		BFB00517220D955B00F2AF69 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
-		BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownMetadata.swift; sourceTree = "<group>"; };
-		BFBEF26F2267350F0096B8AB /* PatchSingleFileDocumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSingleFileDocumentation.swift; sourceTree = "<group>"; };
-		BFBEF2712267581D0096B8AB /* RemoveUnwantedSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveUnwantedSections.swift; sourceTree = "<group>"; };
-		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
-		"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = DocuCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
+		BF0ED21A2461AE88001FDF52 /* DocumentOriginRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentOriginRegister.swift; sourceTree = "<group>"; };
+		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; lastKnownFileType = text; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
+		"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DocuCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_11 /* LinkStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStatistics.swift; sourceTree = "<group>"; };
+		OBJ_12 /* PatchSingleFileDocumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSingleFileDocumentation.swift; sourceTree = "<group>"; };
+		OBJ_13 /* RemoveUnwantedSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveUnwantedSections.swift; sourceTree = "<group>"; };
+		OBJ_14 /* SaveAllDocuments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAllDocuments.swift; sourceTree = "<group>"; };
+		OBJ_15 /* UpdateDocumentTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDocumentTitles.swift; sourceTree = "<group>"; };
+		OBJ_16 /* UpdateRepositoryLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRepositoryLinks.swift; sourceTree = "<group>"; };
+		OBJ_17 /* DocuCheckApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocuCheckApplication.swift; sourceTree = "<group>"; };
+		OBJ_18 /* DocumentationDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationDatabase.swift; sourceTree = "<group>"; };
+		OBJ_19 /* DocumentationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationItem.swift; sourceTree = "<group>"; };
+		OBJ_20 /* DocumentationLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationLoader.swift; sourceTree = "<group>"; };
+		OBJ_21 /* RepositoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCache.swift; sourceTree = "<group>"; };
+		OBJ_22 /* RepositoryContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryContent.swift; sourceTree = "<group>"; };
+		OBJ_24 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		OBJ_25 /* ConfigLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigLoader.swift; sourceTree = "<group>"; };
+		OBJ_27 /* DataDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDocument.swift; sourceTree = "<group>"; };
+		OBJ_28 /* DocumentSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSource.swift; sourceTree = "<group>"; };
+		OBJ_29 /* FileDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDocument.swift; sourceTree = "<group>"; };
+		OBJ_30 /* StringDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringDocument.swift; sourceTree = "<group>"; };
+		OBJ_32 /* EntityIdGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityIdGenerator.swift; sourceTree = "<group>"; };
+		OBJ_33 /* MarkdownDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocument.swift; sourceTree = "<group>"; };
+		OBJ_34 /* MarkdownEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEntities.swift; sourceTree = "<group>"; };
+		OBJ_35 /* MarkdownLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLine.swift; sourceTree = "<group>"; };
+		OBJ_36 /* MarkdownMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownMetadata.swift; sourceTree = "<group>"; };
+		OBJ_37 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
+		OBJ_39 /* Cmd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cmd.swift; sourceTree = "<group>"; };
+		OBJ_40 /* CommandArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandArguments.swift; sourceTree = "<group>"; };
+		OBJ_41 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
+		OBJ_42 /* FS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FS.swift; sourceTree = "<group>"; };
+		OBJ_43 /* StringHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelpers.swift; sourceTree = "<group>"; };
+		OBJ_44 /* StringPathExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringPathExtensions.swift; sourceTree = "<group>"; };
+		OBJ_45 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		OBJ_48 /* MarkdownDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocumentTests.swift; sourceTree = "<group>"; };
+		OBJ_49 /* MarkdownLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLineTests.swift; sourceTree = "<group>"; };
+		OBJ_50 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
+		OBJ_54 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = SOURCE_ROOT; };
+		OBJ_55 /* update-packages.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "update-packages.sh"; sourceTree = "<group>"; };
+		OBJ_56 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		OBJ_57 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		OBJ_9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		OBJ_23 /* Frameworks */ = {
+		OBJ_114 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_42 /* Frameworks */ = {
+		OBJ_94 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
@@ -149,116 +139,107 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BF8053D0221EE2AB006E2171 /* DatabaseOperations */ = {
+		OBJ_10 /* DatabaseOperations */ = {
 			isa = PBXGroup;
 			children = (
-				BF8053CE221EE199006E2171 /* UpdateRepositoryLinks.swift */,
-				BF8053D1221EE341006E2171 /* UpdateDocumentTitles.swift */,
-				BF5B8761222581AB002FA7A8 /* SaveAllDocuments.swift */,
-				BFBEF26F2267350F0096B8AB /* PatchSingleFileDocumentation.swift */,
-				BFBEF2712267581D0096B8AB /* RemoveUnwantedSections.swift */,
-				BF5B87632225BFF8002FA7A8 /* LinkStatistics.swift */,
+				OBJ_11 /* LinkStatistics.swift */,
+				OBJ_12 /* PatchSingleFileDocumentation.swift */,
+				OBJ_13 /* RemoveUnwantedSections.swift */,
+				OBJ_14 /* SaveAllDocuments.swift */,
+				OBJ_15 /* UpdateDocumentTitles.swift */,
+				OBJ_16 /* UpdateRepositoryLinks.swift */,
 			);
 			path = DatabaseOperations;
 			sourceTree = "<group>";
 		};
-		BFB004F4220C71AB00F2AF69 /* Markdown */ = {
+		OBJ_23 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				BFB004F2220C70A800F2AF69 /* MarkdownDocument.swift */,
-				BF8053AE22170FC0006E2171 /* MarkdownLine.swift */,
-				BF8053AC2215D8B3006E2171 /* MarkdownEntities.swift */,
-				BFBEF26C2266085F0096B8AB /* MarkdownMetadata.swift */,
-				BFB004F5220C71C300F2AF69 /* MarkdownParser.swift */,
-				BF8053B2221AF39F006E2171 /* EntityIdGenerator.swift */,
-			);
-			path = Markdown;
-			sourceTree = "<group>";
-		};
-		BFB004FD220C792000F2AF69 /* Document */ = {
-			isa = PBXGroup;
-			children = (
-				BFB004F7220C729700F2AF69 /* DocumentSource.swift */,
-				BFB004F9220C732500F2AF69 /* FileDocument.swift */,
-				BFB004FB220C734D00F2AF69 /* StringDocument.swift */,
-				BFB0050A220C8BB300F2AF69 /* DataDocument.swift */,
-			);
-			path = Document;
-			sourceTree = "<group>";
-		};
-		BFB004FF220C7A1B00F2AF69 /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				BFB00505220C7C1200F2AF69 /* Config.swift */,
-				BFB00500220C7A2F00F2AF69 /* ConfigLoader.swift */,
+				OBJ_24 /* Config.swift */,
+				OBJ_25 /* ConfigLoader.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
 		};
-		BFB00507220C875E00F2AF69 /* Application */ = {
+		OBJ_26 /* Document */ = {
 			isa = PBXGroup;
 			children = (
-				BF8053D0221EE2AB006E2171 /* DatabaseOperations */,
-				BF8053A22214556C006E2171 /* DocuCheckApplication.swift */,
-				BFB00508220C883800F2AF69 /* DocumentationLoader.swift */,
-				BF8053B4221B1712006E2171 /* DocumentationDatabase.swift */,
-				BF8053B6221B2335006E2171 /* DocumentationItem.swift */,
-				BF8053B8221B2F93006E2171 /* RepositoryContent.swift */,
+				OBJ_27 /* DataDocument.swift */,
+				OBJ_28 /* DocumentSource.swift */,
+				OBJ_29 /* FileDocument.swift */,
+				OBJ_30 /* StringDocument.swift */,
 			);
-			path = Application;
+			path = Document;
 			sourceTree = "<group>";
 		};
-		BFB0050C220C99AB00F2AF69 /* Utility */ = {
+		OBJ_31 /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
-				BFB0050D220C99C100F2AF69 /* Cmd.swift */,
-				BFB00517220D955B00F2AF69 /* Console.swift */,
-				BFB0050F220C9E6200F2AF69 /* FS.swift */,
-				BF8053A422146568006E2171 /* CommandArguments.swift */,
-				BF8053A622159AA0006E2171 /* StringPathExtensions.swift */,
-				BF8053D322203C23006E2171 /* StringHelpers.swift */,
+				OBJ_32 /* EntityIdGenerator.swift */,
+				OBJ_33 /* MarkdownDocument.swift */,
+				OBJ_34 /* MarkdownEntities.swift */,
+				OBJ_35 /* MarkdownLine.swift */,
+				OBJ_36 /* MarkdownMetadata.swift */,
+				OBJ_37 /* MarkdownParser.swift */,
+			);
+			path = Markdown;
+			sourceTree = "<group>";
+		};
+		OBJ_38 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_39 /* Cmd.swift */,
+				OBJ_40 /* CommandArguments.swift */,
+				OBJ_41 /* Console.swift */,
+				OBJ_42 /* FS.swift */,
+				OBJ_43 /* StringHelpers.swift */,
+				OBJ_44 /* StringPathExtensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		OBJ_10 /* Tests */ = {
+		OBJ_46 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_11 /* DocuCheckTests */,
+				OBJ_47 /* DocuCheckTests */,
 			);
 			name = Tests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_11 /* DocuCheckTests */ = {
+		OBJ_47 /* DocuCheckTests */ = {
 			isa = PBXGroup;
 			children = (
-				BF8053BA221DB2D9006E2171 /* MarkdownLineTests.swift */,
-				BF8053CC221EC2DD006E2171 /* MarkdownDocumentTests.swift */,
-				OBJ_13 /* XCTestManifests.swift */,
+				OBJ_48 /* MarkdownDocumentTests.swift */,
+				OBJ_49 /* MarkdownLineTests.swift */,
+				OBJ_50 /* XCTestManifests.swift */,
 			);
 			name = DocuCheckTests;
 			path = Tests/DocuCheckTests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_14 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */,
-				"DocuCheck::DocuCheck::Product" /* DocuCheck */,
-			);
-			name = Products;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		OBJ_5 = {
+		OBJ_5 /*  */ = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
-				OBJ_10 /* Tests */,
-				OBJ_14 /* Products */,
+				OBJ_46 /* Tests */,
+				OBJ_51 /* Products */,
+				OBJ_54 /* docs */,
+				OBJ_55 /* update-packages.sh */,
+				OBJ_56 /* LICENSE */,
+				OBJ_57 /* README.md */,
 			);
+			name = "";
 			sourceTree = "<group>";
-			usesTabs = 0;
+		};
+		OBJ_51 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"DocuCheck::DocuCheck::Product" /* DocuCheck */,
+				"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
@@ -271,26 +252,41 @@
 		OBJ_8 /* DocuCheck */ = {
 			isa = PBXGroup;
 			children = (
-				BFB00507220C875E00F2AF69 /* Application */,
-				BFB004FF220C7A1B00F2AF69 /* Config */,
-				BFB004FD220C792000F2AF69 /* Document */,
-				BFB004F4220C71AB00F2AF69 /* Markdown */,
-				BFB0050C220C99AB00F2AF69 /* Utility */,
-				OBJ_9 /* main.swift */,
+				OBJ_9 /* Application */,
+				OBJ_23 /* Config */,
+				OBJ_26 /* Document */,
+				OBJ_31 /* Markdown */,
+				OBJ_38 /* Utility */,
+				OBJ_45 /* main.swift */,
 			);
 			name = DocuCheck;
 			path = Sources/DocuCheck;
 			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_9 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_10 /* DatabaseOperations */,
+				OBJ_17 /* DocuCheckApplication.swift */,
+				OBJ_18 /* DocumentationDatabase.swift */,
+				OBJ_19 /* DocumentationItem.swift */,
+				OBJ_20 /* DocumentationLoader.swift */,
+				BF0ED21A2461AE88001FDF52 /* DocumentOriginRegister.swift */,
+				OBJ_21 /* RepositoryCache.swift */,
+				OBJ_22 /* RepositoryContent.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
 		"DocuCheck::DocuCheck" /* DocuCheck */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_18 /* Build configuration list for PBXNativeTarget "DocuCheck" */;
+			buildConfigurationList = OBJ_59 /* Build configuration list for PBXNativeTarget "DocuCheck" */;
 			buildPhases = (
-				OBJ_21 /* Sources */,
-				OBJ_23 /* Frameworks */,
+				OBJ_62 /* Sources */,
+				OBJ_94 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -303,15 +299,15 @@
 		};
 		"DocuCheck::DocuCheckTests" /* DocuCheckTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_36 /* Build configuration list for PBXNativeTarget "DocuCheckTests" */;
+			buildConfigurationList = OBJ_107 /* Build configuration list for PBXNativeTarget "DocuCheckTests" */;
 			buildPhases = (
-				OBJ_39 /* Sources */,
-				OBJ_42 /* Frameworks */,
+				OBJ_110 /* Sources */,
+				OBJ_114 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_43 /* PBXTargetDependency */,
+				OBJ_115 /* PBXTargetDependency */,
 			);
 			name = DocuCheckTests;
 			productName = DocuCheckTests;
@@ -320,9 +316,9 @@
 		};
 		"DocuCheck::SwiftPMPackageDescription" /* DocuCheckPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_25 /* Build configuration list for PBXNativeTarget "DocuCheckPackageDescription" */;
+			buildConfigurationList = OBJ_96 /* Build configuration list for PBXNativeTarget "DocuCheckPackageDescription" */;
 			buildPhases = (
-				OBJ_28 /* Sources */,
+				OBJ_99 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -338,26 +334,18 @@
 		OBJ_1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 9999;
 				LastUpgradeCheck = 9999;
-				TargetAttributes = {
-					"DocuCheck::DocuCheck" = {
-						LastSwiftMigration = 1020;
-					};
-					"DocuCheck::DocuCheckTests" = {
-						LastSwiftMigration = 1020;
-					};
-				};
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "DocuCheck" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 			);
-			mainGroup = OBJ_5;
-			productRefGroup = OBJ_14 /* Products */;
+			mainGroup = OBJ_5 /*  */;
+			productRefGroup = OBJ_51 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -370,154 +358,138 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		OBJ_21 /* Sources */ = {
+		OBJ_110 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				BF8053AD2215D8B3006E2171 /* MarkdownEntities.swift in Sources */,
-				BF8053B3221AF39F006E2171 /* EntityIdGenerator.swift in Sources */,
-				BFBEF2702267350F0096B8AB /* PatchSingleFileDocumentation.swift in Sources */,
-				BFB00509220C883800F2AF69 /* DocumentationLoader.swift in Sources */,
-				BFB004F3220C70A800F2AF69 /* MarkdownDocument.swift in Sources */,
-				BF8053CF221EE199006E2171 /* UpdateRepositoryLinks.swift in Sources */,
-				BFBEF2722267581D0096B8AB /* RemoveUnwantedSections.swift in Sources */,
-				BFB0050E220C99C100F2AF69 /* Cmd.swift in Sources */,
-				BFB004FC220C734D00F2AF69 /* StringDocument.swift in Sources */,
-				BFB00510220C9E6200F2AF69 /* FS.swift in Sources */,
-				BFB00506220C7C1200F2AF69 /* Config.swift in Sources */,
-				BFBEF26D2266085F0096B8AB /* MarkdownMetadata.swift in Sources */,
-				BF8053D2221EE341006E2171 /* UpdateDocumentTitles.swift in Sources */,
-				OBJ_22 /* main.swift in Sources */,
-				BF8053B9221B2F93006E2171 /* RepositoryContent.swift in Sources */,
-				BF8053B5221B1712006E2171 /* DocumentationDatabase.swift in Sources */,
-				BF8053A522146568006E2171 /* CommandArguments.swift in Sources */,
-				BF8053A722159AA0006E2171 /* StringPathExtensions.swift in Sources */,
-				BFB004F6220C71C300F2AF69 /* MarkdownParser.swift in Sources */,
-				BF5B87642225BFF8002FA7A8 /* LinkStatistics.swift in Sources */,
-				BF8053A32214556C006E2171 /* DocuCheckApplication.swift in Sources */,
-				BF8053AF22170FC0006E2171 /* MarkdownLine.swift in Sources */,
-				BFB0050B220C8BB300F2AF69 /* DataDocument.swift in Sources */,
-				BFB004FA220C732500F2AF69 /* FileDocument.swift in Sources */,
-				BF8053D422203C23006E2171 /* StringHelpers.swift in Sources */,
-				BFB00518220D955B00F2AF69 /* Console.swift in Sources */,
-				BF8053B7221B2335006E2171 /* DocumentationItem.swift in Sources */,
-				BFB004F8220C729800F2AF69 /* DocumentSource.swift in Sources */,
-				BFB00501220C7A2F00F2AF69 /* ConfigLoader.swift in Sources */,
-				BF5B8762222581AB002FA7A8 /* SaveAllDocuments.swift in Sources */,
+				OBJ_111 /* MarkdownDocumentTests.swift in Sources */,
+				OBJ_112 /* MarkdownLineTests.swift in Sources */,
+				OBJ_113 /* XCTestManifests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_28 /* Sources */ = {
+		OBJ_62 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_29 /* Package.swift in Sources */,
+				OBJ_63 /* LinkStatistics.swift in Sources */,
+				OBJ_64 /* PatchSingleFileDocumentation.swift in Sources */,
+				OBJ_65 /* RemoveUnwantedSections.swift in Sources */,
+				OBJ_66 /* SaveAllDocuments.swift in Sources */,
+				OBJ_67 /* UpdateDocumentTitles.swift in Sources */,
+				OBJ_68 /* UpdateRepositoryLinks.swift in Sources */,
+				OBJ_69 /* DocuCheckApplication.swift in Sources */,
+				OBJ_70 /* DocumentationDatabase.swift in Sources */,
+				OBJ_71 /* DocumentationItem.swift in Sources */,
+				OBJ_72 /* DocumentationLoader.swift in Sources */,
+				OBJ_73 /* RepositoryCache.swift in Sources */,
+				OBJ_74 /* RepositoryContent.swift in Sources */,
+				OBJ_75 /* Config.swift in Sources */,
+				OBJ_76 /* ConfigLoader.swift in Sources */,
+				OBJ_77 /* DataDocument.swift in Sources */,
+				OBJ_78 /* DocumentSource.swift in Sources */,
+				OBJ_79 /* FileDocument.swift in Sources */,
+				OBJ_80 /* StringDocument.swift in Sources */,
+				OBJ_81 /* EntityIdGenerator.swift in Sources */,
+				OBJ_82 /* MarkdownDocument.swift in Sources */,
+				OBJ_83 /* MarkdownEntities.swift in Sources */,
+				BF0ED21B2461AE89001FDF52 /* DocumentOriginRegister.swift in Sources */,
+				OBJ_84 /* MarkdownLine.swift in Sources */,
+				OBJ_85 /* MarkdownMetadata.swift in Sources */,
+				OBJ_86 /* MarkdownParser.swift in Sources */,
+				OBJ_87 /* Cmd.swift in Sources */,
+				OBJ_88 /* CommandArguments.swift in Sources */,
+				OBJ_89 /* Console.swift in Sources */,
+				OBJ_90 /* FS.swift in Sources */,
+				OBJ_91 /* StringHelpers.swift in Sources */,
+				OBJ_92 /* StringPathExtensions.swift in Sources */,
+				OBJ_93 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_39 /* Sources */ = {
+		OBJ_99 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				BF9489C3225F872D00B3D9BE /* StringHelpers.swift in Sources */,
-				BF8053C1221DB8B5006E2171 /* Cmd.swift in Sources */,
-				BFBEF26E22660D800096B8AB /* MarkdownMetadata.swift in Sources */,
-				BF8053C8221DB8C1006E2171 /* StringDocument.swift in Sources */,
-				BF8053BD221DB8A8006E2171 /* MarkdownLine.swift in Sources */,
-				OBJ_41 /* XCTestManifests.swift in Sources */,
-				BF8053CB221DB8C4006E2171 /* ConfigLoader.swift in Sources */,
-				BF8053CA221DB8C4006E2171 /* Config.swift in Sources */,
-				BF8053BE221DB8A8006E2171 /* MarkdownEntities.swift in Sources */,
-				BF8053C2221DB8B5006E2171 /* Console.swift in Sources */,
-				BF8053C9221DB8C1006E2171 /* DataDocument.swift in Sources */,
-				BF8053C5221DB8B5006E2171 /* StringPathExtensions.swift in Sources */,
-				BF8053BB221DB2D9006E2171 /* MarkdownLineTests.swift in Sources */,
-				BF8053C6221DB8C1006E2171 /* DocumentSource.swift in Sources */,
-				BF8053BC221DB8A8006E2171 /* MarkdownDocument.swift in Sources */,
-				BF8053BF221DB8A8006E2171 /* MarkdownParser.swift in Sources */,
-				BF8053C4221DB8B5006E2171 /* CommandArguments.swift in Sources */,
-				BF8053CD221EC2DD006E2171 /* MarkdownDocumentTests.swift in Sources */,
-				BF8053C3221DB8B5006E2171 /* FS.swift in Sources */,
-				BF8053C7221DB8C1006E2171 /* FileDocument.swift in Sources */,
-				BF8053C0221DB8A8006E2171 /* EntityIdGenerator.swift in Sources */,
+				OBJ_100 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		OBJ_34 /* PBXTargetDependency */ = {
+		OBJ_105 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "DocuCheck::DocuCheckTests" /* DocuCheckTests */;
-			targetProxy = BFB004F1220C6F3900F2AF69 /* PBXContainerItemProxy */;
+			targetProxy = BF0ED2192461A574001FDF52 /* PBXContainerItemProxy */;
 		};
-		OBJ_43 /* PBXTargetDependency */ = {
+		OBJ_115 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "DocuCheck::DocuCheck" /* DocuCheck */;
-			targetProxy = BFB004F0220C6F3600F2AF69 /* PBXContainerItemProxy */;
+			targetProxy = BF0ED20B246173E8001FDF52 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		OBJ_19 /* Debug */ = {
+		OBJ_103 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = DocuCheck.xcodeproj/DocuCheck_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
-				OTHER_CFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
-				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
-				SWIFT_VERSION = 5.0;
-				TARGET_NAME = DocuCheck;
 			};
 			name = Debug;
 		};
-		OBJ_20 /* Release */ = {
+		OBJ_104 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = DocuCheck.xcodeproj/DocuCheck_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
-				OTHER_CFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
-				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
-				SWIFT_VERSION = 5.0;
-				TARGET_NAME = DocuCheck;
 			};
 			name = Release;
 		};
-		OBJ_26 /* Debug */ = {
+		OBJ_108 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4.2 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk";
-				SWIFT_VERSION = 4.2;
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = DocuCheck.xcodeproj/DocuCheckTests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DocuCheckTests;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
-		OBJ_27 /* Release */ = {
+		OBJ_109 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 4.2 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk";
-				SWIFT_VERSION = 4.2;
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = DocuCheck.xcodeproj/DocuCheckTests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DocuCheckTests;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -532,76 +504,21 @@
 				ENABLE_NS_ASSERTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+					"DEBUG=1",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-DXcode";
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "SWIFT_PACKAGE DEBUG";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USE_HEADERMAP = NO;
 			};
 			name = Debug;
-		};
-		OBJ_32 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		OBJ_33 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Release;
-		};
-		OBJ_37 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = DocuCheck.xcodeproj/DocuCheckTests_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
-				OTHER_CFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_VERSION = 5.0;
-				TARGET_NAME = DocuCheckTests;
-			};
-			name = Debug;
-		};
-		OBJ_38 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = DocuCheck.xcodeproj/DocuCheckTests_Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
-				OTHER_CFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_VERSION = 5.0;
-				TARGET_NAME = DocuCheckTests;
-			};
-			name = Release;
 		};
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -612,25 +529,106 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				OTHER_SWIFT_FLAGS = "-DXcode";
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+		OBJ_60 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = DocuCheck.xcodeproj/DocuCheck_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
+				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DocuCheck;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = DocuCheck.xcodeproj/DocuCheck_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
+				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DocuCheck;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		OBJ_97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_98 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1.0";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		OBJ_18 /* Build configuration list for PBXNativeTarget "DocuCheck" */ = {
+		OBJ_102 /* Build configuration list for PBXAggregateTarget "DocuCheckPackageTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_19 /* Debug */,
-				OBJ_20 /* Release */,
+				OBJ_103 /* Debug */,
+				OBJ_104 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_107 /* Build configuration list for PBXNativeTarget "DocuCheckTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_108 /* Debug */,
+				OBJ_109 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -644,29 +642,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_25 /* Build configuration list for PBXNativeTarget "DocuCheckPackageDescription" */ = {
+		OBJ_59 /* Build configuration list for PBXNativeTarget "DocuCheck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_26 /* Debug */,
-				OBJ_27 /* Release */,
+				OBJ_60 /* Debug */,
+				OBJ_61 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_31 /* Build configuration list for PBXAggregateTarget "DocuCheckPackageTests" */ = {
+		OBJ_96 /* Build configuration list for PBXNativeTarget "DocuCheckPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_32 /* Debug */,
-				OBJ_33 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		OBJ_36 /* Build configuration list for PBXNativeTarget "DocuCheckTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				OBJ_37 /* Debug */,
-				OBJ_38 /* Release */,
+				OBJ_97 /* Debug */,
+				OBJ_98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

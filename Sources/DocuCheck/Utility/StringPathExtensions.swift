@@ -36,10 +36,20 @@ extension String {
     func fileExtensionFromPath() -> String {
         let name = self.fileNameFromPath()
         guard let rpos = name.range(of: ".", options:.backwards) else {
-            // forward slash not found
+            // dot not found
             return ""
         }
         return String(name[rpos.upperBound..<name.endIndex])
+    }
+    
+    /// Returns file name without an extension part from path, stored in the string.
+    func fileNameWithoutExtensionFromPath() -> String {
+        let name = self.fileNameFromPath()
+        guard let rpos = name.range(of: ".", options:.backwards) else {
+            // dot not found
+            return name
+        }
+        return String(name[name.startIndex..<rpos.lowerBound])
     }
     
     /// Returns file item name part from path, stored in the string. Unline `fileNameFromPath()`, this function can return

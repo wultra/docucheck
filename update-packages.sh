@@ -1,4 +1,4 @@
 #!/bin/sh
 
-siwft package resolve
+swift package resolve
 swift package generate-xcodeproj

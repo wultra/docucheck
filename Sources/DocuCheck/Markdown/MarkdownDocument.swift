@@ -27,6 +27,12 @@ class MarkdownDocument {
     
     /// Generator to be used for generate of identifiers for new entities detected in the document.
     let entityIdGenerator: EntityIdGenerator
+	
+	/// Valid if document has been renamed in loading pass.
+	let documentOrigin: DocumentOrigin?
+	
+	/// Time of last modification
+	var timeOfLastModification: Date?
     
     /// Lines in the document
     var lines: [MarkdownLine] = []
@@ -45,11 +51,13 @@ class MarkdownDocument {
     /// - Parameters:
     ///   - source: Source of document
     ///   - repoIdentifier: Identifier for parent's repository.
-    ///   - entityIdGenerator: Entity identifier generator
-    init(source: DocumentSource, repoIdentifier: String, entityIdGenerator: EntityIdGenerator? = nil) {
+    ///   - entityIdGenerator: Entity identifier generator.
+	///   - documentOrigin: Information available only if document has a different original name.
+	init(source: DocumentSource, repoIdentifier: String, entityIdGenerator: EntityIdGenerator? = nil, documentOrigin: DocumentOrigin? = nil) {
         self.repoIdentifier = repoIdentifier
         self.source = source
         self.entityIdGenerator = entityIdGenerator ?? DefaultEntityIdGenerator.default
+		self.documentOrigin = documentOrigin
     }
     
     /// Internal flag marking that document needs to be saved.
@@ -516,7 +524,7 @@ extension Console {
     ///   - message: Message about the problem.
     static func warning(_ doc: MarkdownDocument, _ entity: MarkdownEntity, _ message: String) {
         if let line = doc.line(of: entity) {
-            warning("\(doc.source.name):\(line + 1): \(message)")
+            warning("\(doc.originalLocalPath):\(line + 1): \(message)")
         } else {
             warning(doc, message)
         }
@@ -528,7 +536,7 @@ extension Console {
     ///   - doc: Document containing issue
     ///   - message: Message about the problem.
     static func warning(_ doc: MarkdownDocument, _ message: String) {
-        warning("\(doc.source.name): \(message)")
+        warning("\(doc.originalLocalPath): \(message)")
     }
     
     /// Prints error about entity, stored in the document, in form "FileName:Line: message"
@@ -539,7 +547,7 @@ extension Console {
     ///   - message: Message about the problem.
     static func error(_ doc: MarkdownDocument, _ entity: MarkdownEntity, _ message: String) {
         if let line = doc.line(of: entity) {
-            error("\(doc.source.name):\(line + 1): \(message)")
+            error("\(doc.originalLocalPath):\(line + 1): \(message)")
         } else {
             error(doc, message)
         }
@@ -551,6 +559,6 @@ extension Console {
     ///   - doc: Document containing issue
     ///   - message: Message about the problem.
     static func error(_ doc: MarkdownDocument, _ message: String) {
-        error("\(doc.source.name): \(message)")
+        error("\(doc.originalLocalPath): \(message)")
     }
 }

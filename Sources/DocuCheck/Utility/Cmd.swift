@@ -38,9 +38,10 @@ class Cmd {
     ///   - arguments: Array with command arguments
     ///   - exitOnError: If true, then command execution will cause an immediate exit. The detault value is `Console.exitOnError`
     ///   - ignoreOutput: If true, then both output and error output will be swallowed
+	///   - workingDirectory: If set, then changes working directory for the command
     /// - Returns: true if execution succeeded
     @discardableResult
-    func run(with arguments: [String], exitOnError: Bool = Console.exitOnError, ignoreOutput: Bool = false) -> Bool {
+	func run(with arguments: [String], exitOnError: Bool = Console.exitOnError, ignoreOutput: Bool = false, workingDirectory: String? = nil) -> Bool {
         
         Console.debug("Running: \(commandPath) \(arguments.joined(separator: " "))")
         
@@ -50,6 +51,9 @@ class Cmd {
             task.standardOutput = pipe
             task.standardError = pipe
         }
+		if let workingDirectory = workingDirectory {
+			task.currentDirectoryPath = workingDirectory
+		}
         task.launchPath = commandPath
         task.arguments = arguments
         task.launch()
@@ -70,9 +74,10 @@ class Cmd {
     ///   - arguments: Array with command arguments
     ///   - exitOnError: If true, then command execution will cause an immediate exit. The detault value is `Console.exitOnError`
     ///   - ignoreErrorOutput: If true, then no error will be printed.
+	///   - workingDirectory: If set, then changes working directory for the command
     /// - Returns: Tuple where first parameter is true when operation succeeds and second is captured content.
     @discardableResult
-    func runAndCapture(with arguments: [String], exitOnError: Bool = Console.exitOnError, ignoreErrorOutput: Bool = false) -> (result: Bool, content: String) {
+    func runAndCapture(with arguments: [String], exitOnError: Bool = Console.exitOnError, ignoreErrorOutput: Bool = false, workingDirectory: String? = nil) -> (result: Bool, content: String) {
         
         Console.debug("Running: \(commandPath) \(arguments.joined(separator: " "))")
         
@@ -85,6 +90,9 @@ class Cmd {
             let errPipe = Pipe()
             task.standardError = errPipe
         }
+		if let workingDirectory = workingDirectory {
+			task.currentDirectoryPath = workingDirectory
+		}
         task.launch()
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         task.waitUntilExit()
@@ -98,7 +106,7 @@ class Cmd {
         guard let result = String(data: data, encoding: .utf8) else {
             Console.exitError("Cannot convert data received from pipe from \"\(commandPath)\".")
         }
-        return (true, result)
+        return (true, result.trimmingCharacters(in: .whitespacesAndNewlines))
     }
 }
 
