@@ -20,6 +20,7 @@ import Foundation
 /// configuration and put it to the destination directory.
 class DocumentationLoader {
     
+    let release: String
     let config: Config
     let destinationDir: String
     let repositoryDir: String
@@ -27,39 +28,33 @@ class DocumentationLoader {
     let fetchRepos: Set<String>
     
     private var cmdGit: Cmd!
-    private var repoCache: RepoCache!
     
-    /// Structure representing information about cached repositories
-    private struct RepoCache: Codable {
-        
-        /// Version of RepoCache manager
-        let version: Int
-        
-        /// Returns instance of default `RepoCache` structure
-        static var `default`: RepoCache {
-            return RepoCache(version: 1)
-        }
-    }
+	let repoCache: RepositoryCache
+	let documentOriginRegister: DocumentOriginRegister
     
     /// Contains path to RepoCache file
     private var repoCachePath: String {
-        return repositoryDir.addingPathComponent("docucheck.json")
+        return repoCache.path
     }
     
     /// Initializes object with configuration and directories required for operation.
     ///
     /// - Parameters:
+    ///   - release: Release identifier. For example `2019.11`
     ///   - config: `Config` structure
     ///   - destinationDir: folder where all "repo/docs" folders will be placed
     ///   - repositoryDir: folder where all required git repositories will be placed
     ///   - fastMode: If true, then some slow operations will be ommited.
     ///   - fetchRepos: Optional list of repos to fetch.
-    init(config: Config, destinationDir: String, repositoryDir: String, fastMode: Bool, fetchRepos: [String]) {
+    init(release: String, config: Config, destinationDir: String, repositoryDir: String, fastMode: Bool, fetchRepos: [String]) {
+        self.release = release
         self.config = config
         self.destinationDir = destinationDir
         self.repositoryDir = repositoryDir
         self.fastMode = fastMode
         self.fetchRepos = Set(fetchRepos)
+        self.repoCache = RepositoryCache(release: release, path: repositoryDir.addingPathComponent("docucheck.json"))
+		self.documentOriginRegister = DocumentOriginRegister(config: config, destinationDir: destinationDir)
     }
     
     // MARK: - Main task
@@ -71,15 +66,19 @@ class DocumentationLoader {
     func loadDocumentation() -> DocumentationDatabase? {
         guard
             prepareDirs() &&
-            loadRepoCache() &&
+            repoCache.load() &&
             downloadAllRepos() &&
             copyDocumentationDirs() &&
             removeIgnoredFiles() &&
             patchHomeFiles() &&
-            storeRepoCache() else {
+            repoCache.save() else {
                 return nil
             }
-        let database = DocumentationDatabase(config: config, sourcePath: destinationDir)
+        let database = DocumentationDatabase(
+			config: config,
+			sourcePath: destinationDir,
+			documentOrigins: documentOriginRegister,
+			repositoryCache: repoCache)
         if !database.loadDatabase() {
             return nil
         }
@@ -95,56 +94,6 @@ class DocumentationLoader {
             FS.remove(at: destinationDir)
         }
         FS.makeDir(at: destinationDir)
-        return true
-    }
-    
-    /// Function loads and validates information about repository cache
-    private func loadRepoCache() -> Bool {
-        var removeCache = true
-        let path = repoCachePath
-        if FS.fileExists(at: path) {
-            if let document = FS.document(at: path, description: "Repository cache") {
-                let cacheInfo: RepoCache
-                do {
-                    let decoder = JSONDecoder()
-                    cacheInfo = try decoder.decode(RepoCache.self, from: document.contentData)
-                    if cacheInfo.version == RepoCache.default.version {
-                        removeCache = false
-                    }
-                    repoCache = cacheInfo
-                } catch {
-                    // Do nothing
-                }
-            }
-        }
-        let hasRepoDir = FS.isDirectory(at: repositoryDir)
-        if hasRepoDir {
-            if removeCache {
-                Console.info("Removing repository cache at: \(repositoryDir)")
-                FS.remove(at: repositoryDir)
-                FS.makeDir(at: repositoryDir)
-            }
-        } else {
-            FS.makeDir(at: repositoryDir)
-        }
-        if repoCache == nil {
-            repoCache = RepoCache.default
-        }
-        return storeRepoCache()
-    }
-    
-    /// Stores `RepoCache` into predefined file
-    private func storeRepoCache() -> Bool {
-        guard let info = repoCache else {
-            Console.fatalError("RepoCache structure is missing.")
-        }
-        do {
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(info)
-            try data.write(to: URL(fileURLWithPath: repoCachePath), options: .atomicWrite)
-        } catch {
-            Console.exitError("Failed to write RepoCache information. Error: \(error)")
-        }
         return true
     }
     
@@ -423,9 +372,12 @@ class DocumentationLoader {
             }
             FS.copy(from: homeFilePath, to: newHomeFilePath)
             FS.remove(at: homeFilePath)
+			
+			documentOriginRegister.registerRename(repoIdentifier: repoIdentifier, originalLocalPath: repoParams.homeFile!, newLocalPath: targetName)
 
             // Patch all home files in repo
             FS.directoryList(at: repoPath)?.filter({ $0.fileNameFromPath() == repoParams.homeFile! }).forEach { oldHomeFilePath in
+				let newHomeFilePath = oldHomeFilePath.removingLastPathComponent().addingPathComponent(targetName)
                 let oldHomeFilePathFull = repoPath.addingPathComponent(oldHomeFilePath)
                 let newHomeFilePathFull = oldHomeFilePathFull.removingLastPathComponent().addingPathComponent(targetName)
                 if FS.fileExists(at: newHomeFilePathFull) {
@@ -433,6 +385,8 @@ class DocumentationLoader {
                 }
                 FS.copy(from: oldHomeFilePathFull, to: newHomeFilePathFull)
                 FS.remove(at: oldHomeFilePathFull)
+				
+				documentOriginRegister.registerRename(repoIdentifier: repoIdentifier, originalLocalPath: oldHomeFilePath, newLocalPath: newHomeFilePath)
             }
         }
         return true

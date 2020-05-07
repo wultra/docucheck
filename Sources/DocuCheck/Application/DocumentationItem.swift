@@ -35,6 +35,9 @@ protocol DocumentationItem {
     
     /// Contains true if item represents a directory.
     var isDirectory: Bool { get }
+	
+	/// Contains time of last modification.
+	var timeOfLastModification: Date? { get set }
 }
 
 /// The FileItem representing any file in the documentation.
@@ -44,9 +47,8 @@ class FileItem: DocumentationItem {
     let type: String
     var referenceCount: Int = 0
     let isDirectory: Bool = false
-    var document: MarkdownDocument? {
-        return nil
-    }
+	var timeOfLastModification: Date?
+    let document: MarkdownDocument? = nil
     
     init(repoIdentifier: String, localPath: String) {
         self.repoIdentifier = repoIdentifier
@@ -64,9 +66,8 @@ class DirItem: DocumentationItem {
     // Directory is implicitly referenced, we don't need to warning about missing link to it.
     var referenceCount: Int = 1
     let isDirectory: Bool = true
-    var document: MarkdownDocument? {
-        return nil
-    }
+	var timeOfLastModification: Date?
+    let document: MarkdownDocument? = nil
     
     init(repoIdentifier: String, localPath: String) {
         self.repoIdentifier = repoIdentifier
@@ -82,6 +83,11 @@ extension MarkdownDocument: DocumentationItem {
     var localPath: String {
         return self.source.name
     }
+	
+	/// Returns original local path which may be different to `localPath` if document has been renamed.
+	var originalLocalPath: String {
+		return documentOrigin?.originalLocalPath ?? localPath
+	}
     
     /// Returns file type of document, extracted from `localPath`
     var type: String {
@@ -104,13 +110,14 @@ extension MarkdownDocument: DocumentationItem {
     ///   - repoIdentifier: Repository identifier
     ///   - localPath: Local relative path to `basePath`
     ///   - basePath: Base path, where all documents suppose to be stored
+	///   - origin: Valid in case that document was renamed from different file.
     /// - Returns: DocumentationItem object
-    static func documentationItem(repoIdentifier: String, localPath: String, basePath: String) -> DocumentationItem {
+	static func documentationItem(repoIdentifier: String, localPath: String, basePath: String, origin: DocumentOrigin?) -> DocumentationItem {
         let fullPath = basePath.addingPathComponent(localPath)
         guard let fileDocument = FS.document(at: fullPath, name: localPath) else {
             return FileItem(repoIdentifier: repoIdentifier, localPath: localPath)
         }
-        return MarkdownDocument(source: fileDocument, repoIdentifier: repoIdentifier)
+        return MarkdownDocument(source: fileDocument, repoIdentifier: repoIdentifier, documentOrigin: origin)
     }
     
     

@@ -57,20 +57,15 @@ extension DocumentationDatabase {
             Console.warning(document, title, "Header with page title is not located at first line of document.")
         }
         // Prepare link to original source
-        var pageFileName = document.source.name.fileNameFromPath()
-        if pageFileName == config.effectiveGlobalParameters.targetHomeFile! {
-            pageFileName = repo.params.homeFile!
-        }
-        var baseSourcesPath = repo.repository.baseSourcesPath
-        if !repo.params.hasSingleDocument {
-            // Regular documentation
-            baseSourcesPath.appendPathComponent(repo.params.docsFolder!)
-            baseSourcesPath.appendPathComponent(pageFileName)
-        } else {
-            // Single file documentation
-            baseSourcesPath.appendPathComponent(repo.params.singleDocumentFile!)
-        }
+		let originalSourcesUrl = repo.getOriginalSourceUrl(for: document.originalLocalPath)
         
+		// Time of last modification
+		if document.timeOfLastModification == nil {
+			Console.warning(document, "Missing time of last modification. Using midnight as a fallback.")
+		}
+		let timestampDate = document.timeOfLastModification ?? Calendar.current.startOfDay(for: Date())
+		let timestampValue = (Int64)(timestampDate.timeIntervalSince1970)
+		
         // Modify document
         document.remove(linesFrom: 0, count: line + 1)
 
@@ -79,8 +74,8 @@ extension DocumentationDatabase {
             "---",
             "layout: page",
             "title: \(title.title)",
-            "source: \(baseSourcesPath.absoluteString)",
-            "timestamp: \(NSDate().timeIntervalSince1970)"
+            "source: \(originalSourcesUrl.absoluteString)",
+            "timestamp: \(timestampValue)"
         ]
 
         // Get the post author

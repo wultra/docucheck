@@ -29,10 +29,22 @@ class DocuCheckApplication {
     private var config: Config!
     private var database: DocumentationDatabase!
     
+    private var optReleaseName: String?
     private var optShowExternalLinks = false
     private var optShowUnusedDocs = false
     private var optFastMode = false
     private var optFetchRepo = [String]()
+    
+    /// Name of release determined by `optReleaseName` or path to config file.
+    private var releaseName: String {
+        if let name = optReleaseName {
+            return name
+        }
+        guard let path = configPath else {
+            Console.fatalError("Missing config path.")
+        }
+        return path.fileNameWithoutExtensionFromPath()
+    }
     
     /// Initializes application with command line arguments.
     ///
@@ -59,7 +71,7 @@ class DocuCheckApplication {
         // Load configuration file
         let config = loadConfiguration()
         // Load repositories to an output directory
-        loadDocumentation(config: config)
+        loadDocumentation(release: releaseName, config: config)
     }
     
     /// Function validates arguments provided to the application.
@@ -85,6 +97,9 @@ class DocuCheckApplication {
             }
             .add(option: "--outputDir", shortcut: "-o") { (option) in
                 self.outputDir = option
+            }
+            .add(option: "--releaseName", shortcut: "-n") { (option) in
+                self.optReleaseName = option
             }
             .add(option: "--showExternalLinks", alias: "-sel") {
                 self.optShowExternalLinks = true
@@ -130,14 +145,20 @@ class DocuCheckApplication {
     /// Loads repositories from remote sources to destination path
     ///
     /// - Parameter config: Application configuration
-    private func loadDocumentation(config: Config) {
+    private func loadDocumentation(release: String, config: Config) {
         guard let repositoriesDir = repoDir else {
             Console.exitError("You have to specify path to directory, where repositories will be cloned.")
         }
         guard let outputDir = outputDir else {
             Console.exitError("You have to specify path to directory, where output documentation will be stored.")
         }
-        let loader = DocumentationLoader(config: config, destinationDir: outputDir, repositoryDir: repositoriesDir, fastMode: optFastMode, fetchRepos: optFetchRepo)
+        let loader = DocumentationLoader(
+			release: release,
+			config: config,
+			destinationDir: outputDir,
+			repositoryDir: repositoriesDir,
+			fastMode: optFastMode,
+			fetchRepos: optFetchRepo)
         guard let database = loader.loadDocumentation() else {
             onExit(exitWithError: true)
         }
@@ -179,6 +200,9 @@ class DocuCheckApplication {
             Console.message(" --outputDir=path | -o path     To set path to directory, where all markdown")
             Console.message("                                  files will be copied. This is required in case")
             Console.message("                                  that config doesn't specify output dir.")
+            Console.message(" --releaseName=name | -n name   To set name of release, for example '2020.05'")
+            Console.message("                                  If parameter is not used, then the name is")
+            Console.message("                                  derived from JSON config path.")
             Console.message("")
             Console.message(" --showExternalLinks | -sel     Prints all external links found in docs")
             Console.message(" --showUnusedDocs | -sud        Prints all unreferenced documents")

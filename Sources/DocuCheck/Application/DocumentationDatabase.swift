@@ -23,6 +23,8 @@ class DocumentationDatabase {
     let config: Config
     let sourcePath: String
     let effectiveGlobalParameters: Config.GlobalParameters
+	let documentOrigins: DocumentOriginRegister
+	let repositoryCache: RepositoryCache
     
     var fileItems = [String: DocumentationItem]()
     var repositories = [String: RepositoryContent]()
@@ -36,10 +38,14 @@ class DocumentationDatabase {
     /// - Parameters:
     ///   - config: DocuCheck tool configuration
     ///   - sourcePath: Path to documentation files
-    init(config: Config, sourcePath: String) {
+	///   - documentOrigins: Register of document name changes
+	///   - repositoryCache: Object representing a repository cache
+	init(config: Config, sourcePath: String, documentOrigins: DocumentOriginRegister, repositoryCache: RepositoryCache) {
         self.config = config
         self.sourcePath = sourcePath
         self.effectiveGlobalParameters = config.effectiveGlobalParameters
+		self.documentOrigins = documentOrigins
+		self.repositoryCache = repositoryCache
     }
     
     /// Loads documentation database
@@ -59,7 +65,7 @@ class DocumentationDatabase {
         for (repoId, repoConfig) in config.repositories {
             Console.info("- Scanning \"\(repoId)\"...")
             let params = config.parameters(repo: repoId)
-            let content = RepositoryContent(repoIdentifier: repoId, repository: repoConfig, params: params)
+            let content = RepositoryContent(repoIdentifier: repoId, repository: repoConfig, params: params, globalParams: effectiveGP)
             if !content.loadFileNames(config: config, basePath: sourcePath, markdownExtensions: markdownExtensions) {
                 return false
             }
@@ -86,7 +92,8 @@ class DocumentationDatabase {
                 let ext = filePath.fileExtensionFromPath().lowercased()
                 var item: DocumentationItem
                 if markdownExtensions.contains(ext) {
-                    item = MarkdownDocument.documentationItem(repoIdentifier: repoId, localPath: filePath, basePath: sourcePath)
+					let documentOrigin = documentOrigins.findDocumentOrigin(localPath: filePath)
+                    item = MarkdownDocument.documentationItem(repoIdentifier: repoId, localPath: filePath, basePath: sourcePath, origin: documentOrigin)
                     Console.debug("   * doc: \(filePath)")
                     let fileName = filePath.fileNameFromPath()
                     if repo.params.auxiliaryDocuments?.contains(fileName) ?? false {
@@ -104,7 +111,6 @@ class DocumentationDatabase {
                         } else {
                             Console.debug("        : \(filePath)")
                         }
-                        
                     }
                 }
                 fileItems[filePath] = item
@@ -117,6 +123,21 @@ class DocumentationDatabase {
                 return false
             }
         }
+		
+		Console.info("Updating timestamps...")
+		let git = Cmd("git")
+		for document in allDocuments() {
+			let repo = repositoryContent(for: document.repoIdentifier)!
+			let gitPath = repo.getGitRepositoryPath(for: document.originalLocalPath, repositoryCache: repositoryCache)
+			let gitResult = git.runAndCapture(with: ["log", "-1", "--format=%ct", gitPath.localPath], workingDirectory: gitPath.gitDirectory)
+			if gitResult.result {
+				guard let timestamp = Double(gitResult.content) else {
+					Console.warning(document, "Failed to acquire timestampt for last change. Result from git command: \(gitResult.content)")
+					continue
+				}
+				document.timeOfLastModification = Date(timeIntervalSince1970: timestamp)
+			}
+		}
         
         return true
     }
