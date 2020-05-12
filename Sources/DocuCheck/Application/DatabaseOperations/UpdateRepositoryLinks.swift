@@ -327,12 +327,12 @@ extension DocumentationDatabase {
                 validateAnchor(linkedDocument: linkedDocument, sourceDocument: document, link: link, anchorName: anchorName)
             }
         }
-        if destinationFile.fileExtensionFromPath() == "md" {
-            destinationFile.removeSubrange(Range(uncheckedBounds: (destinationFile.index(offsetBy: destinationFile.count - 3), destinationFile.endIndex)))
-        }
         if globalDestinationFile.hasPrefix(currentDocumentParentDir + "/") {
             // Destination is in the same directory, so remove the path component
             destinationFile = String(globalDestinationFile.suffix(from: globalDestinationFile.index(offsetBy: currentDocumentParentDir.count + 1)))
+        }
+        if destinationFile.fileExtensionFromPath() == "md" {
+            destinationFile.removeSubrange(Range(uncheckedBounds: (destinationFile.index(offsetBy: destinationFile.count - 3), destinationFile.endIndex)))
         }
         let finalNewPath = destinationFile + (anchorName == nil ? "" : "#\(anchorName!)")
         if finalNewPath != link.path {
