@@ -91,6 +91,18 @@ extension DocumentationDatabase {
                 }
             }
         }
+		
+		// Allow overriding the sidebar file on a per file basis
+        if let sidebar = document.firstMetadata(withName: "SIDEBAR") {
+            if let params = sidebar.parameters {
+                if (params.count == 1) {
+                    let sidebarFile = params[0];
+                    newLines += [
+                        "sidebar: \(sidebarFile)"
+                    ]
+                }
+            }
+        }
 
         // Close the Front Matter
         newLines += [
