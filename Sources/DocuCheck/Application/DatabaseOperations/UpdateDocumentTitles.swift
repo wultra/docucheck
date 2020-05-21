@@ -95,11 +95,15 @@ extension DocumentationDatabase {
 		// Allow overriding the sidebar file on a per file basis
         if let sidebar = document.firstMetadata(withName: "SIDEBAR") {
             if let params = sidebar.parameters {
-                if (params.count == 2) {
+                if (params.count >= 1) {
                     let sidebarFile = params[0];
-					let sidebarPosition = params[1]; // absolute, sticky
                     newLines += [
-                        "sidebar: \(sidebarFile)",
+                        "sidebar: \(sidebarFile)"
+                    ]
+                }
+				if (params.count == 2) {
+                    let sidebarPosition = params[1]; // absolute, sticky
+                    newLines += [
 						"sidebarPosition: \(sidebarPosition)"
                     ]
                 }
