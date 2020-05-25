@@ -267,6 +267,11 @@ extension DocumentationDatabase {
     @discardableResult
     private func validateAnchor(linkedDocument: MarkdownDocument, sourceDocument: MarkdownDocument? = nil, link: MarkdownLink, anchorName: String) -> Bool {
         let doc = sourceDocument ?? linkedDocument
+		// Handle special anchor values for the top of the current page.
+		// See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Linking_to_an_element_on_the_same_page
+		if (anchorName == "" || anchorName == "#top") {
+			return true;
+		}
         if let headersCount = linkedDocument.containsAnchor(anchorName) {
             if headersCount > 1 {
                 Console.warning(doc, link, "Link \(link.toString()) points to multiple headers in the document.")

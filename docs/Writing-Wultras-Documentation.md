@@ -123,6 +123,8 @@ Examples:
 | Chapter 4.2                 | `#chapter-42` |
 | Carthage (experimental)     | `#carthage-experimental` |
 
+You can also use special anchor values of `#` and `#top` that link to the top of the current page. This is especially helpful in a sidebar of a single page documentation.
+
 ### Email
 
 Our preprocessor cannot automaticaly detect emails in the text, just like GitHub does and therefore you have to make a full link with email (e.g. link with `mailto:` scheme). For example:
