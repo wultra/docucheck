@@ -57,15 +57,15 @@ extension DocumentationDatabase {
             Console.warning(document, title, "Header with page title is not located at first line of document.")
         }
         // Prepare link to original source
-		let originalSourcesUrl = repo.getOriginalSourceUrl(for: document.originalLocalPath)
+        let originalSourcesUrl = repo.getOriginalSourceUrl(for: document.originalLocalPath)
         
-		// Time of last modification
-		if document.timeOfLastModification == nil {
-			Console.warning(document, "Missing time of last modification. Using midnight as a fallback.")
-		}
-		let timestampDate = document.timeOfLastModification ?? Calendar.current.startOfDay(for: Date())
-		let timestampValue = (Int64)(timestampDate.timeIntervalSince1970)
-		
+        // Time of last modification
+        if document.timeOfLastModification == nil {
+            Console.warning(document, "Missing time of last modification. Using midnight as a fallback.")
+        }
+        let timestampDate = document.timeOfLastModification ?? Calendar.current.startOfDay(for: Date())
+        let timestampValue = (Int64)(timestampDate.timeIntervalSince1970)
+        
         // Modify document
         document.remove(linesFrom: 0, count: line + 1)
 
@@ -87,6 +87,24 @@ extension DocumentationDatabase {
                     newLines += [
                         "author: \(authorName)",
                         "published: \(publishDate)"
+                    ]
+                }
+            }
+        }
+        
+        // Allow overriding the sidebar file on a per file basis
+        if let sidebar = document.firstMetadata(withName: "SIDEBAR") {
+            if let params = sidebar.parameters {
+                if (params.count >= 1) {
+                    let sidebarFile = params[0];
+                    newLines += [
+                        "sidebar: \(sidebarFile)"
+                    ]
+                }
+                if (params.count == 2) {
+                    let sidebarPosition = params[1]; // absolute, sticky
+                    newLines += [
+                        "sidebarPosition: \(sidebarPosition)"
                     ]
                 }
             }

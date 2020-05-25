@@ -127,6 +127,8 @@ Currently only two types of operations are supported:
 
 - Remove multiple lines
 - Select Markdown sequence for automatic generation of "Table of contents".
+- Add the author to the post.
+- Override the sidebar with custom file.
 
 #### Remove multiple lines
 
@@ -153,6 +155,25 @@ If documentation is composed from one single document, then meta-data informatio
 ```
 
 A good example is [SSL Pinning for iOS](https://github.com/wultra/ssl-pinning-ios#docucheck-keep-link). You can see, that document visible at GitHub contains TOC at the beginning, but [version at our portal](https://github.com/wultra/ssl-pinning-ios) has that section available in the sidebar.
- 
+
+#### Add the Author to the Post
+
+You can add an information about an author and article publishing date to the sidebar using a simple one-line tag:
+
+```md
+<!-- AUTHOR joshis_tweets 2020-05-04T00:00:00Z -->
+```
+
+The additional author information is then picked from the `_data/authors.yaml` file based on the author identification.
+
+#### Override the Sidebar With Custom File
+
+In case you would like to include a custom sidebar in the document, you can do so via:
+
+```md
+<!-- SIDEBAR _Sidebar_Server.md sticky -->
+```
+
+The first parameter defines a name of the file to include (in the same folder as the main document). The second parameter defines the sidebar position - `sticky` means that the sidebar should remain visible, any other value (or empty parameter) means that the sidebar scrolls with the content. Use `sticky` value with caution for reasonably small sidebars - if the sidebar is too high, content may not be reachable.
 
 
