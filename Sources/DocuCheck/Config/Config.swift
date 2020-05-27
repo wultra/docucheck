@@ -113,8 +113,8 @@ struct Config: Decodable {
         
         /// Target home file. If not set, then defaulting to "Home.md"
         let targetHomeFile: String?
-		
-		/// Release identifier, indicates the release version.
+        
+        /// Release identifier, indicates the release version.
         let releaseIdentifier: String?
         
         /// Default values for "GlobalParameters" structure. The default structure contains safe values for all properties,
@@ -124,8 +124,8 @@ struct Config: Decodable {
             paths: nil,
             markdownExtensions: ["md", "markdown"],
             imageExtensions: ["png", "jpg", "jpeg", "gif"],
-			targetHomeFile: "index.md",
-			releaseIdentifier: nil
+            targetHomeFile: "index.md",
+            releaseIdentifier: nil
         )
     }
     
@@ -229,7 +229,7 @@ extension Config {
             markdownExtensions: markdownExtensions.sorted(),
             imageExtensions: imageExtensions.sorted(),
             targetHomeFile: gp?.targetHomeFile ?? dp.targetHomeFile!,
-			releaseIdentifier: gp?.releaseIdentifier ?? gp?.releaseIdentifier!
+            releaseIdentifier: gp?.releaseIdentifier ?? gp?.releaseIdentifier!
         )
     }
 }

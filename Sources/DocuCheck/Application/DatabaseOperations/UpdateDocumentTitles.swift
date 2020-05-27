@@ -78,12 +78,12 @@ extension DocumentationDatabase {
             "timestamp: \(timestampValue)"
         ]
 		
-		// Add the release identifier in the document
-		if let releaseIdentifier = repo.globalParams.releaseIdentifier {
-			newLines += [
-				"releaseIdentifier: \(releaseIdentifier)"
-			]
-		}
+        // Add the release identifier in the document
+        if let releaseIdentifier = repo.globalParams.releaseIdentifier {
+            newLines += [
+                "releaseIdentifier: \(releaseIdentifier)"
+            ]
+        }
 
         // Get the post author
         if let author = document.firstMetadata(withName: "AUTHOR") {
