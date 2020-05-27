@@ -124,7 +124,8 @@ struct Config: Decodable {
             paths: nil,
             markdownExtensions: ["md", "markdown"],
             imageExtensions: ["png", "jpg", "jpeg", "gif"],
-            targetHomeFile: "index.md"
+			targetHomeFile: "index.md",
+			releaseIdentifier: nil
         )
     }
     
@@ -227,7 +228,8 @@ extension Config {
             paths: gp?.paths,
             markdownExtensions: markdownExtensions.sorted(),
             imageExtensions: imageExtensions.sorted(),
-            targetHomeFile: gp?.targetHomeFile ?? dp.targetHomeFile!
+            targetHomeFile: gp?.targetHomeFile ?? dp.targetHomeFile!,
+			releaseIdentifier: gp?.releaseIdentifier ?? gp?.releaseIdentifier!
         )
     }
 }
