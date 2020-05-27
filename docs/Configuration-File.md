@@ -161,6 +161,7 @@ This simple structure contains configuration for various paths required by the t
 
 The `Config.GlobalParameters` defines parameters applied globally. You can for example change default parameters of source repositories. Following elements are available:
 
+- `releaseIdentifier`, optional string identifier of the release, for example `2020.05`.
 - `parameters`, optional [`Config.Parameters`](#configparameters-structure) object, modifies global values for all source repositories. 
 - `paths`, optional [`Config.Paths`](#configpaths-structure) object, defining paths required by `DocuCheck`
 - `markdownExtensions`, optional array of strings, defines file name extensions for Markdown document file types.
@@ -188,6 +189,7 @@ The `Config.GlobalParameters` defines parameters applied globally. You can for e
         }
     },
     "globalParameters": {
+        "releaseIdentifier": "2020.05",
         "parameters": {
             "homeFile": "Home.md",
             "ignoredFiles": [ "*.dat" ]

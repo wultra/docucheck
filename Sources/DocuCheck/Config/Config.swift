@@ -113,6 +113,9 @@ struct Config: Decodable {
         
         /// Target home file. If not set, then defaulting to "Home.md"
         let targetHomeFile: String?
+		
+		/// Release identifier, indicates the release version.
+        let releaseIdentifier: String?
         
         /// Default values for "GlobalParameters" structure. The default structure contains safe values for all properties,
         /// except for "paths" and "ignoredFiles".
