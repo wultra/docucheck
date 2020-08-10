@@ -107,6 +107,8 @@ The `Config.Parameters` defines parameters for source repository, that are requi
   - If value in list begins with asterisk `*`, then it's interpreted as wildcard. For example `*.bin` will exclude all files which names ends with `.bin` 
 - `singleDocumentFile`, optional string, defines path (relative in source repository) to one markdown document.
   - If value is set, then it's expected that the whole application's documentation is composed from one single document.
+- `privateProductWebsite`, optional string, defines URL to a private product URL.
+  - If value is set, then it's expected that the application's documentation is composed from a private repository that's not available for external developers. In this case, the product website URL should be displayed as a replacement for link to the original source code.
 
 **Addional notes:**
 

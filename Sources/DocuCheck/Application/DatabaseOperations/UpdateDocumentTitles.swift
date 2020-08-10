@@ -56,8 +56,9 @@ extension DocumentationDatabase {
         if line > 0 {
             Console.warning(document, title, "Header with page title is not located at first line of document.")
         }
-        // Prepare link to original source
+        // Prepare link to original source and source repository
         let originalSourcesUrl = repo.getOriginalSourceUrl(for: document.originalLocalPath)
+		let originalSourceRepoUrl = repo.fullRemotePath
         
         // Time of last modification
         if document.timeOfLastModification == nil {
@@ -74,9 +75,21 @@ extension DocumentationDatabase {
             "---",
             "layout: page",
             "title: \(title.title)",
-            "source: \(originalSourcesUrl.absoluteString)",
             "timestamp: \(timestampValue)"
         ]
+		
+		// If private product URL is available, then use it as a "source" replacement.
+		// Otherwise use just "source" and "sourceRepo", that points to original git source.
+		if let privateProductUrl = repo.params.privateProductWebsite {
+			newLines += [
+				"productUrl: \(privateProductUrl)"
+			]
+		} else {
+			newLines += [
+				"source: \(originalSourcesUrl.absoluteString)",
+				"sourceRepo: \(originalSourceRepoUrl.absoluteString)",
+			]
+		}
 		
         // Add the release identifier in the document
         if let releaseIdentifier = repo.globalParams.releaseIdentifier {
