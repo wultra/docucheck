@@ -217,7 +217,7 @@
 			path = Tests/DocuCheckTests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -229,8 +229,8 @@
 				OBJ_56 /* LICENSE */,
 				OBJ_57 /* README.md */,
 			);
-			name = "";
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		OBJ_51 /* Products */ = {
 			isa = PBXGroup;
@@ -344,7 +344,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_51 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
