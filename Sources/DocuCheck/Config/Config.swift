@@ -75,10 +75,10 @@ struct Config: Decodable {
         /// If set, then the documentation is composed from a single markdown document. The documentation
         /// processing is little bit different than usual, for this case.
         let singleDocumentFile: String?
-		
-		/// If set, then the documentation is composed from a private repository. This option allows you to
-		/// redirect users directly to a specified product page, instead to location of origianl source code.
-		let privateProductWebsite: String?
+        
+        /// If set, then the documentation is composed from a private repository. This option allows you to
+        /// redirect users directly to a specified product page, instead to location of origianl source code.
+        let privateProductWebsite: String?
         
         /// Default values for "Parameters" structure
         static let `default` = Parameters(
@@ -87,7 +87,7 @@ struct Config: Decodable {
             auxiliaryDocuments: [ "_Footer.md", "_Sidebar.md" ],
             ignoredFiles: [ ".git", ".gitignore", ".DS_Store" ],
             singleDocumentFile: nil,
-			privateProductWebsite: nil
+            privateProductWebsite: nil
         )
     }
     
@@ -186,7 +186,7 @@ extension Config {
             auxiliaryDocuments: p?.auxiliaryDocuments ?? gp?.auxiliaryDocuments ?? dp.auxiliaryDocuments!,
             ignoredFiles: ignoredFiles.sorted(),
             singleDocumentFile: p?.singleDocumentFile,
-			privateProductWebsite: p?.privateProductWebsite
+            privateProductWebsite: p?.privateProductWebsite
         )
     }
     
@@ -329,9 +329,9 @@ extension Config.Parameters {
     var hasSingleDocument: Bool {
         return singleDocumentFile != nil
     }
-	
-	/// Contains true if repository's documentation is composed from a private repository.
-	var isPrivateProduct: Bool {
-		return !(privateProductWebsite?.isEmpty ?? true)
-	}
+    
+    /// Contains true if repository's documentation is composed from a private repository.
+    var isPrivateProduct: Bool {
+        return !(privateProductWebsite?.isEmpty ?? true)
+    }
 }

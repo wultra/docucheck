@@ -58,7 +58,7 @@ extension DocumentationDatabase {
         }
         // Prepare link to original source and source repository
         let originalSourcesUrl = repo.getOriginalSourceUrl(for: document.originalLocalPath)
-		let originalSourceRepoUrl = repo.fullRemotePath
+        let originalSourceRepoUrl = repo.fullRemotePath
         
         // Time of last modification
         if document.timeOfLastModification == nil {
@@ -77,20 +77,20 @@ extension DocumentationDatabase {
             "title: \(title.title)",
             "timestamp: \(timestampValue)"
         ]
-		
-		// If private product URL is available, then use it as a "source" replacement.
-		// Otherwise use just "source" and "sourceRepo", that points to original git source.
-		if let privateProductUrl = repo.params.privateProductWebsite {
-			newLines += [
-				"productUrl: \(privateProductUrl)"
-			]
-		} else {
-			newLines += [
-				"source: \(originalSourcesUrl.absoluteString)",
-				"sourceRepo: \(originalSourceRepoUrl.absoluteString)",
-			]
-		}
-		
+        
+        // If private product URL is available, then use it as a "source" replacement.
+        // Otherwise use just "source" and "sourceRepo", that points to original git source.
+        if let privateProductUrl = repo.params.privateProductWebsite {
+            newLines += [
+                "productUrl: \(privateProductUrl)"
+            ]
+        } else {
+            newLines += [
+                "source: \(originalSourcesUrl.absoluteString)",
+                "sourceRepo: \(originalSourceRepoUrl.absoluteString)",
+            ]
+        }
+        
         // Add the release identifier in the document
         if let releaseIdentifier = repo.globalParams.releaseIdentifier {
             newLines += [
