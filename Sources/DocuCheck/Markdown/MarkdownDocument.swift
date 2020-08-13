@@ -130,17 +130,33 @@ extension MarkdownDocument {
 
 extension MarkdownDocument {
     
+    /// Converts strings into MarkdownLine objects.
+    ///
+    /// - Parameter sourceLines: Lines to be converted
+    /// - Returns: Array of MarkdownLine objects.
+    func prepareLinesForAdd(lines sourceLines: [String]) -> [MarkdownLine] {
+        return sourceLines.map { line -> MarkdownLine in
+            return MarkdownLine(id: entityIdGenerator.entityId(), lineContent: line)
+        }
+    }
+    
     /// Adds multiple lines at given position
     ///
     /// - Parameters:
     ///   - sourceLines: Lines to be added
     ///   - at: Starting position for first line
     func add(lines sourceLines: [String], at: Int)  {
-        guard !sourceLines.isEmpty else {
+        add(lines: prepareLinesForAdd(lines: sourceLines), at: at)
+    }
+    
+    /// Adds multiple lines at given position
+    ///
+    /// - Parameters:
+    ///   - lineObjects: Lines to be added
+    ///   - at: Starting position for first line
+    func add(lines lineObjects: [MarkdownLine], at: Int) {
+        guard !lineObjects.isEmpty else {
             return
-        }
-        let lineObjects = sourceLines.map { line -> MarkdownLine in
-            return MarkdownLine(id: entityIdGenerator.entityId(), lineContent: line)
         }
         let prevState = lineObject(at: at - 1)?.parserStateAtEnd ?? .none
         let lastState = markdownParser.parse(lines: lineObjects, initialState: prevState, initialLine: at)
@@ -155,6 +171,7 @@ extension MarkdownDocument {
         updateAnchors()
         updateMetadata()
     }
+    
     
     /// Removes multiple lines from document
     ///
@@ -529,6 +546,19 @@ extension Console {
             warning(doc, message)
         }
     }
+    /// Prints warning about entity, stored in the document, in form "FileName:Line: message"
+    ///
+    /// - Parameters:
+    ///   - doc: Document containing issue
+    ///   - lineId: Line identifier
+    ///   - message: Message about the problem.
+    static func warning(_ doc: MarkdownDocument, _ lineId: EntityId, _ message: String) {
+        if let line = doc.lineNumber(forLineIdentifier: lineId) {
+            warning("\(doc.originalLocalPath):\(line + 1): \(message)")
+        } else {
+            warning(doc, message)
+        }
+    }
     
     /// Prints warning related to document, in form "FileName: message"
     ///
@@ -547,6 +577,20 @@ extension Console {
     ///   - message: Message about the problem.
     static func error(_ doc: MarkdownDocument, _ entity: MarkdownEntity, _ message: String) {
         if let line = doc.line(of: entity) {
+            error("\(doc.originalLocalPath):\(line + 1): \(message)")
+        } else {
+            error(doc, message)
+        }
+    }
+    
+    /// Prints error about entity, stored in the document, in form "FileName:Line: message"
+    ///
+    /// - Parameters:
+    ///   - doc: Document containing issue
+    ///   - lineId: Line identifier
+    ///   - message: Message about the problem.
+    static func error(_ doc: MarkdownDocument, _ lineId: EntityId, _ message: String) {
+        if let line = doc.lineNumber(forLineIdentifier: lineId)  {
             error("\(doc.originalLocalPath):\(line + 1): \(message)")
         } else {
             error(doc, message)
