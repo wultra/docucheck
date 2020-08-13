@@ -19,19 +19,65 @@ import Foundation
 enum MarkdownParserState {
     case none
     case code
-    case codeBlock
+    case codeBlock(regular: Bool)
 }
 
 extension MarkdownParserState {
     /// Returns true if state of parser can affect next lines
     var isMultiline: Bool {
-        return self == .codeBlock
+        return isCodeBlock
+    }
+    
+    /// Returns true if state is any type of codeBlock state
+    var isCodeBlock: Bool {
+        return self == .codeBlock(regular: true) || self == .codeBlock(regular: false)
     }
     
     /// Returns true if state of parser is forbidden at the end of line. For example, if you
     /// don't close opened inline code at the end of line.
     var isForbiddenAtEnd: Bool {
         return self == .code
+    }
+    
+    /// Returns character that can mark escape from this state. This is valid only for
+    /// multiline states.
+    var stateEscapeCharacter: Character {
+        switch self {
+        case let .codeBlock(type):
+            return type ? "`" : "~"
+        default:
+            return "\0"
+        }
+    }
+    
+    /// Returns string that mark escape from this state. This is valid only for
+    /// multiline states.
+    var stateEscapeString: String {
+        switch self {
+        case let .codeBlock(type):
+            return type ? "```" : "~~~"
+        default:
+            return ""
+        }
+    }
+    
+    /// Compare two MarkdownParserStates
+    static func ==(lhs: MarkdownParserState, rhs: MarkdownParserState) -> Bool {
+        switch (lhs, rhs) {
+        case (.none, .none):
+            return true
+        case (.code, .code):
+            return true
+        case (let .codeBlock(type1), let .codeBlock(type2)):
+            return type1 == type2
+        default:
+            return false
+        }
+    }
+    
+    /// Compare two MarkdownParserStates
+    static func !=(lhs: MarkdownParserState, rhs: MarkdownParserState) -> Bool {
+        return !(lhs == rhs)
     }
 }
 
@@ -86,8 +132,14 @@ class MarkdownParser {
     private func parseLine(_ line: MarkdownLine, initialState: MarkdownParserState) -> MarkdownParserState {
         var state = initialState
         
+        line.parserStateAtStart = state
+        
         var nextValidOffset: Int?
         let lc = line.lineContent
+        
+        // Exit from codeblock
+        var codeBlockEscapeChar = state.stateEscapeCharacter
+        var codeBlockEscapeString = state.stateEscapeString
         
         // Iterate over all characters
         for (offset, c) in lc.enumerated() {
@@ -110,12 +162,22 @@ class MarkdownParser {
                         state = .none
                     }
                 case "`":
-                    // Switch to code or codeBlock
+                    // Switch to regular code or codeBlock
                     if lc.hasSubstring("```", at: offset) {
                         nextValidOffset = offset + 3
-                        state = .codeBlock
+                        state = .codeBlock(regular: true)
+                        codeBlockEscapeChar = state.stateEscapeCharacter
+                        codeBlockEscapeString = state.stateEscapeString
                     } else {
                         state = .code
+                    }
+                case "~":
+                    // Switch to alternate codeblock
+                    if lc.hasSubstring("~~~", at: offset) {
+                        nextValidOffset = offset + 3
+                        state = .codeBlock(regular: false)
+                        codeBlockEscapeChar = state.stateEscapeCharacter
+                        codeBlockEscapeString = state.stateEscapeString
                     }
                 case "[":
                     // Ignore checkboxes
@@ -141,6 +203,7 @@ class MarkdownParser {
                     if let header = matchHeader(in: lc, at: offset) {
                         line.add(entity: header)
                         // The rest of the line is not important
+                        line.parserStateAtEnd = .none
                         return .none
                     }
                 case "<":
@@ -161,15 +224,16 @@ class MarkdownParser {
                 }
                 
             case .codeBlock:
-                // Multiline code block
-                if c == "`" {
-                    if lc.hasSubstring("```", at: offset) {
+                // Multiline code block end
+                if c == codeBlockEscapeChar {
+                    if lc.hasSubstring(codeBlockEscapeString, at: offset) {
                         nextValidOffset = offset + 3
                         state = .none
                     }
                 }
             }
         }
+        line.parserStateAtEnd = state
         return state
     }
     

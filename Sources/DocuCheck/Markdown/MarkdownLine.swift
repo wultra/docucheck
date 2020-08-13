@@ -27,7 +27,10 @@ class MarkdownLine {
     
     /// Entities found in the line
     var entities = [MarkdownEditableEntity]()
-    
+     
+    /// Contains parser's state at the end of line
+    var parserStateAtStart = MarkdownParserState.none
+
     /// Contains parser's state at the end of line
     var parserStateAtEnd = MarkdownParserState.none
     
