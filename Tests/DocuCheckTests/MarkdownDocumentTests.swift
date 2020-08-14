@@ -20,54 +20,54 @@ import XCTest
 
 class MarkdownDocumentTests: XCTestCase {
     let source1 =
-"""
+    """
 
-# This is header1
- ## This should produce warning
-###   This is header 3
+    # This is header1
+     ## This should produce warning
+    ###   This is header 3
 
-<!--   comment1 -->
+    <!--   comment1 -->
 
-- [Google](https://google.com) & [Wultra's github](https://github.com/wultra)
-- [Link to header](#this-is-header1), `another code # xxx`
-#  Another header
-- [Local link](File.md) & [Another Link](./Another.md) & `inline code` ![Image](some-image.png)
-- Example of code: ```swift
-  func testuj(parne valce: String) {
-      return "[Test](http://value)"
-  }
-  ```
-- [File and anchor](File.md#some-anchor)
+    - [Google](https://google.com) & [Wultra's github](https://github.com/wultra)
+    - [Link to header](#this-is-header1), `another code # xxx`
+    #  Another header
+    - [Local link](File.md) & [Another Link](./Another.md) & `inline code` ![Image](some-image.png)
+    - Example of code: ```swift
+      func testuj(parne valce: String) {
+          return "[Test](http://value)"
+      }
+      ```
+    - [File and anchor](File.md#some-anchor)
 
-<!--
- this comment should be ignored
- -->
+    <!--
+     this comment should be ignored
+     -->
 
-<!-- comment with spaces -->
-In next chapter, we will try to escape characters
-\\#\\`\\_\\\\\\*\\{\\}\\[\\]\\(\\)\\+\\-\\.\\!
-<!--comment2-->
-"""
+    <!-- comment with spaces -->
+    In next chapter, we will try to escape characters
+    \\#\\`\\_\\\\\\*\\{\\}\\[\\]\\(\\)\\+\\-\\.\\!
+    <!--comment2-->
+    """
     var documentSource1: DocumentSource {
         return StringDocument(name: "Test1.md", string: self.source1)
     }
 
     let source2 =
     """
-# This is header1
-###   This is header 3
+    # This is header1
+    ###   This is header 3
 
-<!-- begin TOC -->
-This is simple table of content
-- Content 1
-- Content 2
-<!-- begin inner-toc with params -->
-<!-- end -->
-<!-- end TOC -->
-In next chapter, we will try to escape characters
-\\#\\`\\_\\\\\\*\\{\\}\\[\\]\\(\\)\\+\\-\\.\\!
-<!-- document-id   543  -->
-"""
+    <!-- begin TOC -->
+    This is simple table of content
+    - Content 1
+    - Content 2
+    <!-- begin inner-toc with params -->
+    <!-- end -->
+    <!-- end TOC -->
+    In next chapter, we will try to escape characters
+    \\#\\`\\_\\\\\\*\\{\\}\\[\\]\\(\\)\\+\\-\\.\\!
+    <!-- document-id   543  -->
+    """
     var documentSource2: DocumentSource {
         return StringDocument(name: "Test2.md", string: self.source2)
     }
