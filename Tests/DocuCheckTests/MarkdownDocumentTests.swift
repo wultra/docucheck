@@ -71,7 +71,33 @@ In next chapter, we will try to escape characters
     var documentSource2: DocumentSource {
         return StringDocument(name: "Test2.md", string: self.source2)
     }
-
+    
+    let source3 =
+    """
+    ```md
+    # Header1
+    ```
+    [link1](File1)
+    ~~~md
+    # Header2
+    ~~~
+    [link2](File2)
+    ~~~md
+    ```
+    # Header3
+    ```
+    ~~~
+    [link3](File3)
+    ```md
+    ~~~
+    # Header4
+    ~~~
+    ```
+    [link4](File4)
+    """
+    var documentSource3: DocumentSource {
+        return StringDocument(name: "Test3.md", string: self.source3)
+    }
    
     override func setUp() {
         super.setUp()
@@ -243,5 +269,18 @@ In next chapter, we will try to escape characters
         }
         XCTAssertFalse(doc_id.isMultiline)
         XCTAssertTrue(doc_id.parameters?[0] == "543")
+    }
+    
+    func testCodeBlocks() {
+        let doc = MarkdownDocument(source: self.documentSource3, repoIdentifier: "test")
+        XCTAssertTrue(doc.load())
+        let headers = doc.allEntities(ofType: .header)
+        XCTAssertTrue(headers.isEmpty)
+        let links = doc.allEntities(ofType: .link)
+        XCTAssertEqual(4, links.count)
+        XCTAssertEqual("link1", (links[0] as! MarkdownLink).title)
+        XCTAssertEqual("link2", (links[1] as! MarkdownLink).title)
+        XCTAssertEqual("link3", (links[2] as! MarkdownLink).title)
+        XCTAssertEqual("link4", (links[3] as! MarkdownLink).title)
     }
 }
