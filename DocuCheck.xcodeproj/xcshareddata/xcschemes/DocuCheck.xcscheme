@@ -60,6 +60,20 @@
             ReferencedContainer = "container:DocuCheck.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-c $(PROJECT_DIR)/../wultra-developers/releases/develop.json"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-r $(PROJECT_DIR)/../wultra-developers/tmp/repos"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-o $(PROJECT_DIR)/../wultra-developers/tmp/dev-out"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
