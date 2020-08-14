@@ -16,7 +16,7 @@
 
 import XCTest
 
-@testable import DocuCheck
+@testable import DocuCheckLib
 
 class SimpleEntity: MarkdownEditableEntity, CustomStringConvertible {
     

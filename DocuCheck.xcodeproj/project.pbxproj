@@ -9,11 +9,11 @@
 /* Begin PBXAggregateTarget section */
 		"DocuCheck::DocuCheckPackageTests::ProductTarget" /* DocuCheckPackageTests */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = OBJ_102 /* Build configuration list for PBXAggregateTarget "DocuCheckPackageTests" */;
+			buildConfigurationList = OBJ_114 /* Build configuration list for PBXAggregateTarget "DocuCheckPackageTests" */;
 			buildPhases = (
 			);
 			dependencies = (
-				OBJ_105 /* PBXTargetDependency */,
+				OBJ_117 /* PBXTargetDependency */,
 			);
 			name = DocuCheckPackageTests;
 			productName = DocuCheckPackageTests;
@@ -21,53 +21,62 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		BF0ED21B2461AE89001FDF52 /* DocumentOriginRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ED21A2461AE88001FDF52 /* DocumentOriginRegister.swift */; };
-		OBJ_100 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
-		OBJ_111 /* MarkdownDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* MarkdownDocumentTests.swift */; };
-		OBJ_112 /* MarkdownLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* MarkdownLineTests.swift */; };
-		OBJ_113 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_50 /* XCTestManifests.swift */; };
-		OBJ_63 /* LinkStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* LinkStatistics.swift */; };
-		OBJ_64 /* PatchSingleFileDocumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* PatchSingleFileDocumentation.swift */; };
-		OBJ_65 /* RemoveUnwantedSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* RemoveUnwantedSections.swift */; };
-		OBJ_66 /* SaveAllDocuments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* SaveAllDocuments.swift */; };
-		OBJ_67 /* UpdateDocumentTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* UpdateDocumentTitles.swift */; };
-		OBJ_68 /* UpdateRepositoryLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* UpdateRepositoryLinks.swift */; };
-		OBJ_69 /* DocuCheckApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* DocuCheckApplication.swift */; };
-		OBJ_70 /* DocumentationDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* DocumentationDatabase.swift */; };
-		OBJ_71 /* DocumentationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* DocumentationItem.swift */; };
-		OBJ_72 /* DocumentationLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* DocumentationLoader.swift */; };
-		OBJ_73 /* RepositoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* RepositoryCache.swift */; };
-		OBJ_74 /* RepositoryContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* RepositoryContent.swift */; };
-		OBJ_75 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* Config.swift */; };
-		OBJ_76 /* ConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* ConfigLoader.swift */; };
-		OBJ_77 /* DataDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* DataDocument.swift */; };
-		OBJ_78 /* DocumentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* DocumentSource.swift */; };
-		OBJ_79 /* FileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* FileDocument.swift */; };
-		OBJ_80 /* StringDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* StringDocument.swift */; };
-		OBJ_81 /* EntityIdGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* EntityIdGenerator.swift */; };
-		OBJ_82 /* MarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* MarkdownDocument.swift */; };
-		OBJ_83 /* MarkdownEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* MarkdownEntities.swift */; };
-		OBJ_84 /* MarkdownLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* MarkdownLine.swift */; };
-		OBJ_85 /* MarkdownMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* MarkdownMetadata.swift */; };
-		OBJ_86 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* MarkdownParser.swift */; };
-		OBJ_87 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* Cmd.swift */; };
-		OBJ_88 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* CommandArguments.swift */; };
-		OBJ_89 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* Console.swift */; };
-		OBJ_90 /* FS.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* FS.swift */; };
-		OBJ_91 /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* StringHelpers.swift */; };
-		OBJ_92 /* StringPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* StringPathExtensions.swift */; };
-		OBJ_93 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* main.swift */; };
+		OBJ_100 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* Cmd.swift */; };
+		OBJ_101 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* CommandArguments.swift */; };
+		OBJ_102 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* Console.swift */; };
+		OBJ_103 /* FS.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* FS.swift */; };
+		OBJ_104 /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_46 /* StringHelpers.swift */; };
+		OBJ_105 /* StringPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* StringPathExtensions.swift */; };
+		OBJ_112 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_123 /* MarkdownDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_50 /* MarkdownDocumentTests.swift */; };
+		OBJ_124 /* MarkdownLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_51 /* MarkdownLineTests.swift */; };
+		OBJ_125 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_52 /* XCTestManifests.swift */; };
+		OBJ_127 /* DocuCheckLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */; };
+		OBJ_66 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* main.swift */; };
+		OBJ_68 /* DocuCheckLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */; };
+		OBJ_75 /* LinkStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* LinkStatistics.swift */; };
+		OBJ_76 /* PatchSingleFileDocumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* PatchSingleFileDocumentation.swift */; };
+		OBJ_77 /* RemoveUnwantedSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* RemoveUnwantedSections.swift */; };
+		OBJ_78 /* SaveAllDocuments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* SaveAllDocuments.swift */; };
+		OBJ_79 /* UpdateDocumentTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* UpdateDocumentTitles.swift */; };
+		OBJ_80 /* UpdateRepositoryLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* UpdateRepositoryLinks.swift */; };
+		OBJ_81 /* DocuCheckApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* DocuCheckApplication.swift */; };
+		OBJ_82 /* DocumentOriginRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* DocumentOriginRegister.swift */; };
+		OBJ_83 /* DocumentationDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* DocumentationDatabase.swift */; };
+		OBJ_84 /* DocumentationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* DocumentationItem.swift */; };
+		OBJ_85 /* DocumentationLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* DocumentationLoader.swift */; };
+		OBJ_86 /* RepositoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* RepositoryCache.swift */; };
+		OBJ_87 /* RepositoryContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* RepositoryContent.swift */; };
+		OBJ_88 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* Config.swift */; };
+		OBJ_89 /* ConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* ConfigLoader.swift */; };
+		OBJ_90 /* DataDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* DataDocument.swift */; };
+		OBJ_91 /* DocumentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* DocumentSource.swift */; };
+		OBJ_92 /* FileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* FileDocument.swift */; };
+		OBJ_93 /* StringDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* StringDocument.swift */; };
+		OBJ_94 /* EntityIdGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* EntityIdGenerator.swift */; };
+		OBJ_95 /* MarkdownDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* MarkdownDocument.swift */; };
+		OBJ_96 /* MarkdownEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* MarkdownEntities.swift */; };
+		OBJ_97 /* MarkdownLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* MarkdownLine.swift */; };
+		OBJ_98 /* MarkdownMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* MarkdownMetadata.swift */; };
+		OBJ_99 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* MarkdownParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BF0ED20B246173E8001FDF52 /* PBXContainerItemProxy */ = {
+		BF8494BB24E6866C00340D59 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = "DocuCheck::DocuCheck";
-			remoteInfo = DocuCheck;
+			remoteGlobalIDString = "DocuCheck::DocuCheckLib";
+			remoteInfo = DocuCheckLib;
 		};
-		BF0ED2192461A574001FDF52 /* PBXContainerItemProxy */ = {
+		BF8494BC24E6866D00340D59 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "DocuCheck::DocuCheckLib";
+			remoteInfo = DocuCheckLib;
+		};
+		BF8494BD24E6866D00340D59 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = OBJ_1 /* Project object */;
 			proxyType = 1;
@@ -77,166 +86,206 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BF0ED21A2461AE88001FDF52 /* DocumentOriginRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentOriginRegister.swift; sourceTree = "<group>"; };
 		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; lastKnownFileType = text; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
+		"DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DocuCheckLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DocuCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		OBJ_11 /* LinkStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStatistics.swift; sourceTree = "<group>"; };
-		OBJ_12 /* PatchSingleFileDocumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSingleFileDocumentation.swift; sourceTree = "<group>"; };
-		OBJ_13 /* RemoveUnwantedSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveUnwantedSections.swift; sourceTree = "<group>"; };
-		OBJ_14 /* SaveAllDocuments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAllDocuments.swift; sourceTree = "<group>"; };
-		OBJ_15 /* UpdateDocumentTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDocumentTitles.swift; sourceTree = "<group>"; };
-		OBJ_16 /* UpdateRepositoryLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRepositoryLinks.swift; sourceTree = "<group>"; };
-		OBJ_17 /* DocuCheckApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocuCheckApplication.swift; sourceTree = "<group>"; };
-		OBJ_18 /* DocumentationDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationDatabase.swift; sourceTree = "<group>"; };
-		OBJ_19 /* DocumentationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationItem.swift; sourceTree = "<group>"; };
-		OBJ_20 /* DocumentationLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationLoader.swift; sourceTree = "<group>"; };
-		OBJ_21 /* RepositoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCache.swift; sourceTree = "<group>"; };
-		OBJ_22 /* RepositoryContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryContent.swift; sourceTree = "<group>"; };
-		OBJ_24 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		OBJ_25 /* ConfigLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigLoader.swift; sourceTree = "<group>"; };
-		OBJ_27 /* DataDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDocument.swift; sourceTree = "<group>"; };
-		OBJ_28 /* DocumentSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSource.swift; sourceTree = "<group>"; };
-		OBJ_29 /* FileDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDocument.swift; sourceTree = "<group>"; };
-		OBJ_30 /* StringDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringDocument.swift; sourceTree = "<group>"; };
-		OBJ_32 /* EntityIdGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityIdGenerator.swift; sourceTree = "<group>"; };
-		OBJ_33 /* MarkdownDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocument.swift; sourceTree = "<group>"; };
-		OBJ_34 /* MarkdownEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEntities.swift; sourceTree = "<group>"; };
-		OBJ_35 /* MarkdownLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLine.swift; sourceTree = "<group>"; };
-		OBJ_36 /* MarkdownMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownMetadata.swift; sourceTree = "<group>"; };
-		OBJ_37 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
-		OBJ_39 /* Cmd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cmd.swift; sourceTree = "<group>"; };
-		OBJ_40 /* CommandArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandArguments.swift; sourceTree = "<group>"; };
-		OBJ_41 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
-		OBJ_42 /* FS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FS.swift; sourceTree = "<group>"; };
-		OBJ_43 /* StringHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelpers.swift; sourceTree = "<group>"; };
-		OBJ_44 /* StringPathExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringPathExtensions.swift; sourceTree = "<group>"; };
-		OBJ_45 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		OBJ_48 /* MarkdownDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocumentTests.swift; sourceTree = "<group>"; };
-		OBJ_49 /* MarkdownLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLineTests.swift; sourceTree = "<group>"; };
-		OBJ_50 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
-		OBJ_54 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = SOURCE_ROOT; };
-		OBJ_55 /* update-packages.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "update-packages.sh"; sourceTree = "<group>"; };
-		OBJ_56 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		OBJ_57 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		OBJ_13 /* LinkStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStatistics.swift; sourceTree = "<group>"; };
+		OBJ_14 /* PatchSingleFileDocumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSingleFileDocumentation.swift; sourceTree = "<group>"; };
+		OBJ_15 /* RemoveUnwantedSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveUnwantedSections.swift; sourceTree = "<group>"; };
+		OBJ_16 /* SaveAllDocuments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAllDocuments.swift; sourceTree = "<group>"; };
+		OBJ_17 /* UpdateDocumentTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDocumentTitles.swift; sourceTree = "<group>"; };
+		OBJ_18 /* UpdateRepositoryLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRepositoryLinks.swift; sourceTree = "<group>"; };
+		OBJ_19 /* DocuCheckApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocuCheckApplication.swift; sourceTree = "<group>"; };
+		OBJ_20 /* DocumentOriginRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentOriginRegister.swift; sourceTree = "<group>"; };
+		OBJ_21 /* DocumentationDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationDatabase.swift; sourceTree = "<group>"; };
+		OBJ_22 /* DocumentationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationItem.swift; sourceTree = "<group>"; };
+		OBJ_23 /* DocumentationLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationLoader.swift; sourceTree = "<group>"; };
+		OBJ_24 /* RepositoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCache.swift; sourceTree = "<group>"; };
+		OBJ_25 /* RepositoryContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryContent.swift; sourceTree = "<group>"; };
+		OBJ_27 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		OBJ_28 /* ConfigLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigLoader.swift; sourceTree = "<group>"; };
+		OBJ_30 /* DataDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDocument.swift; sourceTree = "<group>"; };
+		OBJ_31 /* DocumentSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSource.swift; sourceTree = "<group>"; };
+		OBJ_32 /* FileDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDocument.swift; sourceTree = "<group>"; };
+		OBJ_33 /* StringDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringDocument.swift; sourceTree = "<group>"; };
+		OBJ_35 /* EntityIdGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityIdGenerator.swift; sourceTree = "<group>"; };
+		OBJ_36 /* MarkdownDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocument.swift; sourceTree = "<group>"; };
+		OBJ_37 /* MarkdownEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEntities.swift; sourceTree = "<group>"; };
+		OBJ_38 /* MarkdownLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLine.swift; sourceTree = "<group>"; };
+		OBJ_39 /* MarkdownMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownMetadata.swift; sourceTree = "<group>"; };
+		OBJ_40 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
+		OBJ_42 /* Cmd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cmd.swift; sourceTree = "<group>"; };
+		OBJ_43 /* CommandArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandArguments.swift; sourceTree = "<group>"; };
+		OBJ_44 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
+		OBJ_45 /* FS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FS.swift; sourceTree = "<group>"; };
+		OBJ_46 /* StringHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelpers.swift; sourceTree = "<group>"; };
+		OBJ_47 /* StringPathExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringPathExtensions.swift; sourceTree = "<group>"; };
+		OBJ_50 /* MarkdownDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDocumentTests.swift; sourceTree = "<group>"; };
+		OBJ_51 /* MarkdownLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownLineTests.swift; sourceTree = "<group>"; };
+		OBJ_52 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
+		OBJ_57 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = SOURCE_ROOT; };
+		OBJ_58 /* update-packages.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "update-packages.sh"; sourceTree = "<group>"; };
+		OBJ_59 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		OBJ_60 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		OBJ_9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		OBJ_114 /* Frameworks */ = {
+		OBJ_106 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_94 /* Frameworks */ = {
+		OBJ_126 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
+				OBJ_127 /* DocuCheckLib.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_67 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_68 /* DocuCheckLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		OBJ_10 /* DatabaseOperations */ = {
+		OBJ_10 /* DocuCheckLib */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_11 /* LinkStatistics.swift */,
-				OBJ_12 /* PatchSingleFileDocumentation.swift */,
-				OBJ_13 /* RemoveUnwantedSections.swift */,
-				OBJ_14 /* SaveAllDocuments.swift */,
-				OBJ_15 /* UpdateDocumentTitles.swift */,
-				OBJ_16 /* UpdateRepositoryLinks.swift */,
+				OBJ_11 /* Application */,
+				OBJ_26 /* Config */,
+				OBJ_29 /* Document */,
+				OBJ_34 /* Markdown */,
+				OBJ_41 /* Utility */,
+			);
+			name = DocuCheckLib;
+			path = Sources/DocuCheckLib;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_11 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_12 /* DatabaseOperations */,
+				OBJ_19 /* DocuCheckApplication.swift */,
+				OBJ_20 /* DocumentOriginRegister.swift */,
+				OBJ_21 /* DocumentationDatabase.swift */,
+				OBJ_22 /* DocumentationItem.swift */,
+				OBJ_23 /* DocumentationLoader.swift */,
+				OBJ_24 /* RepositoryCache.swift */,
+				OBJ_25 /* RepositoryContent.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		OBJ_12 /* DatabaseOperations */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_13 /* LinkStatistics.swift */,
+				OBJ_14 /* PatchSingleFileDocumentation.swift */,
+				OBJ_15 /* RemoveUnwantedSections.swift */,
+				OBJ_16 /* SaveAllDocuments.swift */,
+				OBJ_17 /* UpdateDocumentTitles.swift */,
+				OBJ_18 /* UpdateRepositoryLinks.swift */,
 			);
 			path = DatabaseOperations;
 			sourceTree = "<group>";
 		};
-		OBJ_23 /* Config */ = {
+		OBJ_26 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_24 /* Config.swift */,
-				OBJ_25 /* ConfigLoader.swift */,
+				OBJ_27 /* Config.swift */,
+				OBJ_28 /* ConfigLoader.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
 		};
-		OBJ_26 /* Document */ = {
+		OBJ_29 /* Document */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_27 /* DataDocument.swift */,
-				OBJ_28 /* DocumentSource.swift */,
-				OBJ_29 /* FileDocument.swift */,
-				OBJ_30 /* StringDocument.swift */,
+				OBJ_30 /* DataDocument.swift */,
+				OBJ_31 /* DocumentSource.swift */,
+				OBJ_32 /* FileDocument.swift */,
+				OBJ_33 /* StringDocument.swift */,
 			);
 			path = Document;
 			sourceTree = "<group>";
 		};
-		OBJ_31 /* Markdown */ = {
+		OBJ_34 /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_32 /* EntityIdGenerator.swift */,
-				OBJ_33 /* MarkdownDocument.swift */,
-				OBJ_34 /* MarkdownEntities.swift */,
-				OBJ_35 /* MarkdownLine.swift */,
-				OBJ_36 /* MarkdownMetadata.swift */,
-				OBJ_37 /* MarkdownParser.swift */,
+				OBJ_35 /* EntityIdGenerator.swift */,
+				OBJ_36 /* MarkdownDocument.swift */,
+				OBJ_37 /* MarkdownEntities.swift */,
+				OBJ_38 /* MarkdownLine.swift */,
+				OBJ_39 /* MarkdownMetadata.swift */,
+				OBJ_40 /* MarkdownParser.swift */,
 			);
 			path = Markdown;
 			sourceTree = "<group>";
 		};
-		OBJ_38 /* Utility */ = {
+		OBJ_41 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_39 /* Cmd.swift */,
-				OBJ_40 /* CommandArguments.swift */,
-				OBJ_41 /* Console.swift */,
-				OBJ_42 /* FS.swift */,
-				OBJ_43 /* StringHelpers.swift */,
-				OBJ_44 /* StringPathExtensions.swift */,
+				OBJ_42 /* Cmd.swift */,
+				OBJ_43 /* CommandArguments.swift */,
+				OBJ_44 /* Console.swift */,
+				OBJ_45 /* FS.swift */,
+				OBJ_46 /* StringHelpers.swift */,
+				OBJ_47 /* StringPathExtensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		OBJ_46 /* Tests */ = {
+		OBJ_48 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_47 /* DocuCheckTests */,
+				OBJ_49 /* DocuCheckTests */,
 			);
 			name = Tests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_47 /* DocuCheckTests */ = {
+		OBJ_49 /* DocuCheckTests */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_48 /* MarkdownDocumentTests.swift */,
-				OBJ_49 /* MarkdownLineTests.swift */,
-				OBJ_50 /* XCTestManifests.swift */,
+				OBJ_50 /* MarkdownDocumentTests.swift */,
+				OBJ_51 /* MarkdownLineTests.swift */,
+				OBJ_52 /* XCTestManifests.swift */,
 			);
 			name = DocuCheckTests;
 			path = Tests/DocuCheckTests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 = {
+		OBJ_5 /*  */ = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
-				OBJ_46 /* Tests */,
-				OBJ_51 /* Products */,
-				OBJ_54 /* docs */,
-				OBJ_55 /* update-packages.sh */,
-				OBJ_56 /* LICENSE */,
-				OBJ_57 /* README.md */,
+				OBJ_48 /* Tests */,
+				OBJ_53 /* Products */,
+				OBJ_57 /* docs */,
+				OBJ_58 /* update-packages.sh */,
+				OBJ_59 /* LICENSE */,
+				OBJ_60 /* README.md */,
 			);
+			name = "";
 			sourceTree = "<group>";
 			usesTabs = 0;
 		};
-		OBJ_51 /* Products */ = {
+		OBJ_53 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				"DocuCheck::DocuCheck::Product" /* DocuCheck */,
 				"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */,
+				"DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */,
 			);
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -245,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_8 /* DocuCheck */,
+				OBJ_10 /* DocuCheckLib */,
 			);
 			name = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -252,62 +302,59 @@
 		OBJ_8 /* DocuCheck */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_9 /* Application */,
-				OBJ_23 /* Config */,
-				OBJ_26 /* Document */,
-				OBJ_31 /* Markdown */,
-				OBJ_38 /* Utility */,
-				OBJ_45 /* main.swift */,
+				OBJ_9 /* main.swift */,
 			);
 			name = DocuCheck;
 			path = Sources/DocuCheck;
 			sourceTree = SOURCE_ROOT;
-		};
-		OBJ_9 /* Application */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_10 /* DatabaseOperations */,
-				OBJ_17 /* DocuCheckApplication.swift */,
-				OBJ_18 /* DocumentationDatabase.swift */,
-				OBJ_19 /* DocumentationItem.swift */,
-				OBJ_20 /* DocumentationLoader.swift */,
-				BF0ED21A2461AE88001FDF52 /* DocumentOriginRegister.swift */,
-				OBJ_21 /* RepositoryCache.swift */,
-				OBJ_22 /* RepositoryContent.swift */,
-			);
-			path = Application;
-			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
 		"DocuCheck::DocuCheck" /* DocuCheck */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_59 /* Build configuration list for PBXNativeTarget "DocuCheck" */;
+			buildConfigurationList = OBJ_62 /* Build configuration list for PBXNativeTarget "DocuCheck" */;
 			buildPhases = (
-				OBJ_62 /* Sources */,
-				OBJ_94 /* Frameworks */,
+				OBJ_65 /* Sources */,
+				OBJ_67 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				OBJ_69 /* PBXTargetDependency */,
 			);
 			name = DocuCheck;
 			productName = DocuCheck;
 			productReference = "DocuCheck::DocuCheck::Product" /* DocuCheck */;
 			productType = "com.apple.product-type.tool";
 		};
-		"DocuCheck::DocuCheckTests" /* DocuCheckTests */ = {
+		"DocuCheck::DocuCheckLib" /* DocuCheckLib */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_107 /* Build configuration list for PBXNativeTarget "DocuCheckTests" */;
+			buildConfigurationList = OBJ_71 /* Build configuration list for PBXNativeTarget "DocuCheckLib" */;
 			buildPhases = (
-				OBJ_110 /* Sources */,
-				OBJ_114 /* Frameworks */,
+				OBJ_74 /* Sources */,
+				OBJ_106 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				OBJ_115 /* PBXTargetDependency */,
+			);
+			name = DocuCheckLib;
+			productName = DocuCheckLib;
+			productReference = "DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"DocuCheck::DocuCheckTests" /* DocuCheckTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_119 /* Build configuration list for PBXNativeTarget "DocuCheckTests" */;
+			buildPhases = (
+				OBJ_122 /* Sources */,
+				OBJ_126 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_128 /* PBXTargetDependency */,
 			);
 			name = DocuCheckTests;
 			productName = DocuCheckTests;
@@ -316,9 +363,9 @@
 		};
 		"DocuCheck::SwiftPMPackageDescription" /* DocuCheckPackageDescription */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = OBJ_96 /* Build configuration list for PBXNativeTarget "DocuCheckPackageDescription" */;
+			buildConfigurationList = OBJ_108 /* Build configuration list for PBXNativeTarget "DocuCheckPackageDescription" */;
 			buildPhases = (
-				OBJ_99 /* Sources */,
+				OBJ_111 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -344,12 +391,13 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5;
-			productRefGroup = OBJ_51 /* Products */;
+			mainGroup = OBJ_5 /*  */;
+			productRefGroup = OBJ_53 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				"DocuCheck::DocuCheck" /* DocuCheck */,
+				"DocuCheck::DocuCheckLib" /* DocuCheckLib */,
 				"DocuCheck::SwiftPMPackageDescription" /* DocuCheckPackageDescription */,
 				"DocuCheck::DocuCheckPackageTests::ProductTarget" /* DocuCheckPackageTests */,
 				"DocuCheck::DocuCheckTests" /* DocuCheckTests */,
@@ -358,92 +406,122 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		OBJ_110 /* Sources */ = {
+		OBJ_111 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_111 /* MarkdownDocumentTests.swift in Sources */,
-				OBJ_112 /* MarkdownLineTests.swift in Sources */,
-				OBJ_113 /* XCTestManifests.swift in Sources */,
+				OBJ_112 /* Package.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_62 /* Sources */ = {
+		OBJ_122 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_63 /* LinkStatistics.swift in Sources */,
-				OBJ_64 /* PatchSingleFileDocumentation.swift in Sources */,
-				OBJ_65 /* RemoveUnwantedSections.swift in Sources */,
-				OBJ_66 /* SaveAllDocuments.swift in Sources */,
-				OBJ_67 /* UpdateDocumentTitles.swift in Sources */,
-				OBJ_68 /* UpdateRepositoryLinks.swift in Sources */,
-				OBJ_69 /* DocuCheckApplication.swift in Sources */,
-				OBJ_70 /* DocumentationDatabase.swift in Sources */,
-				OBJ_71 /* DocumentationItem.swift in Sources */,
-				OBJ_72 /* DocumentationLoader.swift in Sources */,
-				OBJ_73 /* RepositoryCache.swift in Sources */,
-				OBJ_74 /* RepositoryContent.swift in Sources */,
-				OBJ_75 /* Config.swift in Sources */,
-				OBJ_76 /* ConfigLoader.swift in Sources */,
-				OBJ_77 /* DataDocument.swift in Sources */,
-				OBJ_78 /* DocumentSource.swift in Sources */,
-				OBJ_79 /* FileDocument.swift in Sources */,
-				OBJ_80 /* StringDocument.swift in Sources */,
-				OBJ_81 /* EntityIdGenerator.swift in Sources */,
-				OBJ_82 /* MarkdownDocument.swift in Sources */,
-				OBJ_83 /* MarkdownEntities.swift in Sources */,
-				BF0ED21B2461AE89001FDF52 /* DocumentOriginRegister.swift in Sources */,
-				OBJ_84 /* MarkdownLine.swift in Sources */,
-				OBJ_85 /* MarkdownMetadata.swift in Sources */,
-				OBJ_86 /* MarkdownParser.swift in Sources */,
-				OBJ_87 /* Cmd.swift in Sources */,
-				OBJ_88 /* CommandArguments.swift in Sources */,
-				OBJ_89 /* Console.swift in Sources */,
-				OBJ_90 /* FS.swift in Sources */,
-				OBJ_91 /* StringHelpers.swift in Sources */,
-				OBJ_92 /* StringPathExtensions.swift in Sources */,
-				OBJ_93 /* main.swift in Sources */,
+				OBJ_123 /* MarkdownDocumentTests.swift in Sources */,
+				OBJ_124 /* MarkdownLineTests.swift in Sources */,
+				OBJ_125 /* XCTestManifests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		OBJ_99 /* Sources */ = {
+		OBJ_65 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				OBJ_100 /* Package.swift in Sources */,
+				OBJ_66 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_74 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_75 /* LinkStatistics.swift in Sources */,
+				OBJ_76 /* PatchSingleFileDocumentation.swift in Sources */,
+				OBJ_77 /* RemoveUnwantedSections.swift in Sources */,
+				OBJ_78 /* SaveAllDocuments.swift in Sources */,
+				OBJ_79 /* UpdateDocumentTitles.swift in Sources */,
+				OBJ_80 /* UpdateRepositoryLinks.swift in Sources */,
+				OBJ_81 /* DocuCheckApplication.swift in Sources */,
+				OBJ_82 /* DocumentOriginRegister.swift in Sources */,
+				OBJ_83 /* DocumentationDatabase.swift in Sources */,
+				OBJ_84 /* DocumentationItem.swift in Sources */,
+				OBJ_85 /* DocumentationLoader.swift in Sources */,
+				OBJ_86 /* RepositoryCache.swift in Sources */,
+				OBJ_87 /* RepositoryContent.swift in Sources */,
+				OBJ_88 /* Config.swift in Sources */,
+				OBJ_89 /* ConfigLoader.swift in Sources */,
+				OBJ_90 /* DataDocument.swift in Sources */,
+				OBJ_91 /* DocumentSource.swift in Sources */,
+				OBJ_92 /* FileDocument.swift in Sources */,
+				OBJ_93 /* StringDocument.swift in Sources */,
+				OBJ_94 /* EntityIdGenerator.swift in Sources */,
+				OBJ_95 /* MarkdownDocument.swift in Sources */,
+				OBJ_96 /* MarkdownEntities.swift in Sources */,
+				OBJ_97 /* MarkdownLine.swift in Sources */,
+				OBJ_98 /* MarkdownMetadata.swift in Sources */,
+				OBJ_99 /* MarkdownParser.swift in Sources */,
+				OBJ_100 /* Cmd.swift in Sources */,
+				OBJ_101 /* CommandArguments.swift in Sources */,
+				OBJ_102 /* Console.swift in Sources */,
+				OBJ_103 /* FS.swift in Sources */,
+				OBJ_104 /* StringHelpers.swift in Sources */,
+				OBJ_105 /* StringPathExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		OBJ_105 /* PBXTargetDependency */ = {
+		OBJ_117 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = "DocuCheck::DocuCheckTests" /* DocuCheckTests */;
-			targetProxy = BF0ED2192461A574001FDF52 /* PBXContainerItemProxy */;
+			targetProxy = BF8494BD24E6866D00340D59 /* PBXContainerItemProxy */;
 		};
-		OBJ_115 /* PBXTargetDependency */ = {
+		OBJ_128 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = "DocuCheck::DocuCheck" /* DocuCheck */;
-			targetProxy = BF0ED20B246173E8001FDF52 /* PBXContainerItemProxy */;
+			target = "DocuCheck::DocuCheckLib" /* DocuCheckLib */;
+			targetProxy = BF8494BC24E6866D00340D59 /* PBXContainerItemProxy */;
+		};
+		OBJ_69 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "DocuCheck::DocuCheckLib" /* DocuCheckLib */;
+			targetProxy = BF8494BB24E6866C00340D59 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		OBJ_103 /* Debug */ = {
+		OBJ_109 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_110 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1.0";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		OBJ_115 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 			};
 			name = Debug;
 		};
-		OBJ_104 /* Release */ = {
+		OBJ_116 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 			};
 			name = Release;
 		};
-		OBJ_108 /* Debug */ = {
+		OBJ_120 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -468,7 +546,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_109 /* Release */ = {
+		OBJ_121 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -544,7 +622,7 @@
 			};
 			name = Release;
 		};
-		OBJ_60 /* Debug */ = {
+		OBJ_63 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
@@ -569,7 +647,7 @@
 			};
 			name = Debug;
 		};
-		OBJ_61 /* Release */ = {
+		OBJ_64 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
@@ -594,41 +672,88 @@
 			};
 			name = Release;
 		};
-		OBJ_97 /* Debug */ = {
+		OBJ_72 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1.0";
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = DocuCheck.xcodeproj/DocuCheckLib_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = DocuCheckLib;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DocuCheckLib;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
-		OBJ_98 /* Release */ = {
+		OBJ_73 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD = /usr/bin/true;
-				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1.0";
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = DocuCheck.xcodeproj/DocuCheckLib_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = DocuCheckLib;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				SWIFT_VERSION = 5.0;
+				TARGET_NAME = DocuCheckLib;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		OBJ_102 /* Build configuration list for PBXAggregateTarget "DocuCheckPackageTests" */ = {
+		OBJ_108 /* Build configuration list for PBXNativeTarget "DocuCheckPackageDescription" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_103 /* Debug */,
-				OBJ_104 /* Release */,
+				OBJ_109 /* Debug */,
+				OBJ_110 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_107 /* Build configuration list for PBXNativeTarget "DocuCheckTests" */ = {
+		OBJ_114 /* Build configuration list for PBXAggregateTarget "DocuCheckPackageTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_108 /* Debug */,
-				OBJ_109 /* Release */,
+				OBJ_115 /* Debug */,
+				OBJ_116 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_119 /* Build configuration list for PBXNativeTarget "DocuCheckTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_120 /* Debug */,
+				OBJ_121 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -642,20 +767,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_59 /* Build configuration list for PBXNativeTarget "DocuCheck" */ = {
+		OBJ_62 /* Build configuration list for PBXNativeTarget "DocuCheck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_60 /* Debug */,
-				OBJ_61 /* Release */,
+				OBJ_63 /* Debug */,
+				OBJ_64 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		OBJ_96 /* Build configuration list for PBXNativeTarget "DocuCheckPackageDescription" */ = {
+		OBJ_71 /* Build configuration list for PBXNativeTarget "DocuCheckLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				OBJ_97 /* Debug */,
-				OBJ_98 /* Release */,
+				OBJ_72 /* Debug */,
+				OBJ_73 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

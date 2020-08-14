@@ -16,7 +16,7 @@
 
 import Foundation
 
-class DocuCheckApplication {
+public class DocuCheckApplication {
     
     private let arguments: [String]
     private let applicationName: String
@@ -49,7 +49,7 @@ class DocuCheckApplication {
     /// Initializes application with command line arguments.
     ///
     /// - Parameter arguments: Array with command line arguments
-    init(with arguments: [String]) {
+    public init(with arguments: [String]) {
         self.arguments = arguments
         guard let executablePath = arguments.first else {
             Console.exitError("Cannot determine path to the executable.")
@@ -59,7 +59,7 @@ class DocuCheckApplication {
     }
     
     /// Runs an application
-    func run() {
+    public func run() {
         
         // Initial setup
         Console.exitOnError = true
