@@ -31,6 +31,12 @@ struct MarkdownMetadata {
     /// Line identifier where metadata information ends
     let endLine: EntityId
     
+    /// Inline comment entity identifier where metadata information begins
+    let beginInlineCommentId: EntityId
+    
+    /// Inline comment entity identifier where metadata information ends.
+    let endInlineCommentId: EntityId
+    
     /// Contains true if metadata information is stored at multiple lines
     var isMultiline: Bool {
         return beginLine != endLine

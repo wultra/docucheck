@@ -28,8 +28,8 @@ class MarkdownLine {
     /// Entities found in the line
     var entities = [MarkdownEditableEntity]()
      
-    /// Contains parser's state at the end of line
-    var parserStateAtStart = MarkdownParserState.none
+    /// Contains parser's state at the begin of line
+    var parserStateAtBegin = MarkdownParserState.none
 
     /// Contains parser's state at the end of line
     var parserStateAtEnd = MarkdownParserState.none
@@ -72,7 +72,7 @@ extension MarkdownLine {
         return entities.first { $0.identifier == entityId }
     }
     
-    /// Adds entity to the line
+    /// Adds entity to the line.
     ///
     /// - Parameter entity: entity to be added
     func add(entity: MarkdownEditableEntity) {
@@ -86,7 +86,7 @@ extension MarkdownLine {
         entities.append(entity)
     }
     
-    /// Removes entity with identifier
+    /// Removes entity with identifier.
     ///
     /// - Parameter entityId: Identifier of entity to be removed
     func remove(entityId: EntityId) {
@@ -96,19 +96,35 @@ extension MarkdownLine {
         entities.remove(at: index)
     }
     
-    /// Removes entity from the line
+    /// Removes entity from the line.
     ///
     /// - Parameter entity: Entity to be removed from the line
     func remove(entity: MarkdownEntity) {
         remove(entityId: entity.identifier)
     }
     
-    /// Returns true if line contains entity with given identifier
+    /// Returns true if line contains entity with given identifier.
     ///
     /// - Parameter entityId: Entity to be found
     /// - Returns: true, if line contains entity with given identifier.
     func contains(entityId: EntityId) -> Bool {
         return entities.firstIndex(where: { $0.identifier == entityId }) != nil
+    }
+    
+    /// Returns true if line contains entity with given type
+    ///
+    /// - Parameter entityType: Entity with type to be found
+    /// - Returns: true, if line contains entity with given type.
+    func contains(entityType: EntityType) -> Bool {
+        return entities.firstIndex(where: { $0.type == entityType }) != nil
+    }
+    
+    
+    /// Return all entities with given type.
+    /// - Parameter type: Entity type
+    /// - Returns: Entities with requested type, or empty array if line contains no such object.
+    func allEntities(withType type: EntityType) -> [MarkdownEditableEntity] {
+        return entities.filter { $0.type ==  type }
     }
 }
 
