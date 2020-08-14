@@ -176,4 +176,40 @@ In case you would like to include a custom sidebar in the document, you can do s
 
 The first parameter defines a name of the file to include (in the same folder as the main document). The second parameter defines the sidebar position - `sticky` means that the sidebar should remain visible, any other value (or empty parameter) means that the sidebar scrolls with the content. Use `sticky` value with caution for reasonably small sidebars - if the sidebar is too high, content may not be reachable.
 
+#### Code tabs
 
+You can format code examples written in different languages into tabs, that user can switch between. For example, let say, you want to write the same example in Swift and Objective-C code:
+
+~~~md
+<!-- begin codetabs Swift Objective-C -->
+```swift
+// Example in Swift
+let object = Object()
+```
+```objc
+// Example in Objective-C
+NSObject * object = [[NSObject alloc] init];
+```
+<!-- end -->
+~~~
+
+The number of parameters used in `codetabs`  defines the number of tabs visible in the final documentation. Make sure that the number of code blocks match the number of tab names and there's no other markdown formatting between the code blocks.
+
+#### Arbitrary tabs
+
+In case that [code tabs](#code-tabs) doesn't fit your formatting requirements, then use  `tabs` metadata marker and specify each tab with `tab`. For example:
+
+~~~md
+<!-- begin tabs -->
+<!-- tab Swift -->
+Use following code for swift:
+```swift
+let object = Object()
+```
+<!-- tab Objective-C -->
+Use following code for Objective-C:
+```objc
+NSObject * object = [[NSObject alloc] init];
+```
+<!-- end -->
+~~~
