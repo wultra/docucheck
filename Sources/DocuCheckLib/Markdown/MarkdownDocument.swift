@@ -325,6 +325,15 @@ extension MarkdownDocument {
         return metadata.filter { $0.name == name }
     }
     
+    /// Returns all occurences of metadata objects with given name in the document.
+    ///
+    /// - Parameter name: Name of metadata tag to be found
+    /// - Parameter multiline: Specifies whether metadata should be multiline or not.
+    /// - Returns: Array of objects with metadata information.
+    func allMetadata(withName name: String, multiline: Bool) -> [MarkdownMetadata] {
+        return metadata.filter { $0.isMultiline == multiline && $0.name == name }
+    }
+    
     /// Returns first metadata object with given name or nil if no such information is in document.
     ///
     /// - Parameter name: Name of metadata tag to be found
@@ -333,6 +342,14 @@ extension MarkdownDocument {
         return metadata.first { $0.name == name }
     }
     
+    /// Returns first metadata object with given name or nil if no such information is in document.
+    ///
+    /// - Parameter name: Name of metadata tag to be found
+    /// - Parameter multiline: Specifies whether metadata should be multiline or not.
+    /// - Returns: Object representing metadata information or nil if no such information is in document.
+    func firstMetadata(withName name: String, multiline: Bool) -> MarkdownMetadata? {
+        return metadata.first { $0.isMultiline == multiline && $0.name == name }
+    }
     
     /// Returns MarkdownLine objects for all lines captured in metadata structure. Returns nil in following cases:
     /// - If provided metadata structure doesn't cover multiple lines
@@ -399,16 +416,21 @@ extension MarkdownDocument {
         let isEnd: Bool
         /// Contains line identifier for metadata information
         let lineIdentifier: EntityId
+        /// Contains identifier of inline comment identifier that defines begin for metadata information
+        let commentIdentifier: EntityId
+        
         /// Is true if metadata information is multiline and this is the begin of it.
         var isBegin: Bool { return !isEnd }
         
         /// Converts this information structure into public MarkdownMetadata structure
-        func toMetadata(endLineIdentifier: EntityId? = nil) -> MarkdownMetadata {
+        func toMetadata(endLineIdentifier: EntityId? = nil, endCommentIdentifier: EntityId? = nil) -> MarkdownMetadata {
             return MarkdownMetadata(
                 name: name,
                 parameters: params,
                 beginLine: lineIdentifier,
-                endLine: endLineIdentifier ?? lineIdentifier
+                endLine: endLineIdentifier ?? lineIdentifier,
+                beginInlineCommentId: commentIdentifier,
+                endInlineCommentId: endCommentIdentifier ?? commentIdentifier
             )
         }
     }
@@ -448,7 +470,7 @@ extension MarkdownDocument {
                             return
                         }
                         // Multiline metadata has been successfully closed
-                        metadata.append(onTop.toMetadata(endLineIdentifier: info.lineIdentifier))
+                        metadata.append(onTop.toMetadata(endLineIdentifier: info.lineIdentifier, endCommentIdentifier: comment.identifier))
                     }
                 } else {
                     // Simple metadata, without begin - end marking
@@ -476,7 +498,7 @@ extension MarkdownDocument {
             }
             if components[0] == "end" {
                 let name = components.count > 1 ? components[1] : ""
-                return MetadataInfo(name: String(name), params: nil, isMultiline: true, isEnd: true, lineIdentifier: lineId)
+                return MetadataInfo(name: String(name), params: nil, isMultiline: true, isEnd: true, lineIdentifier: lineId, commentIdentifier: comment.identifier)
             }
             let isMultiline = components[0] == "begin"
             let nameOffset = isMultiline ? 1 : 0
@@ -492,7 +514,7 @@ extension MarkdownDocument {
             } else {
                 params = nil
             }
-            return MetadataInfo(name: name, params: params, isMultiline: isMultiline, isEnd: false, lineIdentifier: lineId)
+            return MetadataInfo(name: name, params: params, isMultiline: isMultiline, isEnd: false, lineIdentifier: lineId, commentIdentifier: comment.identifier)
         }
         Console.warning(self, comment, "Cannot parse metadata information.")
         return nil

@@ -132,7 +132,7 @@ class MarkdownParser {
     private func parseLine(_ line: MarkdownLine, initialState: MarkdownParserState) -> MarkdownParserState {
         var state = initialState
         
-        line.parserStateAtStart = state
+        line.parserStateAtBegin = state
         
         var nextValidOffset: Int?
         let lc = line.lineContent

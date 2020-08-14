@@ -25,7 +25,7 @@ extension DocumentationDatabase {
     /// - Returns: true if operation succeeds
     func removeUnwantedSections() -> Bool {
         allDocuments().forEach { document in
-            document.allMetadata(withName: "remove").forEach { metadata in
+            document.allMetadata(withName: "remove", multiline: true).forEach { metadata in
                 document.removeLinesForMetadata(metadata: metadata)
             }
         }

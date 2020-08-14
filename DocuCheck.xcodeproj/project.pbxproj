@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		BF8494C024E6900100340D59 /* BuildCodeTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */; };
 		OBJ_100 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* Cmd.swift */; };
 		OBJ_101 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* CommandArguments.swift */; };
 		OBJ_102 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* Console.swift */; };
@@ -86,6 +87,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildCodeTabs.swift; sourceTree = "<group>"; };
 		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; lastKnownFileType = text; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DocuCheckLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DocuCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,6 +191,7 @@
 		OBJ_12 /* DatabaseOperations */ = {
 			isa = PBXGroup;
 			children = (
+				BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */,
 				OBJ_13 /* LinkStatistics.swift */,
 				OBJ_14 /* PatchSingleFileDocumentation.swift */,
 				OBJ_15 /* RemoveUnwantedSections.swift */,
@@ -264,7 +267,7 @@
 			path = Tests/DocuCheckTests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -276,7 +279,6 @@
 				OBJ_59 /* LICENSE */,
 				OBJ_60 /* README.md */,
 			);
-			name = "";
 			sourceTree = "<group>";
 			usesTabs = 0;
 		};
@@ -391,7 +393,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_53 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -439,6 +441,7 @@
 				OBJ_75 /* LinkStatistics.swift in Sources */,
 				OBJ_76 /* PatchSingleFileDocumentation.swift in Sources */,
 				OBJ_77 /* RemoveUnwantedSections.swift in Sources */,
+				BF8494C024E6900100340D59 /* BuildCodeTabs.swift in Sources */,
 				OBJ_78 /* SaveAllDocuments.swift in Sources */,
 				OBJ_79 /* UpdateDocumentTitles.swift in Sources */,
 				OBJ_80 /* UpdateRepositoryLinks.swift in Sources */,
