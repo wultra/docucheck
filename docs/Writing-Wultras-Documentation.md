@@ -36,29 +36,14 @@ This document describes how to create a proper documentation for Wultra's applic
    - Let's say, you're going to update documentation for [`wultra/ssl-pinning-ios`](https://github.com/wultra/ssl-pinning-ios)
    - Let's say, you have cloned that repo into `/Users/johndoe/Dev/libs/ssl-pinning-ios`.
    - Create a new branch from current `develop` branch. For example `features/documentation-update`.
-   
-1. Add local path to DocuCheck's configuration:
-   - Edit `/Users/johndoe/Dev/docs/wultra-developers/releases/develop.json`
-   - Put `"localFiles"` key into the configuration. For example:
-     ```json
-     {
-         "repositories": {
-             "ssl-pinning-ios" : {
-                 "remote": "wultra/ssl-pinning-ios",
-                 "localFiles": "/Users/johndoe/Dev/libs/ssl-pinning-ios"
-             },
-         }
-     }
-     ```
 
-1. Run `./update-develop.sh --fast` every time you change documentation for `ssl-pinning-ios`
+1. Run `./update-develop.sh --fast -t /Users/johndoe/Dev/libs/ssl-pinning-ios` every time you change documentation for `ssl-pinning-ios`
 
 1. Optional but recommended, run `./run-local-server.sh` in another console
    - Test your changes live at `http://127.0.0.1:4000/docs/develop/` ([open link](http://127.0.0.1:4000/docs/develop/))
    - You can keep the local server up and running. It will reflect your changes automatically. Just wait a couple of seconds and then reload the page.
 
 1. After you're done with your changes, then:
-   - Revert the configuration you modified in step #3 
    - Push updated documentation into that `features/documentation-update` branch
    - Make a pull request with your changed documentation
    - Wait for a review...

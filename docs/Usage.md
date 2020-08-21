@@ -49,6 +49,16 @@ Prints embedded command's help to the console:
   - Tells `DocuCheck` to fetch changes only for required `repo`. Other repositories will be processed like with using `--fast` switch.
   - You can use this option for multiple repositories for the same command. 
 
+- `--test=path` or `-t path`
+  - Tells `DocuCheck` to use local path as a source for the repository. The repository identifier is determined from the last path component.
+  - In case that repository identifier cannot be determined from the last path component (e.g. you have cloned your sources on a custom path), then use `--testRepo` switch before `--test`
+  - You can use this option for multiple repositories for the same command.
+  - It's recommended to use `--fast` switch when you testing your locally changed documentation.
+
+- `--testRepo=repo` or `-tr repo`
+  - Tells `DocuCheck` to use `repo` as repository identifier for the subsequent `--test=path` option.
+  - This swith can be used only in combination with `--test` or `-t` option.
+
 - `--verbose` or `-v2`
   - Tells `DocuCheck` to print more debug information to the console.
   - You can use this switch in case of troubles, to investigate more about what's wrong.
