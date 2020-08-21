@@ -23,6 +23,7 @@ extension DocumentationDatabase {
     ///
     /// - Returns: true if operation succeeded
     func patchSingleFileDocumentation() -> Bool {
+        Console.info("Patching single docs...")
         repositories.forEach { repoId, repo in
             if repoId.contains("/") {
                 return
