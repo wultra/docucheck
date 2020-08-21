@@ -106,16 +106,12 @@ class DocumentationLoader {
             cmdGit = Cmd("git")
         }
         config.repositories.forEach { repoIdentifier, repoConfig in
-            let fullRepoPath = config.path(repo: repoIdentifier, basePath: repositoryDir)
-            if let localPath = repoConfig.localFiles {
-                // Just copy files from local directory
-                Console.info("Copying local \"\(repoIdentifier)\"...")
-                if FS.fileExists(at: fullRepoPath) {
-                    FS.remove(at: fullRepoPath)
-                }
-                FS.copy(from: localPath, to: repositoryDir.addingPathComponent(repoIdentifier))
+            if repoConfig.localFiles != nil {
+                // Just use files from local directory
+                Console.info("Using local \"\(repoIdentifier)\"...")
             } else {
                 // Download repository
+                let fullRepoPath = config.sourcesPath(repo: repoIdentifier, basePath: repositoryDir)
                 self.cloneOrUpdateGitRepository(repoIdentifier: repoIdentifier, repoConfig: repoConfig, fullRepoPath: fullRepoPath)
             }
         }
@@ -251,13 +247,13 @@ class DocumentationLoader {
                 guard let singleDocument = repoParams.singleDocumentFile else {
                     Console.fatalError("hasSingleDocument is true, but singleDocumentFile is not set")
                 }
-                let sourcePath = config.path(repo: repoIdentifier, basePath: repositoryDir).addingPathComponent(singleDocument)
+                let sourcePath = config.sourcesPath(repo: repoIdentifier, basePath: repositoryDir).addingPathComponent(singleDocument)
                 let destinationPath = fullOutPath.addingPathComponent(effectiveGP.targetHomeFile!)
                 FS.makeDir(at: fullOutPath)
                 FS.copy(from: sourcePath, to: destinationPath)
             } else {
                 // Documentation in "docs" folder, copy that folder
-                let sourcePath = config.path(repo: repoIdentifier, basePath: repositoryDir).addingPathComponent(repoParams.docsFolder!)
+                let sourcePath = config.sourcesPath(repo: repoIdentifier, basePath: repositoryDir).addingPathComponent(repoParams.docsFolder!)
                 FS.copy(from: sourcePath, to: fullOutPath)
             }
         }
@@ -455,7 +451,7 @@ fileprivate extension Config {
         // URL
         params.append(repoConfig.downloadSourcesPath.absoluteString)
         // Destination folder
-        params.append(path(repo: repoIdentifier, basePath: reposPath))
+        params.append(sourcesPath(repo: repoIdentifier, basePath: reposPath))
         
         return params
     }
@@ -468,7 +464,7 @@ fileprivate extension Config {
     ///   - ref: Branch or tag to verify
     /// - Returns: Array of strings, representing parameters for "git" command
     func gitVerifyBranchCommandParameters(repoIdentifier: String, reposPath: String, ref: String) -> [String] {
-        let repoPath = path(repo: repoIdentifier, basePath: reposPath)
+        let repoPath = sourcesPath(repo: repoIdentifier, basePath: reposPath)
         var params = [ "-C", repoPath, "rev-parse", "--verify", ref ]
         if Console.verboseLevel != .all {
             params.append("--quiet")
@@ -489,7 +485,7 @@ fileprivate extension Config {
         guard let repoConfig = repositories[repoIdentifier] else {
             Console.fatalError("Unknown repository identifier \"\(repoIdentifier)\".")
         }
-        let repoPath = path(repo: repoIdentifier, basePath: reposPath)
+        let repoPath = sourcesPath(repo: repoIdentifier, basePath: reposPath)
         var params = [ "-C", repoPath, "checkout" ]
         if repoConfig.hasBranch {
             // Points to a branch
@@ -520,7 +516,7 @@ fileprivate extension Config {
     /// - Parameter reposPath: Path to all repositories
     /// - Returns: Array of strings, representing parameters for "git" command
     func gitPullCommandParameters(repoIdentifier: String, reposPath: String) -> [String] {
-        let repoPath = path(repo: repoIdentifier, basePath: reposPath)
+        let repoPath = sourcesPath(repo: repoIdentifier, basePath: reposPath)
         var params = [ "-C", repoPath, "pull" ]
         
         if Console.verboseLevel != .all {
@@ -537,7 +533,7 @@ fileprivate extension Config {
     /// - Parameter branch: If used, then fetches exact branch.
     /// - Returns: Array of strings, representing parameters for "git" command
     func gitFetchCommandParameters(repoIdentifier: String, reposPath: String, branch: String? = nil) -> [String] {
-        let repoPath = path(repo: repoIdentifier, basePath: reposPath)
+        let repoPath = sourcesPath(repo: repoIdentifier, basePath: reposPath)
         var params = [ "-C", repoPath, "fetch", "--tags" ]
         
         if Console.verboseLevel != .all {
