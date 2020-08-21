@@ -150,15 +150,32 @@ struct Config: Decodable {
 
 
 extension Config {
+
+    /// Returns full path to the repository, based on provided 'basePath'. Unlike `sourcesPath()` function, this
+    /// variant doesn't follow `localFiles` configuration option.
+    ///
+    /// - Parameter identifier: Identifier of repository (e.g. key to "parameters" configuration)
+    /// - Parameter basePath: Base path to calculate a full path.
+    /// - Returns: String with a full path to requested repository
+    func path(repo identifier: String, basePath: String) -> String {
+        guard let repo = repositories[identifier] else {
+            Console.fatalError("Unknown repository identifier `\(identifier)`.")
+        }
+        return basePath.addingPathComponent(repo.path ?? identifier)
+    }
     
-    /// Returns relative path where the repository with given identifier was cloned.
+    /// Returns path where the repository with given identifier was cloned.
     ///
     /// - Parameter identifier: Identifier of repository (e.g. key to "parameters" configuration)
     /// - Parameter basePath: Path where all repositories are cloned
     /// - Returns: String with a relative path to requested repository
-    func path(repo identifier: String, basePath: String) -> String {
+    func sourcesPath(repo identifier: String, basePath: String) -> String {
         guard let repo = repositories[identifier] else {
             Console.fatalError("Unknown repository identifier `\(identifier)`.")
+        }
+        // In case that local files option is set, then return that path.
+        if let localPath = repo.localFiles {
+            return localPath
         }
         return basePath.addingPathComponent(repo.path ?? identifier)
     }

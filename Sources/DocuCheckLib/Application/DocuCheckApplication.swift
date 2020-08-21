@@ -34,6 +34,7 @@ public class DocuCheckApplication {
     private var optShowUnusedDocs = false
     private var optFastMode = false
     private var optFetchRepo = [String]()
+    private var optTestRepo = [(repoId: String?, path: String)]()
     
     /// Name of release determined by `optReleaseName` or path to config file.
     private var releaseName: String {
@@ -76,7 +77,7 @@ public class DocuCheckApplication {
     
     /// Function validates arguments provided to the application.
     private func validateArguments() {
-        
+        var testRepoName: String?
         CommandArguments()
             .add(option: "--help", alias: "-h") {
                 self.printUsage(exitWithError: false)
@@ -116,7 +117,20 @@ public class DocuCheckApplication {
             .add(option: "--fetch", shortcut: "-f") { (option) in
                 self.optFetchRepo.append(option)
             }
+            .add(option: "--testRepo", shortcut: "-tr") { (option) in
+                guard testRepoName == nil else {
+                    Console.exitError("Option '--testRepo' must be followed with '--test'.")
+                }
+                testRepoName = option
+            }
+            .add(option: "--test", shortcut: "-t") { (option) in
+                self.optTestRepo.append((testRepoName, option))
+                testRepoName = nil
+            }
             .afterAll {
+                guard testRepoName == nil else {
+                    Console.exitError("Unused '--testRepo' option.")
+                }
                 guard self.configPath != nil else {
                     Console.exitError("You have to specify path to a configuration file.")
                 }
@@ -139,7 +153,43 @@ public class DocuCheckApplication {
         if repoDir == nil {
             repoDir = fixedPaths.repositoriesPath
         }
-        return config
+        return patchTestLocalFiles(config: config)
+    }
+    
+    /// Function update repository definitions in config according to `optTestRepo` array.
+    /// - Parameter config: Original `Config` loaded from JSON.
+    /// - Returns: Updated `Config`.
+    private func patchTestLocalFiles(config: Config) -> Config {
+        guard !optTestRepo.isEmpty else {
+            return config
+        }
+        var testRepoMapping = config.repositories
+        for testRepo in optTestRepo {
+            let path = testRepo.path
+            guard FS.isDirectory(at: path) else {
+                Console.exitError("Directory with documentation to test not found: \(path)")
+            }
+            let repoId = testRepo.repoId ?? path.fileItemNameFromPath()
+            guard !repoId.isEmpty else {
+                Console.exitError("Failed to determine repository identifier from path: \(path)")
+            }
+            guard let repo = config.repositories[repoId] else {
+                Console.exitError("Test repository '\(repoId)' not found in configuration.")
+            }
+            let updatedRepo = Config.Repository(
+                remote: repo.remote,
+                provider: repo.provider,
+                branch: repo.branch,
+                tag: repo.tag,
+                path: repo.path,
+                localFiles: path)
+            testRepoMapping[repoId] = updatedRepo
+        }
+        // Create an updated Config
+        return Config(
+            repositories: testRepoMapping,
+            repositoryParameters: config.repositoryParameters,
+            globalParameters: config.globalParameters)
     }
     
     /// Loads repositories from remote sources to destination path
@@ -208,11 +258,18 @@ public class DocuCheckApplication {
             Console.message(" --showExternalLinks | -sel     Prints all external links found in docs")
             Console.message(" --showUnusedDocs | -sud        Prints all unreferenced documents")
             Console.message(" --failOnWarning                Process will fail when warning is reported")
-            Console.message(" --fast                           if used, then some slow tasks will be ommited,")
+            Console.message(" --fast                         If used, then some slow tasks will be ommited,")
             Console.message("                                  like pulling changes from git branch.")
             Console.message(" --fetch=repo | -f repo         If used, only specified repo will be updated")
             Console.message("                                  from remote repository. Can be used for multiple")
             Console.message("                                  repo identifiers.")
+            Console.message(" --test=path | -t path          Test local changes for source repository at local")
+            Console.message("                                  path. The repository identifier is determined")
+            Console.message("                                  from last path component, unless '--testRepo'")
+            Console.message("                                  precede this option.")
+            Console.message(" --testRepo=repo | -tr repo     Set custom repository identifier for subsequent")
+            Console.message("                                  '--test' switch. So, you should use this switch")
+            Console.message("                                  only in pair with '--test'.")
             Console.message("")
             Console.message(" --help    | -h                 Prints this help information")
             Console.message(" --verbose | -v2                Turns on more information printed to the console")
