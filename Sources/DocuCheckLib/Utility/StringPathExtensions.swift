@@ -61,7 +61,7 @@ extension String {
             // forward slash not found
             return self
         }
-        return String(self[rpos.upperBound..<self.endIndex])
+        return String(self[rpos.upperBound..<stringEnd])
     }
     
     /// Returns directory part from path, stored in the string.
