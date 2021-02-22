@@ -69,11 +69,21 @@ extension DocumentationDatabase {
         
         // Modify document
         document.remove(linesFrom: 0, count: line + 1)
+        
+        // Check if there is a template override
+        var layout = "page"
+        if let template = document.firstMetadata(withName: "TEMPLATE") {
+            if let params = template.parameters {
+                if (params.count == 1) {
+                    layout = params[0];
+                }
+            }
+        }
 
         // Add common attributes
         var newLines = [
             "---",
-            "layout: page",
+            "layout: \(layout)",
             "title: \(title.title)",
             "timestamp: \(timestampValue)"
         ]
