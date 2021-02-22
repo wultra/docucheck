@@ -73,10 +73,10 @@ extension DocumentationDatabase {
         // Check if there is a template override
         var layout = "page"
         if let template = document.firstMetadata(withName: "TEMPLATE") {
-            if let params = template.parameters {
-                if (params.count == 1) {
-                    layout = params[0];
-                }
+            if let layoutName = template.parameters?.first {
+                layout = layoutName
+            } else {
+                Console.warning(document, template.beginLine, "Missing template name in TEMPLATE metadata tag.")
             }
         }
 
