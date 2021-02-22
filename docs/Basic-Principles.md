@@ -156,6 +156,16 @@ If documentation is composed from one single document, then meta-data informatio
 
 A good example is [SSL Pinning for iOS](https://github.com/wultra/ssl-pinning-ios#docucheck-keep-link). You can see, that document visible at GitHub contains TOC at the beginning, but [version at our portal](https://github.com/wultra/ssl-pinning-ios) has that section available in the sidebar.
 
+#### Changing Page Template
+
+In case a particular documentation page desires a specific layout, you can specify a custom template by using the `TEMPLATE` metadata:
+
+```md
+<!-- TEMPLATE tutorials -->
+```
+
+The `TEMPLATE` metadata require exactly one attribute that represents the template name. The value is filled in to the `layout:` portion of Jekyll front matter without any interpretation (you are responsible for providing an existing layout name). If no template is specified in a particular documentation page, the default `page` template is used.
+
 #### Add the Author to the Post
 
 You can add an information about an author and article publishing date to the sidebar using a simple one-line tag:
