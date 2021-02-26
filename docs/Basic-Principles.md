@@ -223,3 +223,21 @@ NSObject * object = [[NSObject alloc] init];
 ```
 <!-- end -->
 ~~~
+
+#### Info boxes
+
+You can use information boxes with a custom styling to highlight some important information. For example: 
+
+~~~md
+<!-- begin box warning -->
+All your base are belong to us.
+<!-- end -->
+~~~
+
+The code above will be displayed as:
+
+<!-- begin box warning -->
+All your base are belong to us.
+<!-- end -->
+
+The following styles are supported: `info`,  `warning` and `success`.
