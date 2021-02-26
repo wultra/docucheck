@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		BF8494C024E6900100340D59 /* BuildCodeTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */; };
+		BFF465FA25E95A7D00A0ED9F /* BuildInfoBoxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF465F925E95A7D00A0ED9F /* BuildInfoBoxes.swift */; };
 		OBJ_100 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* Cmd.swift */; };
 		OBJ_101 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* CommandArguments.swift */; };
 		OBJ_102 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* Console.swift */; };
@@ -88,6 +89,7 @@
 
 /* Begin PBXFileReference section */
 		BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildCodeTabs.swift; sourceTree = "<group>"; };
+		BFF465F925E95A7D00A0ED9F /* BuildInfoBoxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfoBoxes.swift; sourceTree = "<group>"; };
 		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; lastKnownFileType = text; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DocuCheckLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DocuCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */,
+				BFF465F925E95A7D00A0ED9F /* BuildInfoBoxes.swift */,
 				OBJ_13 /* LinkStatistics.swift */,
 				OBJ_14 /* PatchSingleFileDocumentation.swift */,
 				OBJ_15 /* RemoveUnwantedSections.swift */,
@@ -465,6 +468,7 @@
 				OBJ_98 /* MarkdownMetadata.swift in Sources */,
 				OBJ_99 /* MarkdownParser.swift in Sources */,
 				OBJ_100 /* Cmd.swift in Sources */,
+				BFF465FA25E95A7D00A0ED9F /* BuildInfoBoxes.swift in Sources */,
 				OBJ_101 /* CommandArguments.swift in Sources */,
 				OBJ_102 /* Console.swift in Sources */,
 				OBJ_103 /* FS.swift in Sources */,

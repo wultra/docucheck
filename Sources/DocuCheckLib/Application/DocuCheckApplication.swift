@@ -216,7 +216,8 @@ public class DocuCheckApplication {
         
         _ = database.patchSingleFileDocumentation()
         _ = database.removeUnwantedSections()
-        _ = database.updatedCodeTabs()
+        _ = database.updateCodeTabs()
+        _ = database.updateInfoBoxes()
         _ = database.updateRepositoryLinks()
         _ = database.updateDocumentTitles()
         _ = database.saveAllChanges()

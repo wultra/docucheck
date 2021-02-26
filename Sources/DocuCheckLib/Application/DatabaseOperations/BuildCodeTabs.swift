@@ -21,7 +21,7 @@ extension DocumentationDatabase {
     
     /// Transform all `codetabs` or `tabs` metadata objects in all documents.
     /// - Returns: true if everyghing was OK.
-    func updatedCodeTabs() -> Bool {
+    func updateCodeTabs() -> Bool {
         Console.info("Building code tabs...")
         var result = true
         allDocuments().forEach { document in
