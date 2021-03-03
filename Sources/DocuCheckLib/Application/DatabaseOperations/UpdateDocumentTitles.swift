@@ -92,11 +92,13 @@ extension DocumentationDatabase {
         // Add the repository branch or tag
         if let tag = repo.repository.tag {
             newLines += [
-                "tag: \(tag)"
+                "tag: \(tag)",
+                "version: \(tag)"
             ]
         } else if let branch = repo.repository.branch {
             newLines += [
-                "branch: \(branch)"
+                "branch: \(branch)",
+                "version: \(branch)"
             ]
         }
         
