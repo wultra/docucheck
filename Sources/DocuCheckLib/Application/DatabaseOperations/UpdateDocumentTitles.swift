@@ -85,8 +85,20 @@ extension DocumentationDatabase {
             "---",
             "layout: \(layout)",
             "title: \(title.title)",
-            "timestamp: \(timestampValue)"
+            "timestamp: \(timestampValue)",
+            "repoIdentifier: \(repo.repoIdentifier)"
         ]
+        
+        // Add the repository branch or tag
+        if let tag = repo.repository.tag {
+            newLines += [
+                "tag: \(tag)"
+            ]
+        } else if let branch = repo.repository.branch {
+            newLines += [
+                "branch: \(branch)"
+            ]
+        }
         
         // If private product URL is available, then use it as a "source" replacement.
         // Otherwise use just "source" and "sourceRepo", that points to original git source.

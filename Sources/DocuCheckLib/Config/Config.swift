@@ -129,7 +129,7 @@ struct Config: Decodable {
             paths: nil,
             markdownExtensions: ["md", "markdown"],
             imageExtensions: ["png", "jpg", "jpeg", "gif"],
-            targetHomeFile: "index.md",
+            targetHomeFile: "",
             releaseIdentifier: nil
         )
     }
