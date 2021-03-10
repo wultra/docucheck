@@ -57,14 +57,14 @@ class MarkdownDocumentTests: XCTestCase {
     # This is header1
     ###   This is header 3
 
-    <!-- begin TOC -->
+    <!-- Begin TOC -->
     This is simple table of content
     - Content 1
     - Content 2
     <!-- begin inner-toc with params -->
     <!-- inner-item -->
     <!-- end -->
-    <!-- end TOC -->
+    <!-- End TOC -->
     In next chapter, we will try to escape characters
     \\#\\`\\_\\\\\\*\\{\\}\\[\\]\\(\\)\\+\\-\\.\\!
     <!-- document-id   543  -->
@@ -239,12 +239,17 @@ class MarkdownDocumentTests: XCTestCase {
         let doc = MarkdownDocument(source: self.documentSource2, repoIdentifier: "test")
         XCTAssertTrue(doc.load())
         
-        guard let toc = doc.firstMetadata(withName: "TOC") else {
+        guard let TOC = doc.firstMetadata(withName: "TOC") else {
+            XCTFail()
+            return
+        }
+        guard let toc = doc.firstMetadata(withName: "toc") else {
             XCTFail()
             return
         }
         XCTAssertTrue(toc.isMultiline)
         XCTAssertEqual(toc.identifier, doc.getMetadata(withIdentifier: toc.identifier)?.identifier)
+        XCTAssertEqual(TOC.identifier, toc.identifier)
         
         guard let toc_lines = doc.getLinesForMetadata(metadata: toc, includeMarkers: false)?.map({ $0.toString() }) else {
             XCTFail()
