@@ -19,6 +19,14 @@ import Foundation
 
 struct MarkdownMetadata {
     
+    /// Mixed entity identifier, calculated from `beginLine` and `beginInlineCommentId`.
+    /// Be aware that this identifier may be altered with changes in document. This is due
+    /// to fact, that each change in document cause update of array of metedata objects.
+    let identifier: EntityId
+
+    /// Optional mixed identifier of parent metadata object.
+    let parentIdentifier: EntityId?
+
     /// Contains metadata name.
     let name: String
     

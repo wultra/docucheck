@@ -356,6 +356,33 @@ extension MarkdownDocument {
         return metadata.first { $0.isMultiline == multiline && $0.nameForSearch == lowercasedName }
     }
     
+    /// Returns metadata object with given identifier or nil if no such object exist in document.
+    ///
+    /// - Parameter identifier: Metadata identifier
+    /// - Returns: Object representing metadata information or nil if no such information is in document.
+    func getMetadata(withIdentifier identifier: EntityId) -> MarkdownMetadata? {
+        return metadata.first { $0.identifier == identifier }
+    }
+    
+    /// Returns all nested metadata objects for given metadata object.
+    ///
+    /// - Parameter metadata: Parent metadata object.
+    /// - Returns: All nested metadata objects
+    func allNestedMetadata(parent: MarkdownMetadata) -> [MarkdownMetadata] {
+        return metadata.filter { $0.parentIdentifier == parent.identifier }
+    }
+    
+    /// Returns parent metadata object or nil if given object has no parent.
+    ///
+    /// - Parameter metadata: Child metadata object
+    /// - Returns: Parent metadata object or nil if given object has no parent.
+    func getParentMetadata(to metadata: MarkdownMetadata) -> MarkdownMetadata? {
+        if let parentId = metadata.parentIdentifier {
+            return getMetadata(withIdentifier: parentId)
+        }
+        return nil
+    }
+    
     /// Returns MarkdownLine objects for all lines captured in metadata structure. Returns nil in following cases:
     /// - If provided metadata structure doesn't cover multiple lines
     /// - If line numbers cannot be determined from identifiers from metadata structure.
@@ -411,6 +438,10 @@ extension MarkdownDocument {
     
     /// Helper structure representing metadata information parsed from HTML comment.
     private struct MetadataInfo {
+        /// Mixed identifier, calculated from `lineIdentifier` and `commentIdentifier`
+        let identifier: EntityId
+        /// Parent's mixed identifier.
+        let parentIdentifier: EntityId?
         /// Name of metadata entity.
         let name: String
         /// Optional parameters
@@ -430,6 +461,8 @@ extension MarkdownDocument {
         /// Converts this information structure into public MarkdownMetadata structure
         func toMetadata(endLineIdentifier: EntityId? = nil, endCommentIdentifier: EntityId? = nil) -> MarkdownMetadata {
             return MarkdownMetadata(
+                identifier: identifier,
+                parentIdentifier: parentIdentifier,
                 name: name,
                 nameForSearch: name.lowercased(),
                 parameters: params,
@@ -454,7 +487,7 @@ extension MarkdownDocument {
                 // Skip other than "inline comments" entity
                 guard let comment = entity as? MarkdownInlineComment else { return }
                 // Try to parse HTML comment into metadata information
-                guard let info = self.parseMetadataString(fromComment: comment, lineId: lineObject.identifier) else { return }
+                guard let info = self.parseMetadataString(fromComment: comment, lineId: lineObject.identifier, parentId: stack.last?.identifier) else { return }
                 if info.isMultiline {
                     if info.isBegin {
                         // Opening multiline metadata. Push that value to the stack.
@@ -495,7 +528,7 @@ extension MarkdownDocument {
     /// - Parameter comment: Comment to parse
     /// - Parameter lineId: Current line's identifier
     /// - Returns: Metadata information structure or nil in case of failure.
-    private func parseMetadataString(fromComment comment: MarkdownInlineComment, lineId: EntityId) -> MetadataInfo? {
+    private func parseMetadataString(fromComment comment: MarkdownInlineComment, lineId: EntityId, parentId: EntityId?) -> MetadataInfo? {
         let components = comment.content.split(separator: " ")
         if components.count > 0 {
             let firstComponent = components[0].lowercased()
@@ -505,7 +538,15 @@ extension MarkdownDocument {
             }
             if firstComponent == "end" {
                 let name = components.count > 1 ? components[1] : ""
-                return MetadataInfo(name: String(name), params: nil, isMultiline: true, isEnd: true, lineIdentifier: lineId, commentIdentifier: comment.identifier)
+                return MetadataInfo(
+                    identifier: entityIdGenerator.mixedEntityId(id1: lineId, id2: comment.identifier),
+                    parentIdentifier: parentId,
+                    name: String(name),
+                    params: nil,
+                    isMultiline: true,
+                    isEnd: true,
+                    lineIdentifier: lineId,
+                    commentIdentifier: comment.identifier)
             }
             let isMultiline = firstComponent == "begin"
             let nameOffset = isMultiline ? 1 : 0
@@ -521,7 +562,15 @@ extension MarkdownDocument {
             } else {
                 params = nil
             }
-            return MetadataInfo(name: name, params: params, isMultiline: isMultiline, isEnd: false, lineIdentifier: lineId, commentIdentifier: comment.identifier)
+            return MetadataInfo(
+                identifier: entityIdGenerator.mixedEntityId(id1: lineId, id2: comment.identifier),
+                parentIdentifier: parentId,
+                name: name,
+                params: params,
+                isMultiline: isMultiline,
+                isEnd: false,
+                lineIdentifier: lineId,
+                commentIdentifier: comment.identifier)
         }
         Console.warning(self, comment, "Cannot parse metadata information.")
         return nil

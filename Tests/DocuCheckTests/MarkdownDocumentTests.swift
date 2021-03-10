@@ -62,6 +62,7 @@ class MarkdownDocumentTests: XCTestCase {
     - Content 1
     - Content 2
     <!-- begin inner-toc with params -->
+    <!-- inner-item -->
     <!-- end -->
     <!-- end TOC -->
     In next chapter, we will try to escape characters
@@ -243,25 +244,36 @@ class MarkdownDocumentTests: XCTestCase {
             return
         }
         XCTAssertTrue(toc.isMultiline)
+        XCTAssertEqual(toc.identifier, doc.getMetadata(withIdentifier: toc.identifier)?.identifier)
+        
         guard let toc_lines = doc.getLinesForMetadata(metadata: toc, includeMarkers: false)?.map({ $0.toString() }) else {
             XCTFail()
             return
         }
-        XCTAssertTrue(toc_lines.count == 5)
+        XCTAssertTrue(toc_lines.count == 6)
         XCTAssertTrue(toc_lines[0] == "This is simple table of content")
         XCTAssertTrue(toc_lines[1] == "- Content 1")
         XCTAssertTrue(toc_lines[2] == "- Content 2")
         XCTAssertTrue(toc_lines[3] == "<!-- begin inner-toc with params -->")
-        XCTAssertTrue(toc_lines[4] == "<!-- end -->")
+        XCTAssertTrue(toc_lines[4] == "<!-- inner-item -->")
+        XCTAssertTrue(toc_lines[5] == "<!-- end -->")
   
         guard let inner_toc = doc.firstMetadata(withName: "inner-toc") else {
             XCTFail()
             return
         }
+        XCTAssertEqual(toc.identifier, inner_toc.parentIdentifier)
         XCTAssertTrue(inner_toc.isMultiline)
         XCTAssertTrue(inner_toc.parameters?.count == 2)
         XCTAssertTrue(inner_toc.parameters?[0] == "with")
         XCTAssertTrue(inner_toc.parameters?[1] == "params")
+        
+        let nested_toc = doc.allNestedMetadata(parent: toc)
+        XCTAssertTrue(nested_toc.count == 1)
+        XCTAssertEqual(nested_toc.first?.identifier, inner_toc.identifier)
+        
+        let parent_toc = doc.getParentMetadata(to: inner_toc)
+        XCTAssertEqual(toc.identifier, parent_toc?.identifier)
         
         guard let doc_id = doc.firstMetadata(withName: "document-id") else {
             XCTFail()

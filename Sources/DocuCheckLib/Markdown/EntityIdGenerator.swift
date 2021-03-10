@@ -19,6 +19,10 @@ import Foundation
 protocol EntityIdGenerator {
     /// Returns a new, unique, entity identifier.
     func entityId() -> EntityId
+    
+    /// Returns mixed identifier from given two identifiers. The mixed identifier
+    /// is typically a temporary identifier, valid until next document change.
+    func mixedEntityId(id1: EntityId, id2: EntityId) -> EntityId
 }
 
 
@@ -38,5 +42,9 @@ class DefaultEntityIdGenerator: EntityIdGenerator {
         let id = nextIdentifier
         nextIdentifier += 1
         return id
+    }
+    
+    func mixedEntityId(id1: EntityId, id2: EntityId) -> EntityId {
+        return -(Int64(INT32_MAX) * id1 + id2)
     }
 }
