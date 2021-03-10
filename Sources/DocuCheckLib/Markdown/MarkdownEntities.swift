@@ -17,7 +17,7 @@
 import Foundation
 
 typealias StringRange = Range<String.Index>
-typealias EntityId = Int
+typealias EntityId = Int64
 
 enum EntityType {
     case error
