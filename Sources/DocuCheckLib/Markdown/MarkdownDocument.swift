@@ -277,6 +277,7 @@ extension MarkdownDocument {
 }
 
 // MARK: - Specialized entities
+
 extension MarkdownDocument {
     
     /// Returns all links in the document
@@ -322,7 +323,8 @@ extension MarkdownDocument {
     /// - Parameter name: Name of metadata tag to be found
     /// - Returns: Array of objects with metadata information.
     func allMetadata(withName name: String) -> [MarkdownMetadata] {
-        return metadata.filter { $0.name == name }
+        let lowercasedName = name.lowercased()
+        return metadata.filter { $0.nameForSearch == lowercasedName }
     }
     
     /// Returns all occurences of metadata objects with given name in the document.
@@ -331,7 +333,8 @@ extension MarkdownDocument {
     /// - Parameter multiline: Specifies whether metadata should be multiline or not.
     /// - Returns: Array of objects with metadata information.
     func allMetadata(withName name: String, multiline: Bool) -> [MarkdownMetadata] {
-        return metadata.filter { $0.isMultiline == multiline && $0.name == name }
+        let lowercasedName = name.lowercased()
+        return metadata.filter { $0.isMultiline == multiline && $0.nameForSearch == lowercasedName }
     }
     
     /// Returns first metadata object with given name or nil if no such information is in document.
@@ -339,7 +342,8 @@ extension MarkdownDocument {
     /// - Parameter name: Name of metadata tag to be found
     /// - Returns: Object representing metadata information or nil if no such information is in document.
     func firstMetadata(withName name: String) -> MarkdownMetadata? {
-        return metadata.first { $0.name == name }
+        let lowercasedName = name.lowercased()
+        return metadata.first { $0.nameForSearch == lowercasedName }
     }
     
     /// Returns first metadata object with given name or nil if no such information is in document.
@@ -348,7 +352,8 @@ extension MarkdownDocument {
     /// - Parameter multiline: Specifies whether metadata should be multiline or not.
     /// - Returns: Object representing metadata information or nil if no such information is in document.
     func firstMetadata(withName name: String, multiline: Bool) -> MarkdownMetadata? {
-        return metadata.first { $0.isMultiline == multiline && $0.name == name }
+        let lowercasedName = name.lowercased()
+        return metadata.first { $0.isMultiline == multiline && $0.nameForSearch == lowercasedName }
     }
     
     /// Returns MarkdownLine objects for all lines captured in metadata structure. Returns nil in following cases:
@@ -426,6 +431,7 @@ extension MarkdownDocument {
         func toMetadata(endLineIdentifier: EntityId? = nil, endCommentIdentifier: EntityId? = nil) -> MarkdownMetadata {
             return MarkdownMetadata(
                 name: name,
+                nameForSearch: name.lowercased(),
                 parameters: params,
                 beginLine: lineIdentifier,
                 endLine: endLineIdentifier ?? lineIdentifier,
@@ -492,15 +498,16 @@ extension MarkdownDocument {
     private func parseMetadataString(fromComment comment: MarkdownInlineComment, lineId: EntityId) -> MetadataInfo? {
         let components = comment.content.split(separator: " ")
         if components.count > 0 {
-            if components[0] == "!!" {
+            let firstComponent = components[0].lowercased()
+            if firstComponent == "!!" {
                 // Not an error, just ignore metadata comments which begins with "!!"
                 return nil
             }
-            if components[0] == "end" {
+            if firstComponent == "end" {
                 let name = components.count > 1 ? components[1] : ""
                 return MetadataInfo(name: String(name), params: nil, isMultiline: true, isEnd: true, lineIdentifier: lineId, commentIdentifier: comment.identifier)
             }
-            let isMultiline = components[0] == "begin"
+            let isMultiline = firstComponent == "begin"
             let nameOffset = isMultiline ? 1 : 0
             let paramOffset = isMultiline ? 2 : 1
             if components.count < nameOffset + 1 {

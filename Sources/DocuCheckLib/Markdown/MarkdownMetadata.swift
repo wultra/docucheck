@@ -22,6 +22,9 @@ struct MarkdownMetadata {
     /// Contains metadata name.
     let name: String
     
+    /// A lowercased name
+    let nameForSearch: String
+    
     /// Contains optional metadata parameters
     let parameters: [String]?
     
