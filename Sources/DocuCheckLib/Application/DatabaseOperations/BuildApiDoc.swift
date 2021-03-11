@@ -123,7 +123,7 @@ extension DocumentationDatabase {
         let jekyllApiSyntax = [
             "{% api %}",                // 0
             "{% endapi %}",             // 1
-            "{% apipath \(apiHttpMethod) \(apiUri) \"\(apiTitle) %}\"",
+            "{% apipath \(apiHttpMethod) \(apiUri) \"\(apiTitle)\" %}",
             "{% endapipath %}",         // 3
             "{% apidescription %}",     // 4
             "{% endapidescription %}",  // 5
