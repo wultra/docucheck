@@ -102,7 +102,7 @@ extension DocumentationDatabase {
         
         for line in oldLines {
             let copyLine: Bool
-            if let tabMetadata = findTabInLine(line: line, tabMarkers: tabMarkers) {
+            if let tabMetadata = tabMarkers.findTabInLine(line: line) {
                 // It's also "tab" metadata marker
                 if let tabName = tabMetadata.parameters?.first {
                     tabNames.append(tabName)
@@ -132,22 +132,6 @@ extension DocumentationDatabase {
         }
         return applyCodeTabs(document: document, metadata: metadata, tabNames: tabNames, tabContent: tabBlocks)
     }
-    
-    
-    /// Find metadata object matching one of inline comments available in the line.
-    /// - Parameters:
-    ///   - line: Line containing inline comments.
-    ///   - tabMarkers: All tab metadata objects.
-    /// - Returns: Metadata object or nil if no such object has been matched.
-    private func findTabInLine(line: MarkdownLine, tabMarkers: [EntityId:MarkdownMetadata]) -> MarkdownMetadata? {
-        for comment in line.allEntities(withType: .inlineComment) {
-            if let metadata = tabMarkers[comment.identifier] {
-                return metadata
-            }
-        }
-        return nil
-    }
-    
     
     /// Apply `codetabs` or `tabs` changes to the document.
     /// - Parameters:
@@ -198,5 +182,20 @@ extension DocumentationDatabase {
         document.add(lines: newLines, at: startLine)
         
         return true
+    }
+}
+
+fileprivate extension Dictionary where Key == EntityId, Value == MarkdownMetadata {
+    /// Find metadata object matching one of inline comments available in the line.
+    /// - Parameters:
+    ///   - line: Line containing possible inline comments.
+    /// - Returns: Metadata object or nil if no such object has been matched.
+    func findTabInLine(line: MarkdownLine) -> MarkdownMetadata? {
+        for comment in line.allEntities(withType: .inlineComment) {
+            if let metadata = self[comment.identifier] {
+                return metadata
+            }
+        }
+        return nil
     }
 }

@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		BF8494C024E6900100340D59 /* BuildCodeTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */; };
+		BF98F61E25F92DE700FAC376 /* BuildApiDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98F61D25F92DE700FAC376 /* BuildApiDoc.swift */; };
 		BFF465FA25E95A7D00A0ED9F /* BuildInfoBoxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF465F925E95A7D00A0ED9F /* BuildInfoBoxes.swift */; };
 		OBJ_100 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* Cmd.swift */; };
 		OBJ_101 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* CommandArguments.swift */; };
@@ -89,6 +90,7 @@
 
 /* Begin PBXFileReference section */
 		BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildCodeTabs.swift; sourceTree = "<group>"; };
+		BF98F61D25F92DE700FAC376 /* BuildApiDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildApiDoc.swift; sourceTree = "<group>"; };
 		BFF465F925E95A7D00A0ED9F /* BuildInfoBoxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfoBoxes.swift; sourceTree = "<group>"; };
 		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; lastKnownFileType = text; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DocuCheckLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +195,7 @@
 		OBJ_12 /* DatabaseOperations */ = {
 			isa = PBXGroup;
 			children = (
+				BF98F61D25F92DE700FAC376 /* BuildApiDoc.swift */,
 				BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */,
 				BFF465F925E95A7D00A0ED9F /* BuildInfoBoxes.swift */,
 				OBJ_13 /* LinkStatistics.swift */,
@@ -443,6 +446,7 @@
 			files = (
 				OBJ_75 /* LinkStatistics.swift in Sources */,
 				OBJ_76 /* PatchSingleFileDocumentation.swift in Sources */,
+				BF98F61E25F92DE700FAC376 /* BuildApiDoc.swift in Sources */,
 				OBJ_77 /* RemoveUnwantedSections.swift in Sources */,
 				BF8494C024E6900100340D59 /* BuildCodeTabs.swift in Sources */,
 				OBJ_78 /* SaveAllDocuments.swift in Sources */,

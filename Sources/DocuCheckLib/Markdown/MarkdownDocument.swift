@@ -323,8 +323,7 @@ extension MarkdownDocument {
     /// - Parameter name: Name of metadata tag to be found
     /// - Returns: Array of objects with metadata information.
     func allMetadata(withName name: String) -> [MarkdownMetadata] {
-        let lowercasedName = name.lowercased()
-        return metadata.filter { $0.nameForSearch == lowercasedName }
+        return metadata.allMetadata(withName: name)
     }
     
     /// Returns all occurences of metadata objects with given name in the document.
@@ -333,8 +332,7 @@ extension MarkdownDocument {
     /// - Parameter multiline: Specifies whether metadata should be multiline or not.
     /// - Returns: Array of objects with metadata information.
     func allMetadata(withName name: String, multiline: Bool) -> [MarkdownMetadata] {
-        let lowercasedName = name.lowercased()
-        return metadata.filter { $0.isMultiline == multiline && $0.nameForSearch == lowercasedName }
+        return metadata.allMetadata(withName: name, multiline: multiline)
     }
     
     /// Returns first metadata object with given name or nil if no such information is in document.
@@ -342,8 +340,7 @@ extension MarkdownDocument {
     /// - Parameter name: Name of metadata tag to be found
     /// - Returns: Object representing metadata information or nil if no such information is in document.
     func firstMetadata(withName name: String) -> MarkdownMetadata? {
-        let lowercasedName = name.lowercased()
-        return metadata.first { $0.nameForSearch == lowercasedName }
+        return metadata.firstMetadata(withName: name)
     }
     
     /// Returns first metadata object with given name or nil if no such information is in document.
@@ -352,8 +349,7 @@ extension MarkdownDocument {
     /// - Parameter multiline: Specifies whether metadata should be multiline or not.
     /// - Returns: Object representing metadata information or nil if no such information is in document.
     func firstMetadata(withName name: String, multiline: Bool) -> MarkdownMetadata? {
-        let lowercasedName = name.lowercased()
-        return metadata.first { $0.isMultiline == multiline && $0.nameForSearch == lowercasedName }
+        return metadata.firstMetadata(withName: name, multiline: multiline)
     }
     
     /// Returns metadata object with given identifier or nil if no such object exist in document.
@@ -361,7 +357,7 @@ extension MarkdownDocument {
     /// - Parameter identifier: Metadata identifier
     /// - Returns: Object representing metadata information or nil if no such information is in document.
     func getMetadata(withIdentifier identifier: EntityId) -> MarkdownMetadata? {
-        return metadata.first { $0.identifier == identifier }
+        return metadata.getMetadata(withIdentifier: identifier)
     }
     
     /// Returns all nested metadata objects for given metadata object.
