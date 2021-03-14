@@ -59,7 +59,7 @@ class BuildApiDocFilter: DocumentFilter {
         document.allMetadata(withName: "api", multiline: true)
             // Prepare all changes and filted failed ones
             .compactMap { metadata -> (MarkdownMetadata, [MarkdownLine])? in
-                guard let newLines = self.prepareApiChanges(document: document, metadata: metadata) else {
+                guard let newLines = self.prepareDocumentChanges(document: document, metadata: metadata) else {
                     result = false
                     return nil
                 }
@@ -82,16 +82,7 @@ class BuildApiDocFilter: DocumentFilter {
         // Does nothing...
         return true
     }    
-    
-    /// State of API generator
-    fileprivate enum State: Equatable {
-        case api(String, String, String)
-        case description
-        case request
-        case response
-        case responseTab(String)
-    }
-    
+        
     /// Transform `API` metadata hierarchy into jekyll plugin syntax. The function only prepares
     /// future changes to the document.
     ///
@@ -99,7 +90,7 @@ class BuildApiDocFilter: DocumentFilter {
     ///   - document: Current document
     ///   - metadata: Metadata object wrapping API documentation.
     /// - Returns: Array of new lines or nil in case of failure.
-    private func prepareApiChanges(document: MarkdownDocument, metadata: MarkdownMetadata) -> [MarkdownLine]? {
+    private func prepareDocumentChanges(document: MarkdownDocument, metadata: MarkdownMetadata) -> [MarkdownLine]? {
         // Acquire original lines
         guard let oldLines = document.getLinesForMetadata(metadata: metadata, includeMarkers: false, removeLines: false) else {
             Console.error(document, metadata.beginLine, "updateApiDocs: Failed to acquire lines for '\(metadata.name)' metadata marker.")
@@ -126,7 +117,7 @@ class BuildApiDocFilter: DocumentFilter {
         newLines.reserveCapacity(oldLines.count + 4)
 
         // Generator state
-        var state = [State]()
+        var state = [BuildApiDocFilterState]()
         
         var hasDescription = false
         var hasRequest = false
@@ -134,7 +125,7 @@ class BuildApiDocFilter: DocumentFilter {
         
         // The `openState` closure adds a new state to state stack and appends jekyll begin-tag
         // syntax to newLines.
-        let openState = { (newState: State) in
+        let openState = { (newState: BuildApiDocFilterState) in
             newLines.append(contentsOf: document.prepareLinesForAdd(lines: [newState.beginTag]))
             state.append(newState)
         }
@@ -248,8 +239,16 @@ fileprivate extension Dictionary where Key == EntityId, Value == MarkdownMetadat
     }
 }
 
-fileprivate extension BuildApiDocFilter.State {
-    static func == (lhs: BuildApiDocFilter.State, rhs: BuildApiDocFilter.State) -> Bool {
+/// State of API generator
+fileprivate enum BuildApiDocFilterState: Equatable {
+    
+    case api(String, String, String)
+    case description
+    case request
+    case response
+    case responseTab(String)
+    
+    static func == (lhs: BuildApiDocFilterState, rhs: BuildApiDocFilterState) -> Bool {
         switch (lhs, rhs) {
         case (.api, .api): return true
         case (.description, .description): return true
