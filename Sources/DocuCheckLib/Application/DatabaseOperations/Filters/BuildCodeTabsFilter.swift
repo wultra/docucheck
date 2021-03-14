@@ -16,31 +16,35 @@
 
 import Foundation
 
-extension DocumentationDatabase {
+/// Transform all `codetabs` or `tabs` metadata objects in all documents.
+class BuildCodeTabsFilter: DocumentFilter {
     
-    
-    /// Transform all `codetabs` or `tabs` metadata objects in all documents.
-    /// - Returns: true if everyghing was OK.
-    func updateCodeTabs() -> Bool {
+    func setUpFilter(dataProvider: DocumentFilterDataProvider) -> Bool {
         Console.info("Building code tabs...")
+        return true
+    }
+        
+    func applyFilter(to document: MarkdownDocument) -> Bool {
         var result = true
-        allDocuments().forEach { document in
-            // Process all <!-- begin codetabs ... --> metadata objects
-            document.allMetadata(withName: "codetabs", multiline: true).forEach { metadata in
-                let partialResult = self.updateCodeTabs(document: document, metadata: metadata)
-                result = result && partialResult
-            }
-            // Find all <!-- tab name --> metadata objects and create map with inline identifiers.
-            let allTabMarkers: [EntityId:MarkdownMetadata] = document.allMetadata(withName: "tab", multiline: false).reduce(into: [:]) { $0[$1.beginInlineCommentId] = $1 }
-            // Process all <!-- begin tabs --> metadata objects
-            document.allMetadata(withName: "tabs", multiline: true).forEach { metadata in
-                let partialResult = self.updateTabs(document: document, metadata: metadata, tabMarkers: allTabMarkers)
-                result = result && partialResult
-            }
+        // Process all <!-- begin codetabs ... --> metadata objects
+        document.allMetadata(withName: "codetabs", multiline: true).forEach { metadata in
+            let partialResult = self.updateCodeTabs(document: document, metadata: metadata)
+            result = result && partialResult
+        }
+        // Find all <!-- tab name --> metadata objects and create map with inline identifiers.
+        let allTabMarkers: [EntityId:MarkdownMetadata] = document.allMetadata(withName: "tab", multiline: false).reduce(into: [:]) { $0[$1.beginInlineCommentId] = $1 }
+        // Process all <!-- begin tabs --> metadata objects
+        document.allMetadata(withName: "tabs", multiline: true).forEach { metadata in
+            let partialResult = self.updateTabs(document: document, metadata: metadata, tabMarkers: allTabMarkers)
+            result = result && partialResult
         }
         return result
     }
-    
+        
+    func tearDownFilter() -> Bool {
+        // Does nothing...
+        return true
+    }
     
     /// Transform `<!-- begin codetabs -->` metadata into `{% codetabs %}`.
     /// - Parameters:

@@ -16,68 +16,72 @@
 
 import Foundation
 
-extension DocumentationDatabase {
+/// Transform all `API` metadata objects in document.
+///
+/// Example for API metadata annotations:
+/// ~~~
+/// <!-- begin API POST /note/edit Edit Note -->
+/// ### POST /note/edit
+/// <!-- API-DESCRIPTION -->
+/// Edit an exisiting note.
+/// <!-- API-REQUEST -->
+/// ```json
+/// {
+///    "id": "12",
+///    "text": "Updated text"
+/// }
+/// ```
+/// <!-- API-RESPONSE 200 -->
+/// ```json
+/// {
+///    "status": "OK"
+/// }
+/// ```
+/// <!-- API-RESPONSE 401 -->
+/// ```json
+/// {
+///    "status": "ERROR",
+///    "message": "401 Unauthorized"
+/// }
+/// ```
+/// <!-- end -->
+/// ~~~
+class BuildApiDocFilter: DocumentFilter {
     
-    /// Transform all `API` metadata objects in all documents.
-    ///
-    /// Example for API metadata annotations:
-    /// ~~~
-    /// <!-- begin API POST /note/edit Edit Note -->
-    /// ### POST /note/edit
-    /// <!-- API-DESCRIPTION -->
-    /// Edit an exisiting note.
-    /// <!-- API-REQUEST -->
-    /// ```json
-    /// {
-    ///    "id": "12",
-    ///    "text": "Updated text"
-    /// }
-    /// ```
-    /// <!-- API-RESPONSE 200 -->
-    /// ```json
-    /// {
-    ///    "status": "OK"
-    /// }
-    /// ```
-    /// <!-- API-RESPONSE 401 -->
-    /// ```json
-    /// {
-    ///    "status": "ERROR",
-    ///    "message": "401 Unauthorized"
-    /// }
-    /// ```
-    /// <!-- end -->
-    /// ~~~
-    ///
-    /// - Returns: true if everyghing was OK.
-    func updateApiDocs() -> Bool {
+    func setUpFilter(dataProvider: DocumentFilterDataProvider) -> Bool {
         Console.info("Building API docs...")
+        return true
+    }
+        
+    func applyFilter(to document: MarkdownDocument) -> Bool {
         var result = true
-        allDocuments().forEach { document in
-            // Process all <!-- api ... --> metadata objects
-            document.allMetadata(withName: "api", multiline: true)
-                // Prepare all changes and filted failed ones
-                .compactMap { metadata -> (MarkdownMetadata, [MarkdownLine])? in
-                    guard let newLines = self.prepareApiChanges(document: document, metadata: metadata) else {
-                        result = false
-                        return nil
-                    }
-                    return (metadata, newLines)
+        // Process all <!-- api ... --> metadata objects
+        document.allMetadata(withName: "api", multiline: true)
+            // Prepare all changes and filted failed ones
+            .compactMap { metadata -> (MarkdownMetadata, [MarkdownLine])? in
+                guard let newLines = self.prepareApiChanges(document: document, metadata: metadata) else {
+                    result = false
+                    return nil
                 }
-                // Apply all changes to this document
-                .forEach { metadata, newLines in
-                    guard let startLine = document.lineNumber(forLineIdentifier: metadata.beginLine) else {
-                        Console.error(document, metadata.beginLine, "updateApiDocs: Failed to acquire start line number.")
-                        result = false
-                        return
-                    }
-                    document.removeLinesForMetadata(metadata: metadata, includeMarkers: true)
-                    document.add(lines: newLines, at: startLine)
+                return (metadata, newLines)
+            }
+            // Apply all changes to this document
+            .forEach { metadata, newLines in
+                guard let startLine = document.lineNumber(forLineIdentifier: metadata.beginLine) else {
+                    Console.error(document, metadata.beginLine, "updateApiDocs: Failed to acquire start line number.")
+                    result = false
+                    return
                 }
-        }
+                document.removeLinesForMetadata(metadata: metadata, includeMarkers: true)
+                document.add(lines: newLines, at: startLine)
+            }
         return result
     }
-    
+        
+    func tearDownFilter() -> Bool {
+        // Does nothing...
+        return true
+    }    
     
     /// State of API generator
     private enum State {
