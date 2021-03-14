@@ -1,0 +1,69 @@
+//
+// Copyright 2021 Wultra s.r.o.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions
+// and limitations under the License.
+//
+
+import XCTest
+
+@testable import DocuCheckLib
+
+class BuildApiDocFilterTests: XCTestCase {
+
+    let document1 =
+    """
+    <!-- begin API POST /note/edit Edit Note -->
+    ### POST /note/edit
+    <!-- API-DESCRIPTION -->
+    Edit an exisiting note.
+    <!-- API-REQUEST -->
+    ```
+    {
+        "id": "12",
+        "text": "Updated text"
+    }
+    ```
+    <!-- API-RESPONSE 200 -->
+    ```
+    {
+        "status": "OK"
+    }
+    ```
+    <!-- API-RESPONSE 401 -->
+    ```
+    {
+        "status": "ERROR",
+        "message": "401 Unauthorized"
+    }
+    ```
+    <!-- end -->
+    """
+    
+    var documentSource1: DocumentSource {
+        StringDocument(name: "Test1.md", string: document1)
+    }
+    
+    override func setUp() {
+        super.setUp()
+        Console.exitOnError = false
+    }
+
+    func testApiGenerator() {
+        let filter = BuildApiDocFilter()
+        let doc = MarkdownDocument(source: self.documentSource1, repoIdentifier: "test")
+        XCTAssertTrue(doc.load())
+        
+        let result = filter.applyFilter(to: doc)
+        XCTAssertTrue(result)
+    }
+}

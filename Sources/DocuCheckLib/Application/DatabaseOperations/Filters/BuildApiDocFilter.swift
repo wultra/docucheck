@@ -84,11 +84,12 @@ class BuildApiDocFilter: DocumentFilter {
     }    
     
     /// State of API generator
-    private enum State {
-        case path
+    fileprivate enum State: Equatable {
+        case api(String, String, String)
         case description
         case request
-        case response(Int)
+        case response
+        case responseTab(String)
     }
     
     /// Transform `API` metadata hierarchy into jekyll plugin syntax. The function only prepares
@@ -111,93 +112,44 @@ class BuildApiDocFilter: DocumentFilter {
         }
         // Get all nested tags and filter API responses
         let apiTags = document.allNestedMetadata(parent: metadata)
-        let apiResponses = apiTags.allMetadata(withName: "api-response", multiline: false)
-        
-        // Validate order of nested tags and its parameters
-        guard validateNestedTags(document: document, api: metadata, apiTags: apiTags, apiResponses: apiResponses) else {
-            return nil
-        }
         
         // Get API parameters
         let apiHttpMethod = apiParams[0]
         let apiUri = apiParams[1]
         let apiTitle = apiParams[2..<apiParams.count].joined(separator: " ")
         
-        // Prepare jekyll plugin syntax strings
-        let jekyllApiSyntax = [
-            "{% api %}",                // 0
-            "{% endapi %}",             // 1
-            "{% apipath \(apiHttpMethod) \(apiUri) \"\(apiTitle)\" %}",
-            "{% endapipath %}",         // 3
-            "{% apidescription %}",     // 4
-            "{% endapidescription %}",  // 5
-            "{% apirequest %}",         // 6
-            "{% endapirequest %}",      // 7
-        ]
-        let jekyllApiRespSyntax = apiResponses.flatMap { response -> [String] in
-            let responseCode = response.parameters?.first ?? "-1"
-            return [ "{% apiresponsetab \(responseCode) %}", "{% endapiresponsetab %}" ]
-        }
-        
-        // Prepare markdown lines from jekyll syntax strings
-        let jekyllApiSyntaxLines = document.prepareLinesForAdd(lines: jekyllApiSyntax)
-        let jekyllApiRespSyntaxLines = document.prepareLinesForAdd(lines: jekyllApiRespSyntax)
-
         // Prepare map that provide quick lookup whether line contains metadata tag
-        let apiTagsMap = apiTags.reduce(into: [:]) { $0[$1.identifier] = $1 }
+        let apiTagsMap = apiTags.reduce(into: [:]) { $0[$1.beginInlineCommentId] = $1 }
         
         // Prepare array for new lines
         var newLines = [MarkdownLine]()
-        newLines.reserveCapacity(oldLines.count + jekyllApiRespSyntax.count + jekyllApiSyntax.count)
+        newLines.reserveCapacity(oldLines.count + 4)
+
+        // Generator state
+        var state = [State]()
         
-        var currentBlock = [MarkdownLine]()     // Current collected lines between the tags
-        var state: State?                       // Current generator state
-        //var responseIndex = 0                   // Current index to jekyllApiRespSyntax
+        var hasDescription = false
+        var hasRequest = false
+        var hasResponse = false
         
-        // The `closeState` closure copies lines from `currentBlock` to `newLines` and adds
-        // appropriate closing tag depending on the state
-        let closeState = {
-            guard let state = state else { return } // Do nothing, if state is not set yet
-            // Append collected lines
-            newLines.append(contentsOf: currentBlock)
-            // Append closing jekyll syntax for the current state
-            switch state {
-            case .path:
-                newLines.append(jekyllApiSyntaxLines[3])            // {% endapipath %}
-            case .description:
-                newLines.append(jekyllApiSyntaxLines[5])            // {% endapidescription %}
-            case .request:
-                newLines.append(jekyllApiSyntaxLines[7])            // {% endapirequest %}
-            case .response(let index):
-                newLines.append(jekyllApiRespSyntaxLines[index + 1])// {% endapiresponsetab %}
-            }
+        // The `openState` closure adds a new state to state stack and appends jekyll begin-tag
+        // syntax to newLines.
+        let openState = { (newState: State) in
+            newLines.append(contentsOf: document.prepareLinesForAdd(lines: [newState.beginTag]))
+            state.append(newState)
         }
         
-        // The `openState` closure will close the current state and appends leading marker
-        // for the new state. The new state is then set to `state` variable.
-        let openState = { (newState: State) in
-            // Close any opened state before we switch the state
-            closeState()
-            // Append opening jekyll syntax for the new state
-            switch newState {
-            case .path:
-                newLines.append(jekyllApiSyntaxLines[2])            // {% apipath METHOD URI TITLE %}
-            case .description:
-                newLines.append(jekyllApiSyntaxLines[4])            // {% apidescription %}
-            case .request:
-                newLines.append(jekyllApiSyntaxLines[6])            // {% apirequest %}
-            case .response(let index):
-                newLines.append(jekyllApiRespSyntaxLines[index])    // {% apiresponsetab RC %}
-            }
-            // Keep new state and flush collected lines
-            state = newState
-            currentBlock.removeAll()
+        // The `closeState` closure pops last state from state stack and appends jekyll end-tag
+        // syntax to newLines.
+        let closeState = {
+            guard let topState = state.popLast() else { return }    // Do nothing, if stack is empty
+            // Append closing jekyll syntax for the current state
+            newLines.append(contentsOf: document.prepareLinesForAdd(lines: [topState.endTag]))
         }
         
         // Let's start!
         // Append "api" and "apipath"
-        newLines.append(jekyllApiSyntaxLines[0])    // {% api %}
-        openState(.path)
+        openState(.api(apiHttpMethod, apiUri, apiTitle))
         
         // Iterate over all original lines
         for line in oldLines {
@@ -206,19 +158,63 @@ class BuildApiDocFilter: DocumentFilter {
                 // This line contains some metadata tag.
                 switch tag.nameForSearch {
                 case "api-description":
-                    openState(.description)
-                    copyLine = false
-                case "api-request":
-                    openState(.request)
-                    copyLine = false
-                case "api-response":
-                    guard let responseIndex = apiResponses.getMetadataIndex(withIdentifier: tag.identifier) else {
-                        Console.error(document, tag.beginLine, "updateApiDocs: Failed to get index to response tag.")
+                    guard case .api(_,_,_) = state.last else {
+                        Console.warning(document, tag.beginLine, "'\(tag.name)' is not allowed in this context.")
                         return nil
                     }
-                    openState(.response(responseIndex))
+                    guard !hasDescription else {
+                        Console.warning(document, tag.beginLine, "'\(tag.name)' only one API-DESCRIPTION is allowed in API.")
+                        return nil
+                    }
+                    hasDescription = true
+                    openState(.description)
                     copyLine = false
+                    
+                case "api-request":
+                    if state.last == .description {
+                        closeState()
+                    }
+                    guard case .api(_,_,_) = state.last else {
+                        Console.warning(document, tag.beginLine, "'\(tag.name)' is not allowed in this context.")
+                        return nil
+                    }
+                    guard !hasRequest else {
+                        Console.warning(document, tag.beginLine, "'\(tag.name)' only one API-REQUEST is allowed in API.")
+                        return nil
+                    }
+                    hasRequest = true
+                    openState(.request)
+                    copyLine = false
+                    
+                case "api-response":
+                    if state.last == .description || state.last == .request {
+                        // Close previous description or request tag
+                        closeState()
+                    }
+                    if case .responseTab(_) = state.last {
+                        // Close previously opened response tab.
+                        closeState()
+                    }
+                    if case .api(_,_,_) = state.last {
+                    } else if state.last == .response {
+                    } else {
+                        Console.warning(document, tag.beginLine, "'\(tag.name)' is not allowed in this context.")
+                        return nil
+                    }
+                    guard let statusCode = tag.parameters?.first else {
+                        Console.warning(document, tag.beginLine, "'\(tag.name)' has no status code in first parameter.")
+                        return nil
+                    }
+                    if !hasResponse {
+                        // This is first response tag, so open whole response wrapping element.
+                        openState(.response)
+                        hasResponse = true
+                    }
+                    openState(.responseTab(statusCode))
+                    copyLine = false
+                    
                 default:
+                    // Unknown tag, just copy this line
                     copyLine = true
                 }
             } else {
@@ -226,19 +222,14 @@ class BuildApiDocFilter: DocumentFilter {
                 copyLine = true
             }
             if copyLine {
-                currentBlock.append(line)
+                newLines.append(line)
             }
         }
-        // Close any opened state after for-loop
-        closeState()
-        // Final trailing marker
-        newLines.append(jekyllApiRespSyntaxLines[1])    // {% endapi %}
-
+        // Close all opened states
+        while !state.isEmpty {
+            closeState()
+        }
         return newLines
-    }
-    
-    private func validateNestedTags(document: MarkdownDocument, api: MarkdownMetadata, apiTags: [MarkdownMetadata], apiResponses: [MarkdownMetadata]) -> Bool {
-        return true
     }
 }
 
@@ -257,3 +248,47 @@ fileprivate extension Dictionary where Key == EntityId, Value == MarkdownMetadat
     }
 }
 
+fileprivate extension BuildApiDocFilter.State {
+    static func == (lhs: BuildApiDocFilter.State, rhs: BuildApiDocFilter.State) -> Bool {
+        switch (lhs, rhs) {
+        case (.api, .api): return true
+        case (.description, .description): return true
+        case (.request, .request): return true
+        case (.response, .response): return true
+        case (.responseTab(let a), .responseTab(let b)):
+            return a == b
+        default:
+            return false
+        }
+    }
+        
+    var beginTag: String {
+        switch self {
+        case .api(let method, let uri, let title):
+            return "{% api \(method.uppercased()) \(uri) \"\(title)\" %}"
+        case .description:
+            return "{% apidescription %}"
+        case .request:
+            return "{% apirequest %}"
+        case .response:
+            return "{% apiresponse %}"
+        case .responseTab(let statusCode):
+            return "{% apiresponsetab \(statusCode) %}"
+        }
+    }
+
+    var endTag: String {
+        switch self {
+        case .api(_, _, _):
+            return "{% endapi %}"
+        case .description:
+            return "{% endapidescription %}"
+        case .request:
+            return "{% endapirequest %}"
+        case .response:
+            return "{% endapiresponse %}"
+        case .responseTab(_):
+            return "{% endapiresponsetab %}"
+        }
+    }
+}

@@ -25,6 +25,7 @@
 		BF98F61E25F92DE700FAC376 /* BuildApiDocFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98F61D25F92DE700FAC376 /* BuildApiDocFilter.swift */; };
 		BF98F64625FE201500FAC376 /* DocumentFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98F64525FE201500FAC376 /* DocumentFilter.swift */; };
 		BF98F65725FE24E100FAC376 /* RunAllFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98F65625FE24E100FAC376 /* RunAllFilters.swift */; };
+		BFE0B95025FE31C1000402F9 /* BuildApiDocFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE0B94F25FE31C1000402F9 /* BuildApiDocFilterTests.swift */; };
 		BFF465FA25E95A7D00A0ED9F /* BuildInfoBoxesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF465F925E95A7D00A0ED9F /* BuildInfoBoxesFilter.swift */; };
 		OBJ_100 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* Cmd.swift */; };
 		OBJ_101 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* CommandArguments.swift */; };
@@ -95,6 +96,7 @@
 		BF98F61D25F92DE700FAC376 /* BuildApiDocFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildApiDocFilter.swift; sourceTree = "<group>"; };
 		BF98F64525FE201500FAC376 /* DocumentFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFilter.swift; sourceTree = "<group>"; };
 		BF98F65625FE24E100FAC376 /* RunAllFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunAllFilters.swift; sourceTree = "<group>"; };
+		BFE0B94F25FE31C1000402F9 /* BuildApiDocFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildApiDocFilterTests.swift; sourceTree = "<group>"; };
 		BFF465F925E95A7D00A0ED9F /* BuildInfoBoxesFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfoBoxesFilter.swift; sourceTree = "<group>"; };
 		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; lastKnownFileType = text; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DocuCheckLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +180,14 @@
 				OBJ_15 /* RemoveUnwantedSectionsFilter.swift */,
 				OBJ_17 /* UpdateDocumentTitlesFilter.swift */,
 				OBJ_18 /* UpdateRepositoryLinksFilter.swift */,
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
+		BFE0B94E25FE31A8000402F9 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				BFE0B94F25FE31C1000402F9 /* BuildApiDocFilterTests.swift */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -279,6 +289,7 @@
 		OBJ_49 /* DocuCheckTests */ = {
 			isa = PBXGroup;
 			children = (
+				BFE0B94E25FE31A8000402F9 /* Filters */,
 				OBJ_50 /* MarkdownDocumentTests.swift */,
 				OBJ_51 /* MarkdownLineTests.swift */,
 				OBJ_52 /* XCTestManifests.swift */,
@@ -440,6 +451,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				BFE0B95025FE31C1000402F9 /* BuildApiDocFilterTests.swift in Sources */,
 				OBJ_123 /* MarkdownDocumentTests.swift in Sources */,
 				OBJ_124 /* MarkdownLineTests.swift in Sources */,
 				OBJ_125 /* XCTestManifests.swift in Sources */,

@@ -126,6 +126,18 @@ extension MarkdownDocument {
     }
 }
 
+// MARK: - Debug
+extension MarkdownDocument {
+    
+    /// Returns content of document. The method should be used only for debug or testing purposes.
+    ///
+    /// - Returns: Flat string with current content of document.
+    func debugDumpLines() {
+        let content = lines.map { $0.lineContent }.joined(separator: "\n")
+        print("\(content)")
+    }
+}
+
 // MARK: - Lines management
 
 extension MarkdownDocument {

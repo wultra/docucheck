@@ -80,7 +80,7 @@ extension MarkdownLine {
         let overlappedEntities = entities.filter({ entity.range.overlaps($0.range) })
         guard overlappedEntities.isEmpty else {
             let fooId = overlappedEntities.first?.identifier ?? -1
-            Console.warning("Inserting entity (id:\(entity.identifier)) which overlaps with some other entity (id:\(fooId).")
+            Console.warning("Inserting entity (id:\(entity.identifier)) which overlaps with some other entity (id:\(fooId)).")
             return
         }
         entities.append(entity)
