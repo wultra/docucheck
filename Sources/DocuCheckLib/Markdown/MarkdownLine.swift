@@ -103,6 +103,11 @@ extension MarkdownLine {
         remove(entityId: entity.identifier)
     }
     
+    /// Remove all entities from line.
+    func removeAllEntities() {
+        entities.removeAll()
+    }
+    
     /// Returns true if line contains entity with given identifier.
     ///
     /// - Parameter entityId: Entity to be found
