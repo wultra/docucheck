@@ -255,15 +255,15 @@ extension MarkdownDocument {
     /// - Parameter type: Type of entity, to be searched
     /// - Returns: array with all entities with requested type
     func allEntities(ofType type: EntityType) -> [MarkdownEditableEntity] {
-        var result = [MarkdownEditableEntity]()
-        lines.forEach { line in
-            line.entities.forEach { entity in
-                if entity.type == type {
-                    result.append(entity)
-                }
-            }
-        }
-        return result
+        return lines.allEntities(withType: type)
+    }
+    
+    /// Returns first entity with requested type in document.
+    ///
+    /// - Parameter type: Type of entity, to be searched
+    /// - Returns: Entity with requested type or nil if no such object exists in the document.
+    func firstEntity(ofType type: EntityType) -> MarkdownEditableEntity? {
+        return lines.firstEntity(withType: type)
     }
 
     /// Returns line where the entity with given identifier belongs to.

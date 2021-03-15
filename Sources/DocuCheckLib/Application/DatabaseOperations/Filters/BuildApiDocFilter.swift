@@ -20,24 +20,23 @@ import Foundation
 ///
 /// Example for API metadata annotations:
 /// ~~~
-/// <!-- begin API POST /note/edit Edit Note -->
-/// ### POST /note/edit
-/// <!-- API-DESCRIPTION -->
+/// <!-- begin API POST /note/edit -->
+/// ### Edit note
 /// Edit an exisiting note.
-/// <!-- API-REQUEST -->
+/// #### Request
 /// ```json
 /// {
 ///    "id": "12",
 ///    "text": "Updated text"
 /// }
 /// ```
-/// <!-- API-RESPONSE 200 -->
+/// #### Response 200
 /// ```json
 /// {
 ///    "status": "OK"
 /// }
 /// ```
-/// <!-- API-RESPONSE 401 -->
+/// #### Response 401
 /// ```json
 /// {
 ///    "status": "ERROR",
@@ -97,29 +96,28 @@ class BuildApiDocFilter: DocumentFilter {
             return nil
         }
         // Get parameters for API
-        guard let apiParams = metadata.parameters, apiParams.count >= 3 else {
+        guard let apiParams = metadata.parameters, apiParams.count >= 2 else {
             Console.warning(document, metadata.beginLine, "'\(metadata.name)' marker has insufficient number of parameters.")
             return nil
         }
-        // Get all nested tags and filter API responses
-        let apiTags = document.allNestedMetadata(parent: metadata)
+        guard let firstHeader = oldLines.firstHeader(), firstHeader.level == 3 else {
+            Console.warning(document, metadata.beginLine, "'\(metadata.name)' marker must contain Level-3 header with title of API endpoint.")
+            return nil
+        }
         
         // Get API parameters
         let apiHttpMethod = apiParams[0]
         let apiUri = apiParams[1]
-        let apiTitle = apiParams[2..<apiParams.count].joined(separator: " ")
-        
-        // Prepare map that provide quick lookup whether line contains metadata tag
-        let apiTagsMap = apiTags.reduce(into: [:]) { $0[$1.beginInlineCommentId] = $1 }
+        let apiTitle = firstHeader.title
         
         // Prepare array for new lines
         var newLines = [MarkdownLine]()
-        newLines.reserveCapacity(oldLines.count + 4)
+        newLines.reserveCapacity(oldLines.count + 10)
 
         // Generator state
         var state = [BuildApiDocFilterState]()
         
-        var hasDescription = false
+        var linesInDescription = 0
         var hasRequest = false
         var hasResponse = false
         
@@ -139,103 +137,109 @@ class BuildApiDocFilter: DocumentFilter {
         }
         
         // Let's start!
-        // Append "api" and "apipath"
+        // Open "api" block
         openState(.api(apiHttpMethod, apiUri, apiTitle))
         
         // Iterate over all original lines
         for line in oldLines {
             let copyLine: Bool
-            if let tag = apiTagsMap.findTagInLine(line: line) {
-                // This line contains some metadata tag.
-                switch tag.nameForSearch {
-                case "api-description":
-                    guard case .api(_,_,_) = state.last else {
-                        Console.warning(document, tag.beginLine, "'\(tag.name)' is not allowed in this context.")
-                        return nil
-                    }
-                    guard !hasDescription else {
-                        Console.warning(document, tag.beginLine, "'\(tag.name)' only one API-DESCRIPTION is allowed in API.")
-                        return nil
-                    }
-                    hasDescription = true
+            if let header = line.firstEntity(withType: .header) as? MarkdownHeader {
+                if header.identifier == firstHeader.identifier {
+                    // This is the title header, copy line now and then open the description section
+                    newLines.append(line)
                     openState(.description)
                     copyLine = false
-                    
-                case "api-request":
-                    if state.last == .description {
-                        closeState()
-                    }
-                    guard case .api(_,_,_) = state.last else {
-                        Console.warning(document, tag.beginLine, "'\(tag.name)' is not allowed in this context.")
-                        return nil
-                    }
-                    guard !hasRequest else {
-                        Console.warning(document, tag.beginLine, "'\(tag.name)' only one API-REQUEST is allowed in API.")
-                        return nil
-                    }
-                    hasRequest = true
-                    openState(.request)
-                    copyLine = false
-                    
-                case "api-response":
-                    if state.last == .description || state.last == .request {
-                        // Close previous description or request tag
-                        closeState()
-                    }
-                    if case .responseTab(_) = state.last {
-                        // Close previously opened response tab.
-                        closeState()
-                    }
-                    if case .api(_,_,_) = state.last {
-                    } else if state.last == .response {
+                } else {
+                    let lowercasedTitle = header.title.lowercased()
+                    if lowercasedTitle.hasPrefix("request") {
+                        // #### Request
+                        if state.last == .description {
+                            closeState()
+                        }
+                        guard case .api(_,_,_) = state.last else {
+                            Console.warning(document, header, "API request header is not allowed in this context.")
+                            return nil
+                        }
+                        guard !hasRequest else {
+                            Console.warning(document, header, "Only one API request header is allowed in API.")
+                            return nil
+                        }
+                        if header.level != 4 {
+                            Console.warning(document, header, "API request header must be Level-4 header.")
+                        }
+                        hasRequest = true
+                        openState(.request)
+                        copyLine = false
+                    } else if lowercasedTitle.hasPrefix("response") {
+                        // #### Response XXX
+                        if state.last == .description || state.last == .request {
+                            // Close previous description or request tag
+                            closeState()
+                        }
+                        if case .responseTab(_) = state.last {
+                            // Close previously opened response tab.
+                            closeState()
+                        }
+                        if case .api(_,_,_) = state.last {
+                        } else if state.last == .response {
+                        } else {
+                            Console.warning(document, header, "API response header is not allowed in this context.")
+                            return nil
+                        }
+                        if header.level != 4 {
+                            Console.warning(document, header, "API response header must be Level-4 header.")
+                        }
+                        let titleComponents = header.title.split(separator: " ")
+                        guard titleComponents.count >= 2 else {
+                            Console.warning(document, header, "API response header must contain a status code in its title.")
+                            return nil
+                        }
+                        if !hasResponse {
+                            // This is first response tag, so open whole response wrapping element.
+                            openState(.response)
+                            hasResponse = true
+                        }
+                        openState(.responseTab(String(titleComponents[1])))
+                        copyLine = false
                     } else {
-                        Console.warning(document, tag.beginLine, "'\(tag.name)' is not allowed in this context.")
-                        return nil
+                        // Unknown header, print warning only if level is less or equal to 3.
+                        if header.level <= 3 {
+                            Console.warning(document, header, "Unrecognized header in API declaration.")
+                        }
+                        copyLine = true
                     }
-                    guard let statusCode = tag.parameters?.first else {
-                        Console.warning(document, tag.beginLine, "'\(tag.name)' has no status code in first parameter.")
-                        return nil
-                    }
-                    if !hasResponse {
-                        // This is first response tag, so open whole response wrapping element.
-                        openState(.response)
-                        hasResponse = true
-                    }
-                    openState(.responseTab(statusCode))
-                    copyLine = false
-                    
-                default:
-                    // Unknown tag, just copy this line
-                    copyLine = true
                 }
             } else {
-                // Ignore this meta tag and copy the whole line
+                // Nothing interesting here, just copy this line
+                if state.last == .description && !line.lineContent.isEmpty {
+                    // If current state is description and line is not empty, then increase counter
+                    linesInDescription += 1
+                }
                 copyLine = true
             }
             if copyLine {
                 newLines.append(line)
             }
         }
+        
         // Close all opened states
         while !state.isEmpty {
             closeState()
         }
-        return newLines
-    }
-}
-
-fileprivate extension Dictionary where Key == EntityId, Value == MarkdownMetadata {
-    /// Find metadata object matching one of inline comments available in the line.
-    /// - Parameters:
-    ///   - line: Line containing possible inline comments.
-    /// - Returns: Metadata object or nil if no such object has been matched.
-    func findTagInLine(line: MarkdownLine) -> MarkdownMetadata? {
-        for comment in line.allEntities(withType: .inlineComment) {
-            if let metadata = self[comment.identifier] {
-                return metadata
-            }
+        
+        // Post process validations
+        guard hasRequest else {
+            Console.warning(document, metadata.beginLine, "API has no request section. Use `#### Request` header to declare it.")
+            return nil
         }
-        return nil
+        guard hasResponse else {
+            Console.warning(document, metadata.beginLine, "API has no response section. Use one or more `#### Response XXX` headers to declare it. XXX is numeric HTTP response status code.")
+            return nil
+        }
+        if linesInDescription == 0 {
+            Console.warning(document, metadata.beginLine, "API has no description. You should write few lines between title header and request header.")
+        }
+        return newLines
     }
 }
 
@@ -248,9 +252,11 @@ fileprivate enum BuildApiDocFilterState: Equatable {
     case response
     case responseTab(String)
     
+    /// Compare two state enumerations.
     static func == (lhs: BuildApiDocFilterState, rhs: BuildApiDocFilterState) -> Bool {
         switch (lhs, rhs) {
-        case (.api, .api): return true
+        case (.api(let a1, let a2, let a3), .api(let b1, let b2, let b3)):
+            return a1 == b1 && a2 == b2 && a3 == b3
         case (.description, .description): return true
         case (.request, .request): return true
         case (.response, .response): return true
@@ -260,7 +266,8 @@ fileprivate enum BuildApiDocFilterState: Equatable {
             return false
         }
     }
-        
+    
+    /// Returns begin jekyll tag for state.
     var beginTag: String {
         switch self {
         case .api(let method, let uri, let title):
@@ -276,6 +283,7 @@ fileprivate enum BuildApiDocFilterState: Equatable {
         }
     }
 
+    /// Returns end jekyll tag for state.
     var endTag: String {
         switch self {
         case .api(_, _, _):

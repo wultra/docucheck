@@ -22,28 +22,44 @@ class BuildApiDocFilterTests: XCTestCase {
 
     let document1 =
     """
-    <!-- begin API POST /note/edit Edit Note -->
-    ### POST /note/edit
-    <!-- API-DESCRIPTION -->
+    <!-- begin API POST /note/edit -->
+    ### Edit Note
     Edit an exisiting note.
-    <!-- API-REQUEST -->
+    #### Request
     ```
     {
         "id": "12",
         "text": "Updated text"
     }
     ```
-    <!-- API-RESPONSE 200 -->
+    #### Response 200
     ```
     {
         "status": "OK"
     }
     ```
-    <!-- API-RESPONSE 401 -->
+    #### Response 401
     ```
     {
         "status": "ERROR",
         "message": "401 Unauthorized"
+    }
+    ```
+    <!-- end -->
+
+    <!-- begin API POST /note/remove -->
+    ### Remove Note
+    Remove an existing note
+    #### Request
+    ```
+    {
+        "id": "12"
+    }
+    ```
+    #### Response 200
+    ```
+    {
+        "status": "OK"
     }
     ```
     <!-- end -->
