@@ -151,7 +151,7 @@ class BuildApiDocFilter: DocumentFilter {
                     copyLine = false
                 } else {
                     let lowercasedTitle = header.title.lowercased()
-                    if lowercasedTitle.hasPrefix("request") {
+                    if lowercasedTitle == "request" {
                         // #### Request
                         if state.last == .description {
                             closeState()
@@ -228,10 +228,6 @@ class BuildApiDocFilter: DocumentFilter {
         }
         
         // Post process validations
-        guard hasRequest else {
-            Console.warning(document, metadata.beginLine, "API has no request section. Use `#### Request` header to declare it.")
-            return nil
-        }
         guard hasResponse else {
             Console.warning(document, metadata.beginLine, "API has no response section. Use one or more `#### Response XXX` headers to declare it. XXX is numeric HTTP response status code.")
             return nil

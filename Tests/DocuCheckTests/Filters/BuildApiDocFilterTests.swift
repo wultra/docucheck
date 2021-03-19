@@ -20,6 +20,7 @@ import XCTest
 
 class BuildApiDocFilterTests: XCTestCase {
 
+    // Regular document
     let document1 =
     """
     <!-- begin API POST /note/edit -->
@@ -64,10 +65,69 @@ class BuildApiDocFilterTests: XCTestCase {
     ```
     <!-- end -->
     """
-    
-    var documentSource1: DocumentSource {
-        StringDocument(name: "Test1.md", string: document1)
+
+    // Request + Request Body headers
+    let document2 =
+    """
+    <!-- begin api PUT /push/campaign/${id}/user/add -->
+    ### Add Users To Campaign
+    Associate users to a specific campaign. Users are identified in request body as an array of strings.
+    #### Request
+    ##### Query Parameters
+    <table>
+        <tr>
+            <td>id</td>
+            <td>Campaign identifier</td>
+        </tr>
+    </table>
+    ##### Request Body
+    ```json
+    {
+      "requestObject": [
+        "1234567890",
+        "1234567891",
+        "1234567893"
+      ]
     }
+    ```
+    - list of users
+    #### Response 200
+    ```json
+    {
+      "status": "OK"
+    }
+    ```
+    <!-- end -->
+    """
+    
+    // Optional request section
+    let document3 =
+    """
+    <!-- begin api GET /push/service/status -->
+    ### Service Status
+    Send a system status response, with basic information about the running application.
+    #### Response 200
+    ```json
+    {
+      "status": "OK",
+      "responseObject": {
+        "applicationName": "powerauth-push",
+        "applicationDisplayName": "PowerAuth Push Server",
+        "applicationEnvironment": "",
+        "version": "0.21.0",
+        "buildTime": "2019-01-22T14:59:14.954+0000",
+        "timestamp": "2019-01-22T15:00:28.399+0000"
+      }
+    }
+    ```
+    - `applicationName` - Application name.
+    - `applicationDisplayName` - Application display name.
+    - `applicationEnvironment` - Application environment.
+    - `version` - Version of Push server.
+    - `buildTime` - Timestamp when the powerauth-push-server.war file was built.
+    - `timestamp` - Current time on application.
+    <!-- end -->
+    """
     
     override func setUp() {
         super.setUp()
@@ -76,10 +136,20 @@ class BuildApiDocFilterTests: XCTestCase {
 
     func testApiGenerator() {
         let filter = BuildApiDocFilter()
-        let doc = MarkdownDocument(source: self.documentSource1, repoIdentifier: "test")
+        var doc = MarkdownDocument(source: StringDocument(name: "Test1.md", string: document1), repoIdentifier: "test1")
         XCTAssertTrue(doc.load())
         
-        let result = filter.applyFilter(to: doc)
+        var result = filter.applyFilter(to: doc)
+        XCTAssertTrue(result)
+        
+        doc = MarkdownDocument(source: StringDocument(name: "Test2.md", string: document2), repoIdentifier: "test2")
+        XCTAssertTrue(doc.load())
+        result = filter.applyFilter(to: doc)
+        XCTAssertTrue(result)
+        
+        doc = MarkdownDocument(source: StringDocument(name: "Test3.md", string: document3), repoIdentifier: "test3")
+        XCTAssertTrue(doc.load())
+        result = filter.applyFilter(to: doc)
         XCTAssertTrue(result)
     }
 }
