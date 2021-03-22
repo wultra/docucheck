@@ -21,8 +21,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		BF8494C024E6900100340D59 /* BuildCodeTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */; };
-		BFF465FA25E95A7D00A0ED9F /* BuildInfoBoxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF465F925E95A7D00A0ED9F /* BuildInfoBoxes.swift */; };
+		BF8494C024E6900100340D59 /* BuildCodeTabsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8494BE24E68FEB00340D59 /* BuildCodeTabsFilter.swift */; };
+		BF98F61E25F92DE700FAC376 /* BuildApiDocFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98F61D25F92DE700FAC376 /* BuildApiDocFilter.swift */; };
+		BF98F64625FE201500FAC376 /* DocumentFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98F64525FE201500FAC376 /* DocumentFilter.swift */; };
+		BF98F65725FE24E100FAC376 /* RunAllFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98F65625FE24E100FAC376 /* RunAllFilters.swift */; };
+		BFE0B95025FE31C1000402F9 /* BuildApiDocFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE0B94F25FE31C1000402F9 /* BuildApiDocFilterTests.swift */; };
+		BFF465FA25E95A7D00A0ED9F /* BuildInfoBoxesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF465F925E95A7D00A0ED9F /* BuildInfoBoxesFilter.swift */; };
 		OBJ_100 /* Cmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* Cmd.swift */; };
 		OBJ_101 /* CommandArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* CommandArguments.swift */; };
 		OBJ_102 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* Console.swift */; };
@@ -38,10 +42,10 @@
 		OBJ_68 /* DocuCheckLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */; };
 		OBJ_75 /* LinkStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* LinkStatistics.swift */; };
 		OBJ_76 /* PatchSingleFileDocumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* PatchSingleFileDocumentation.swift */; };
-		OBJ_77 /* RemoveUnwantedSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* RemoveUnwantedSections.swift */; };
+		OBJ_77 /* RemoveUnwantedSectionsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* RemoveUnwantedSectionsFilter.swift */; };
 		OBJ_78 /* SaveAllDocuments.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* SaveAllDocuments.swift */; };
-		OBJ_79 /* UpdateDocumentTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* UpdateDocumentTitles.swift */; };
-		OBJ_80 /* UpdateRepositoryLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* UpdateRepositoryLinks.swift */; };
+		OBJ_79 /* UpdateDocumentTitlesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* UpdateDocumentTitlesFilter.swift */; };
+		OBJ_80 /* UpdateRepositoryLinksFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* UpdateRepositoryLinksFilter.swift */; };
 		OBJ_81 /* DocuCheckApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* DocuCheckApplication.swift */; };
 		OBJ_82 /* DocumentOriginRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* DocumentOriginRegister.swift */; };
 		OBJ_83 /* DocumentationDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* DocumentationDatabase.swift */; };
@@ -88,17 +92,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildCodeTabs.swift; sourceTree = "<group>"; };
-		BFF465F925E95A7D00A0ED9F /* BuildInfoBoxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfoBoxes.swift; sourceTree = "<group>"; };
+		BF8494BE24E68FEB00340D59 /* BuildCodeTabsFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildCodeTabsFilter.swift; sourceTree = "<group>"; };
+		BF98F61D25F92DE700FAC376 /* BuildApiDocFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildApiDocFilter.swift; sourceTree = "<group>"; };
+		BF98F64525FE201500FAC376 /* DocumentFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFilter.swift; sourceTree = "<group>"; };
+		BF98F65625FE24E100FAC376 /* RunAllFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunAllFilters.swift; sourceTree = "<group>"; };
+		BFE0B94F25FE31C1000402F9 /* BuildApiDocFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildApiDocFilterTests.swift; sourceTree = "<group>"; };
+		BFF465F925E95A7D00A0ED9F /* BuildInfoBoxesFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfoBoxesFilter.swift; sourceTree = "<group>"; };
 		"DocuCheck::DocuCheck::Product" /* DocuCheck */ = {isa = PBXFileReference; lastKnownFileType = text; path = DocuCheck; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckLib::Product" /* DocuCheckLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DocuCheckLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"DocuCheck::DocuCheckTests::Product" /* DocuCheckTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = DocuCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_13 /* LinkStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStatistics.swift; sourceTree = "<group>"; };
 		OBJ_14 /* PatchSingleFileDocumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSingleFileDocumentation.swift; sourceTree = "<group>"; };
-		OBJ_15 /* RemoveUnwantedSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveUnwantedSections.swift; sourceTree = "<group>"; };
+		OBJ_15 /* RemoveUnwantedSectionsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveUnwantedSectionsFilter.swift; sourceTree = "<group>"; };
 		OBJ_16 /* SaveAllDocuments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAllDocuments.swift; sourceTree = "<group>"; };
-		OBJ_17 /* UpdateDocumentTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDocumentTitles.swift; sourceTree = "<group>"; };
-		OBJ_18 /* UpdateRepositoryLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRepositoryLinks.swift; sourceTree = "<group>"; };
+		OBJ_17 /* UpdateDocumentTitlesFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDocumentTitlesFilter.swift; sourceTree = "<group>"; };
+		OBJ_18 /* UpdateRepositoryLinksFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRepositoryLinksFilter.swift; sourceTree = "<group>"; };
 		OBJ_19 /* DocuCheckApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocuCheckApplication.swift; sourceTree = "<group>"; };
 		OBJ_20 /* DocumentOriginRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentOriginRegister.swift; sourceTree = "<group>"; };
 		OBJ_21 /* DocumentationDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentationDatabase.swift; sourceTree = "<group>"; };
@@ -162,6 +170,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF98F64425FE1FA600FAC376 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				BF98F64525FE201500FAC376 /* DocumentFilter.swift */,
+				BFF465F925E95A7D00A0ED9F /* BuildInfoBoxesFilter.swift */,
+				BF8494BE24E68FEB00340D59 /* BuildCodeTabsFilter.swift */,
+				BF98F61D25F92DE700FAC376 /* BuildApiDocFilter.swift */,
+				OBJ_15 /* RemoveUnwantedSectionsFilter.swift */,
+				OBJ_17 /* UpdateDocumentTitlesFilter.swift */,
+				OBJ_18 /* UpdateRepositoryLinksFilter.swift */,
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
+		BFE0B94E25FE31A8000402F9 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				BFE0B94F25FE31C1000402F9 /* BuildApiDocFilterTests.swift */,
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
 		OBJ_10 /* DocuCheckLib */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,14 +223,11 @@
 		OBJ_12 /* DatabaseOperations */ = {
 			isa = PBXGroup;
 			children = (
-				BF8494BE24E68FEB00340D59 /* BuildCodeTabs.swift */,
-				BFF465F925E95A7D00A0ED9F /* BuildInfoBoxes.swift */,
+				BF98F64425FE1FA600FAC376 /* Filters */,
+				BF98F65625FE24E100FAC376 /* RunAllFilters.swift */,
 				OBJ_13 /* LinkStatistics.swift */,
 				OBJ_14 /* PatchSingleFileDocumentation.swift */,
-				OBJ_15 /* RemoveUnwantedSections.swift */,
 				OBJ_16 /* SaveAllDocuments.swift */,
-				OBJ_17 /* UpdateDocumentTitles.swift */,
-				OBJ_18 /* UpdateRepositoryLinks.swift */,
 			);
 			path = DatabaseOperations;
 			sourceTree = "<group>";
@@ -262,6 +289,7 @@
 		OBJ_49 /* DocuCheckTests */ = {
 			isa = PBXGroup;
 			children = (
+				BFE0B94E25FE31A8000402F9 /* Filters */,
 				OBJ_50 /* MarkdownDocumentTests.swift */,
 				OBJ_51 /* MarkdownLineTests.swift */,
 				OBJ_52 /* XCTestManifests.swift */,
@@ -423,6 +451,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				BFE0B95025FE31C1000402F9 /* BuildApiDocFilterTests.swift in Sources */,
 				OBJ_123 /* MarkdownDocumentTests.swift in Sources */,
 				OBJ_124 /* MarkdownLineTests.swift in Sources */,
 				OBJ_125 /* XCTestManifests.swift in Sources */,
@@ -442,12 +471,14 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_75 /* LinkStatistics.swift in Sources */,
+				BF98F65725FE24E100FAC376 /* RunAllFilters.swift in Sources */,
 				OBJ_76 /* PatchSingleFileDocumentation.swift in Sources */,
-				OBJ_77 /* RemoveUnwantedSections.swift in Sources */,
-				BF8494C024E6900100340D59 /* BuildCodeTabs.swift in Sources */,
+				BF98F61E25F92DE700FAC376 /* BuildApiDocFilter.swift in Sources */,
+				OBJ_77 /* RemoveUnwantedSectionsFilter.swift in Sources */,
+				BF8494C024E6900100340D59 /* BuildCodeTabsFilter.swift in Sources */,
 				OBJ_78 /* SaveAllDocuments.swift in Sources */,
-				OBJ_79 /* UpdateDocumentTitles.swift in Sources */,
-				OBJ_80 /* UpdateRepositoryLinks.swift in Sources */,
+				OBJ_79 /* UpdateDocumentTitlesFilter.swift in Sources */,
+				OBJ_80 /* UpdateRepositoryLinksFilter.swift in Sources */,
 				OBJ_81 /* DocuCheckApplication.swift in Sources */,
 				OBJ_82 /* DocumentOriginRegister.swift in Sources */,
 				OBJ_83 /* DocumentationDatabase.swift in Sources */,
@@ -462,13 +493,14 @@
 				OBJ_92 /* FileDocument.swift in Sources */,
 				OBJ_93 /* StringDocument.swift in Sources */,
 				OBJ_94 /* EntityIdGenerator.swift in Sources */,
+				BF98F64625FE201500FAC376 /* DocumentFilter.swift in Sources */,
 				OBJ_95 /* MarkdownDocument.swift in Sources */,
 				OBJ_96 /* MarkdownEntities.swift in Sources */,
 				OBJ_97 /* MarkdownLine.swift in Sources */,
 				OBJ_98 /* MarkdownMetadata.swift in Sources */,
 				OBJ_99 /* MarkdownParser.swift in Sources */,
 				OBJ_100 /* Cmd.swift in Sources */,
-				BFF465FA25E95A7D00A0ED9F /* BuildInfoBoxes.swift in Sources */,
+				BFF465FA25E95A7D00A0ED9F /* BuildInfoBoxesFilter.swift in Sources */,
 				OBJ_101 /* CommandArguments.swift in Sources */,
 				OBJ_102 /* Console.swift in Sources */,
 				OBJ_103 /* FS.swift in Sources */,

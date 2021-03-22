@@ -53,3 +53,63 @@ struct MarkdownMetadata {
         return beginLine != endLine
     }
 }
+
+
+// This extension adds various search capability to array of `MarkdownMetadata` objects.
+
+extension Array where Element == MarkdownMetadata {
+
+    /// Returns all occurences of metadata objects with given name in the array.
+    ///
+    /// - Parameter name: Name of metadata tag to be found
+    /// - Returns: Array of objects with metadata information.
+    func allMetadata(withName name: String) -> [MarkdownMetadata] {
+        let lowercasedName = name.lowercased()
+        return filter { $0.nameForSearch == lowercasedName }
+    }
+    
+    /// Returns all occurences of metadata objects with given name in the array.
+    ///
+    /// - Parameter name: Name of metadata tag to be found
+    /// - Parameter multiline: Specifies whether metadata should be multiline or not.
+    /// - Returns: Array of objects with metadata information.
+    func allMetadata(withName name: String, multiline: Bool) -> [MarkdownMetadata] {
+        let lowercasedName = name.lowercased()
+        return filter { $0.isMultiline == multiline && $0.nameForSearch == lowercasedName }
+    }
+    
+    /// Returns first metadata object with given name or nil if no such information is in array.
+    ///
+    /// - Parameter name: Name of metadata tag to be found
+    /// - Returns: Object representing metadata information or nil if no such information is in array.
+    func firstMetadata(withName name: String) -> MarkdownMetadata? {
+        let lowercasedName = name.lowercased()
+        return first { $0.nameForSearch == lowercasedName }
+    }
+    
+    /// Returns first metadata object with given name or nil if no such information is in array.
+    ///
+    /// - Parameter name: Name of metadata tag to be found
+    /// - Parameter multiline: Specifies whether metadata should be multiline or not.
+    /// - Returns: Object representing metadata information or nil if no such information is in array.
+    func firstMetadata(withName name: String, multiline: Bool) -> MarkdownMetadata? {
+        let lowercasedName = name.lowercased()
+        return first { $0.isMultiline == multiline && $0.nameForSearch == lowercasedName }
+    }
+    
+    /// Returns metadata object with given identifier or nil if no such object exist in array.
+    ///
+    /// - Parameter identifier: Metadata identifier
+    /// - Returns: Object representing metadata information or nil if no such information is in array.
+    func getMetadata(withIdentifier identifier: EntityId) -> MarkdownMetadata? {
+        return first { $0.identifier == identifier }
+    }
+    
+    /// Returns index to metadata array for given metadata with identifier or nil if no such object exist in array.
+    ///
+    /// - Parameter identifier: Metadata identifier
+    /// - Returns: Index of metadata information or nil if no such information is in array.
+    func getMetadataIndex(withIdentifier identifier: EntityId) -> Int? {
+        return firstIndex { $0.identifier == identifier }
+    }
+}

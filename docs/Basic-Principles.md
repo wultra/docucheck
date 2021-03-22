@@ -117,7 +117,7 @@ Captured in meta1 and meta2
 Also captured in "meta1"
 <!-- !! ignore this meta-tag -->
 <!-- end -->
-``` 
+```
 
 The purpose of meta-data captures is to define regions of text in document, which requires a special processing. For example, if you want to remove a part of document, normally visible at Github, which suppose to not be visible at our development portal.
 
@@ -241,3 +241,54 @@ All your base are belong to us.
 <!-- end -->
 
 The following styles are supported: `info`,  `warning` and `success`.
+
+#### API documentation
+
+Use the following syntax to declare a RESTful API endpoint documentation:
+~~~md
+<!-- begin API POST /note/edit -->
+### Edit note
+Edit an exisiting note.
+
+#### Request
+```json
+{
+   "id": "12",
+   "text": "Updated text"
+}
+```
+- `id` - note identifier
+- `text` - new content of note
+
+#### Response 200
+```json
+{
+   "status": "OK"
+}
+```
+
+#### Response 401
+```json
+{
+   "status": "ERROR",
+   "message": "401 Unauthorized"
+}
+```
+<!-- end -->
+~~~
+
+The following sections are recognized inside API metadata tag:
+
+- `<!-- begin API {HTTP_METHOD} {RELATIVE_URI} -->` 
+  - `{HTTP_METHOD}` - use `POST`, `GET`, `PUT`, etc.
+  - `{RELATIVE_URI}` - endpoint's relative URI
+- `### Title` 
+  - The endpoint's title is declared as first L3 header 
+- The block of markdown text, up to next L4 header, declares endpoint's description. 
+  - `DocuCheck` prints warning if this section is empty.
+- `#### Request` 
+  - The endpoint's request section is declared as L4 header with `request` in its title. 
+  - This section is optional.
+- `#### Response {STATUS_CODE}` 
+  - The endpoint's response section is declared as L4 header with `response` prefix in its title. 
+  - The title must contain `{STATUS_CODE}`. 

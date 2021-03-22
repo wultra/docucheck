@@ -16,27 +16,35 @@
 
 import Foundation
 
-extension DocumentationDatabase {
+/// Updates all document titles to format required by our documentation portal.
+class UpdateDocumentTitlesFilter: DocumentFilter {
     
-    /// Updates all document titles to format required by our documentation portal.
-    ///
-    /// - Returns: true if operation succeeded
-    func updateDocumentTitles() -> Bool {
+    var db: DocumentationDatabase!
+    
+    func setUpFilter(dataProvider: DocumentFilterDataProvider) -> Bool {
         Console.info("Patching document titles...")
-        allDocuments().forEach { document in
-            guard let repo = repositoryContent(for: document.repoIdentifier) else {
-                Console.fatalError("Document whith invalid repository identifier.")
-            }
-            let fileName = document.source.name.fileNameFromPath()
-            if repo.params.auxiliaryDocuments?.contains(fileName) ?? false {
-                self.updateAuxiliaryDocument(document: document, repo: repo)
-            } else {
-                self.updateRegularPage(document: document, repo: repo)
-            }
+        db = dataProvider.database
+        return true
+    }
+        
+    func applyFilter(to document: MarkdownDocument) -> Bool {
+        guard let repo = db.repositoryContent(for: document.repoIdentifier) else {
+            Console.fatalError("Document whith invalid repository identifier.")
+        }
+        let fileName = document.source.name.fileNameFromPath()
+        if repo.params.auxiliaryDocuments?.contains(fileName) ?? false {
+            self.updateAuxiliaryDocument(document: document, repo: repo)
+        } else {
+            self.updateRegularPage(document: document, repo: repo)
         }
         return true
     }
-    
+        
+    func tearDownFilter() -> Bool {
+        // Does nothing...
+        return true
+    }
+
     /// Updates all page titles in documents.
     ///
     /// - Parameters:

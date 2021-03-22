@@ -16,31 +16,35 @@
 
 import Foundation
 
-extension DocumentationDatabase {
+/// Transform all `codetabs` or `tabs` metadata objects in all documents.
+class BuildCodeTabsFilter: DocumentFilter {
     
-    
-    /// Transform all `codetabs` or `tabs` metadata objects in all documents.
-    /// - Returns: true if everyghing was OK.
-    func updateCodeTabs() -> Bool {
+    func setUpFilter(dataProvider: DocumentFilterDataProvider) -> Bool {
         Console.info("Building code tabs...")
+        return true
+    }
+        
+    func applyFilter(to document: MarkdownDocument) -> Bool {
         var result = true
-        allDocuments().forEach { document in
-            // Process all <!-- begin codetabs ... --> metadata objects
-            document.allMetadata(withName: "codetabs", multiline: true).forEach { metadata in
-                let partialResult = self.updateCodeTabs(document: document, metadata: metadata)
-                result = result && partialResult
-            }
-            // Find all <!-- tab name --> metadata objects and create map with inline identifiers.
-            let allTabMarkers: [EntityId:MarkdownMetadata] = document.allMetadata(withName: "tab", multiline: false).reduce(into: [:]) { $0[$1.beginInlineCommentId] = $1 }
-            // Process all <!-- begin tabs --> metadata objects
-            document.allMetadata(withName: "tabs", multiline: true).forEach { metadata in
-                let partialResult = self.updateTabs(document: document, metadata: metadata, tabMarkers: allTabMarkers)
-                result = result && partialResult
-            }
+        // Process all <!-- begin codetabs ... --> metadata objects
+        document.allMetadata(withName: "codetabs", multiline: true).forEach { metadata in
+            let partialResult = self.updateCodeTabs(document: document, metadata: metadata)
+            result = result && partialResult
+        }
+        // Find all <!-- tab name --> metadata objects and create map with inline identifiers.
+        let allTabMarkers: [EntityId:MarkdownMetadata] = document.allMetadata(withName: "tab", multiline: false).reduce(into: [:]) { $0[$1.beginInlineCommentId] = $1 }
+        // Process all <!-- begin tabs --> metadata objects
+        document.allMetadata(withName: "tabs", multiline: true).forEach { metadata in
+            let partialResult = self.updateTabs(document: document, metadata: metadata, tabMarkers: allTabMarkers)
+            result = result && partialResult
         }
         return result
     }
-    
+        
+    func tearDownFilter() -> Bool {
+        // Does nothing...
+        return true
+    }
     
     /// Transform `<!-- begin codetabs -->` metadata into `{% codetabs %}`.
     /// - Parameters:
@@ -102,7 +106,7 @@ extension DocumentationDatabase {
         
         for line in oldLines {
             let copyLine: Bool
-            if let tabMetadata = findTabInLine(line: line, tabMarkers: tabMarkers) {
+            if let tabMetadata = tabMarkers.findTabInLine(line: line) {
                 // It's also "tab" metadata marker
                 if let tabName = tabMetadata.parameters?.first {
                     tabNames.append(tabName)
@@ -132,22 +136,6 @@ extension DocumentationDatabase {
         }
         return applyCodeTabs(document: document, metadata: metadata, tabNames: tabNames, tabContent: tabBlocks)
     }
-    
-    
-    /// Find metadata object matching one of inline comments available in the line.
-    /// - Parameters:
-    ///   - line: Line containing inline comments.
-    ///   - tabMarkers: All tab metadata objects.
-    /// - Returns: Metadata object or nil if no such object has been matched.
-    private func findTabInLine(line: MarkdownLine, tabMarkers: [EntityId:MarkdownMetadata]) -> MarkdownMetadata? {
-        for comment in line.allEntities(withType: .inlineComment) {
-            if let metadata = tabMarkers[comment.identifier] {
-                return metadata
-            }
-        }
-        return nil
-    }
-    
     
     /// Apply `codetabs` or `tabs` changes to the document.
     /// - Parameters:
@@ -198,5 +186,20 @@ extension DocumentationDatabase {
         document.add(lines: newLines, at: startLine)
         
         return true
+    }
+}
+
+fileprivate extension Dictionary where Key == EntityId, Value == MarkdownMetadata {
+    /// Find metadata object matching one of inline comments available in the line.
+    /// - Parameters:
+    ///   - line: Line containing possible inline comments.
+    /// - Returns: Metadata object or nil if no such object has been matched.
+    func findTabInLine(line: MarkdownLine) -> MarkdownMetadata? {
+        for comment in line.allEntities(withType: .inlineComment) {
+            if let metadata = self[comment.identifier] {
+                return metadata
+            }
+        }
+        return nil
     }
 }

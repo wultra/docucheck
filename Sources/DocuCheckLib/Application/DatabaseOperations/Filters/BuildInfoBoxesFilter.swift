@@ -16,23 +16,28 @@
 
 import Foundation
 
-extension DocumentationDatabase {
+/// Transform all `box` metadata objects in document.
+class BuildInfoBoxesFilter: DocumentFilter {
     
-    /// Transform all `box` metadata objects in all documents.
-    /// - Returns: true if everyghing was OK.
-    func updateInfoBoxes() -> Bool {
+    func setUpFilter(dataProvider: DocumentFilterDataProvider) -> Bool {
         Console.info("Building info boxes...")
+        return true
+    }
+        
+    func applyFilter(to document: MarkdownDocument) -> Bool {
         var result = true
-        allDocuments().forEach { document in
-            // Process all <!-- begin box ... --> metadata objects
-            document.allMetadata(withName: "box", multiline: true).forEach { metadata in
-                let partialResult = self.updateInfoBox(document: document, metadata: metadata)
-                result = result && partialResult
-            }
+        // Process all <!-- begin box ... --> metadata objects
+        document.allMetadata(withName: "box", multiline: true).forEach { metadata in
+            let partialResult = self.updateInfoBox(document: document, metadata: metadata)
+            result = result && partialResult
         }
         return result
     }
-    
+        
+    func tearDownFilter() -> Bool {
+        // Does nothing...
+        return true
+    }    
     
     /// Transform `<!-- begin box info -->` into `{% box info %}`.
     /// - Parameters:

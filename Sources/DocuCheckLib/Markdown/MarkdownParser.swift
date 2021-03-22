@@ -133,6 +133,7 @@ class MarkdownParser {
         var state = initialState
         
         line.parserStateAtBegin = state
+        line.removeAllEntities()
         
         var nextValidOffset: Int?
         let lc = line.lineContent

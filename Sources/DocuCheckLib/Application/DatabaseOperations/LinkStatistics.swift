@@ -18,6 +18,24 @@ import Foundation
 
 extension DocumentationDatabase {
 
+    /// Clear variables keeping link statistics.
+    func clearLinksStatistics() {
+        externalLinks.removeAll()
+        amgiguousLinks.removeAll()
+    }
+    
+    /// Add link to list of external links.
+    /// - Parameter link: Tuple with document and external link.
+    func addExternalLink(link: (MarkdownDocument, MarkdownLink)) {
+        externalLinks.append(link)
+    }
+    
+    /// Add link to list of ambiguous links.
+    /// - Parameter link: Tuple with document and ambiguous link.
+    func addAmbiguousLink(link: (MarkdownDocument, MarkdownLink)) {
+        amgiguousLinks.append(link)
+    }
+    
     /// Prints all external links detected in the documentation. You must call
     /// updateRepositoryLinks() to update the list of external links.
     ///

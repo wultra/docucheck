@@ -215,11 +215,7 @@ public class DocuCheckApplication {
         self.database = database
         
         _ = database.patchSingleFileDocumentation()
-        _ = database.removeUnwantedSections()
-        _ = database.updateCodeTabs()
-        _ = database.updateInfoBoxes()
-        _ = database.updateRepositoryLinks()
-        _ = database.updateDocumentTitles()
+        _ = database.runAllFilters()
         _ = database.saveAllChanges()
         
         if optShowExternalLinks {

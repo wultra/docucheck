@@ -80,7 +80,7 @@ extension MarkdownLine {
         let overlappedEntities = entities.filter({ entity.range.overlaps($0.range) })
         guard overlappedEntities.isEmpty else {
             let fooId = overlappedEntities.first?.identifier ?? -1
-            Console.warning("Inserting entity (id:\(entity.identifier)) which overlaps with some other entity (id:\(fooId).")
+            Console.warning("Inserting entity (id:\(entity.identifier)) which overlaps with some other entity (id:\(fooId)).")
             return
         }
         entities.append(entity)
@@ -103,6 +103,11 @@ extension MarkdownLine {
         remove(entityId: entity.identifier)
     }
     
+    /// Remove all entities from line.
+    func removeAllEntities() {
+        entities.removeAll()
+    }
+    
     /// Returns true if line contains entity with given identifier.
     ///
     /// - Parameter entityId: Entity to be found
@@ -119,12 +124,64 @@ extension MarkdownLine {
         return entities.firstIndex(where: { $0.type == entityType }) != nil
     }
     
-    
     /// Return all entities with given type.
     /// - Parameter type: Entity type
     /// - Returns: Entities with requested type, or empty array if line contains no such object.
     func allEntities(withType type: EntityType) -> [MarkdownEditableEntity] {
         return entities.filter { $0.type ==  type }
+    }
+    
+    /// Return first entity with given type.
+    /// - Parameter type: Entity type.
+    /// - Returns: Entity with given type, or nil if line contains no such object.
+    func firstEntity(withType type: EntityType) -> MarkdownEditableEntity? {
+        return entities.first { $0.type == type }
+    }
+}
+
+extension Array where Element == MarkdownLine {
+    
+    /// Return all entities with given type from this array of lines.
+    /// - Parameter type: Entity type
+    /// - Returns: Entities with requested type, or empty array if lines contains no such object.
+    func allEntities(withType type: EntityType) -> [MarkdownEditableEntity] {
+        return flatMap { $0.allEntities(withType: type) }
+    }
+    
+    /// Return first entity with given type from this array of lines.
+    /// - Parameter type: Entity type.
+    /// - Returns: Entity with given type, or nil if line contains no such object.
+    func firstEntity(withType type: EntityType) -> MarkdownEditableEntity? {
+        for line in self {
+            if let entity = line.firstEntity(withType: type) {
+                return entity
+            }
+        }
+        return nil
+    }
+    
+    /// Search for all headers in this array of lines.
+    /// - Returns: Array of header entities.
+    func allHeaders() -> [MarkdownHeader] {
+        return allEntities(withType: .header) .map { $0 as! MarkdownHeader }
+    }
+    
+    /// Search for all links in this array of lines.
+    /// - Returns: Array of link entities.
+    func allLinks() -> [MarkdownLink] {
+        return allEntities(withType: .link) .map { $0 as! MarkdownLink }
+    }
+    
+    /// Search for first link in this array of lines.
+    /// - Returns: First header or nil if lines contains no header entity.
+    func firstHeader() -> MarkdownHeader? {
+        return firstEntity(withType: .header) as? MarkdownHeader
+    }
+    
+    /// Search for first link in this array of lines.
+    /// - Returns: First link or nil if lines contains no link entity.
+    func firstLink() -> MarkdownHeader? {
+        return firstEntity(withType: .header) as? MarkdownHeader
     }
 }
 

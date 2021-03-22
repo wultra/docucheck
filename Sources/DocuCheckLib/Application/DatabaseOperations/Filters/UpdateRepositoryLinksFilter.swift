@@ -16,25 +16,30 @@
 
 import Foundation
 
-extension DocumentationDatabase {
+/// Validates and updates cross repository links.
+class UpdateRepositoryLinksFilter: DocumentFilter {
     
-    /// Validates and updates all cross repository links
-    ///
-    /// - Returns: true if operation succeeded
-    func updateRepositoryLinks() -> Bool {
+    var db: DocumentationDatabase!
+    
+    func setUpFilter(dataProvider: DocumentFilterDataProvider) -> Bool {
         Console.info("Validating links in documents...")
+        db = dataProvider.database
+        db.clearLinksStatistics()
         
-        externalLinks.removeAll()
-        amgiguousLinks.removeAll()
+        return true
+    }
         
-        allDocuments().forEach { document in
-            document.allLinks.forEach { (link) in
-                self.patchLink(document: document, link: link)
-            }
+    func applyFilter(to document: MarkdownDocument) -> Bool {
+        document.allLinks.forEach { (link) in
+            self.patchLink(document: document, link: link)
         }
         return true
     }
-    
+        
+    func tearDownFilter() -> Bool {
+        // Does nothing...
+        return true
+    }
     
     /// Validates and updates link, from given document.
     ///
@@ -83,14 +88,14 @@ extension DocumentationDatabase {
             documentPath.removeSubrange(range.lowerBound ..< documentPath.endIndex)
         }
         // For first search, try to look for a direct links to a whole repository
-        if let (repoIdentifier, _) = config.repositories.first(where: { (key, repoConfig) in
+        if let (repoIdentifier, _) = db.config.repositories.first(where: { (key, repoConfig) in
             let promoPath = repoConfig.mainRepositoryPromoPath.absoluteString
             return documentPath == promoPath || documentPath == "\(promoPath)/"
         }) {
             return LinkInfo(repoIdentifier: repoIdentifier, documentPath: nil, anchorName: anchorName)
         }
         // Now try to find cross reference links (e.g. path which begins with expected full URL to repository docs)
-        guard let (repoIdentifier, repoConfig) = config.repositories.first(where: { (key, repoConfig) in
+        guard let (repoIdentifier, repoConfig) = db.config.repositories.first(where: { (key, repoConfig) in
             return documentPath.hasPrefix(repoConfig.baseCrossReferencePath.absoluteString + "/")
         }) else {
             return nil
@@ -116,7 +121,7 @@ extension DocumentationDatabase {
                 link.path = path
             }
         }
-        externalLinks.append((document, link))
+        db.addExternalLink(link: (document, link))
     }
     
     /// Validates and patches link to an external document (e.g. document in another documentation repository)
@@ -136,11 +141,11 @@ extension DocumentationDatabase {
             keepExternalLink(document: document, link: link, removeAnchor: true)
             return
         }
-        guard let repo = repositoryContent(for: linkInfo.repoIdentifier) else {
+        guard let repo = db.repositoryContent(for: linkInfo.repoIdentifier) else {
             Console.fatalError("Invalid repository identifier.")
         }
         // If document is not used, then use target home file
-        let targetHomeFile = self.effectiveGlobalParameters.targetHomeFile!
+        let targetHomeFile = db.effectiveGlobalParameters.targetHomeFile!
         var documentPath = linkInfo.documentPath ?? targetHomeFile
         // Now try to remove "docs" folder from the path
         let docsFolder = repo.params.docsFolder! + "/"
@@ -162,7 +167,7 @@ extension DocumentationDatabase {
         }
         // Now look more closely to the target file
         var linkedItemPath = repo.repoIdentifier.addingPathComponent(documentPath)
-        guard var linkedItem = self.findDocumentationItem(path: linkedItemPath) else {
+        guard var linkedItem = db.findDocumentationItem(path: linkedItemPath) else {
             Console.fatalError("Cannot find linked item: \(linkedItemPath)")
         }
         if linkedItem.isDirectory {
@@ -172,7 +177,7 @@ extension DocumentationDatabase {
                 return
             }
             // Find another item pointing to document
-            guard let updateItem = self.findDocumentationItem(path: linkedItemPath) else {
+            guard let updateItem = db.findDocumentationItem(path: linkedItemPath) else {
                 Console.fatalError("Cannot find linked item: \(linkedItemPath)")
             }
             linkedItem = updateItem
@@ -302,11 +307,11 @@ extension DocumentationDatabase {
         }
         let pathURL = URL(fileURLWithPath: currentDocumentParentDir).appendingPathComponent(path).standardized
         var destinationFile = pathURL.relativeString
-        guard let repo = repositoryContent(for: document.repoIdentifier) else {
+        guard let repo = db.repositoryContent(for: document.repoIdentifier) else {
             Console.fatalError("Document whith invalid repository identifier.")
         }
         let pathFileName = destinationFile.fileNameFromPath()
-        let targetHomeFile = config.effectiveGlobalParameters.targetHomeFile!
+        let targetHomeFile = db.config.effectiveGlobalParameters.targetHomeFile!
         if pathFileName == repo.params.homeFile && pathFileName != targetHomeFile {
             destinationFile = destinationFile.removingLastPathComponent().addingPathComponent(targetHomeFile)
         }
@@ -316,11 +321,11 @@ extension DocumentationDatabase {
             return
         }
         let globalDestinationFile = destinationFile.hasPrefix(document.repoIdentifier) ? destinationFile : document.repoIdentifier.addingPathComponent(destinationFile)
-        if var referencedItem = self.findDocumentationItem(path: globalDestinationFile) {
+        if var referencedItem = db.findDocumentationItem(path: globalDestinationFile) {
             // Check local link to directory
             if referencedItem.isDirectory {
                 destinationFile = destinationFile.addingPathComponent(targetHomeFile)
-                if let indexInFolder = self.findDocumentationItem(path: destinationFile) {
+                if let indexInFolder = db.findDocumentationItem(path: destinationFile) {
                     referencedItem = indexInFolder
                 } else {
                     Console.warning(document, link, "Link \(link.toString()) point to folder in repository, but \"\(repo.params.homeFile!)\" is missing in that folder.")
@@ -362,7 +367,7 @@ extension DocumentationDatabase {
         }
         // This is really a top level document (located in docs folder), but links is relative
         // and goes to an upper folder. We should construct a full link github repository.
-        guard let repo = repositoryContent(for: document.repoIdentifier) else {
+        guard let repo = db.repositoryContent(for: document.repoIdentifier) else {
             Console.fatalError("Document whith invalid repository identifier.")
         }
         
