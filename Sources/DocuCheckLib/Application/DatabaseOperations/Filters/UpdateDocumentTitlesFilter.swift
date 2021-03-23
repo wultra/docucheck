@@ -110,6 +110,14 @@ class UpdateDocumentTitlesFilter: DocumentFilter {
             ]
         }
         
+        // Store a mark if this documentation is composed completely of a single document,
+        // typically a single Readme.md file.
+        if repo.params.hasSingleDocument {
+            newLines += [
+                "singleDocument: true"
+            ]
+        }
+        
         // If private product URL is available, then use it as a "source" replacement.
         // Otherwise use just "source" and "sourceRepo", that points to original git source.
         if let privateProductUrl = repo.params.privateProductWebsite {
