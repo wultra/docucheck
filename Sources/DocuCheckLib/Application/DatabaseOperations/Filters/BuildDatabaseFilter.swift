@@ -47,7 +47,7 @@ class BuildDatabaseFilter: DocumentFilter {
         
     func applyFilter(to document: MarkdownDocument) -> Bool {
         var result = true
-        // Process all <!-- api ... --> metadata objects
+        // Process all <!-- database ... --> metadata objects
         document.allMetadata(withName: "database", multiline: true)
             // Prepare all changes and filted failed ones
             .compactMap { metadata -> (MarkdownMetadata, [MarkdownLine])? in
@@ -89,7 +89,7 @@ class BuildDatabaseFilter: DocumentFilter {
             return nil
         }
         // Get parameters for API
-        guard let apiParams = metadata.parameters, apiParams.count >= 2 else {
+        guard let dbParams = metadata.parameters, dbParams.count >= 2 else {
             Console.warning(document, metadata.beginLine, "'\(metadata.name)' marker has insufficient number of parameters.")
             return nil
         }
@@ -99,8 +99,8 @@ class BuildDatabaseFilter: DocumentFilter {
         }
         
         // Get API parameters
-        let dbObjectType = apiParams[0]
-        let dbObjectName = apiParams[1]
+        let dbObjectType = dbParams[0]
+        let dbObjectName = dbParams[1]
         let dbObjectTitle = firstHeader.title
         
         // Prepare array for new lines
@@ -129,7 +129,7 @@ class BuildDatabaseFilter: DocumentFilter {
         }
         
         // Let's start!
-        // Open "api" block
+        // Open "database" block
         openState(.database(dbObjectType, dbObjectName, dbObjectTitle))
         
         // Iterate over all original lines
@@ -142,9 +142,9 @@ class BuildDatabaseFilter: DocumentFilter {
                     openState(.description)
                     copyLine = false
                 } else {
-                    // #### XXX
+                    // #### Response XXX
                     if state.last == .description {
-                        // Close previous description or request tag
+                        // Close previous description
                         closeState()
                     }
                     if case .definitionTab(_) = state.last {
@@ -154,23 +154,18 @@ class BuildDatabaseFilter: DocumentFilter {
                     if case .database(_,_,_) = state.last {
                     } else if state.last == .definition {
                     } else {
-                        Console.warning(document, header, "Database definition is not allowed in this context.")
+                        Console.warning(document, header, "Definition header is not allowed in this context.")
                         return nil
                     }
                     if header.level != 4 {
-                        Console.warning(document, header, "Database definition header must be Level-4 header.")
-                    }
-                    let titleComponents = header.title.split(separator: " ")
-                    guard titleComponents.count >= 1 else {
-                        Console.warning(document, header, "Database definition header must contain a non-empty title.")
-                        return nil
+                        Console.warning(document, header, "Definition header must be Level-4 header.")
                     }
                     if !hasDefinition {
-                        // This is first response tag, so open whole response wrapping element.
+                        // This is first definition tag, so open whole response wrapping element.
                         openState(.definition)
                         hasDefinition = true
                     }
-                    openState(.definitionTab(String(titleComponents[1])))
+                    openState(.definitionTab(header.title))
                     copyLine = false
                 }
             } else {
@@ -228,14 +223,14 @@ fileprivate enum BuildDatabaseFilterState: Equatable {
     /// Returns begin jekyll tag for state.
     var beginTag: String {
         switch self {
-        case .database(let method, let uri, let title):
-            return "{% database \(method.uppercased()) \(uri) \"\(title)\" %}"
+        case .database(let dbObjType, let dbObjName, let title):
+            return "{% database \(dbObjType) \(dbObjName) \"\(title)\" %}"
         case .description:
             return "{% databasedescription %}"
         case .definition:
             return "{% databasetabs %}"
-        case .definitionTab(let statusCode):
-            return "{% databasetab \(statusCode) %}"
+        case .definitionTab(let value):
+            return "{% databasetab \(value) %}"
         }
     }
 
