@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1BD0000326262AB0002223FA /* BuildDatabaseFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD0000226262AB0002223FA /* BuildDatabaseFilter.swift */; };
+		1BD0001A26262F3D002223FA /* BuildDatabaseFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD0000926262EB8002223FA /* BuildDatabaseFilterTests.swift */; };
 		BF8494C024E6900100340D59 /* BuildCodeTabsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8494BE24E68FEB00340D59 /* BuildCodeTabsFilter.swift */; };
 		BF98F61E25F92DE700FAC376 /* BuildApiDocFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98F61D25F92DE700FAC376 /* BuildApiDocFilter.swift */; };
 		BF98F64625FE201500FAC376 /* DocumentFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF98F64525FE201500FAC376 /* DocumentFilter.swift */; };
@@ -92,6 +94,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1BD0000226262AB0002223FA /* BuildDatabaseFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildDatabaseFilter.swift; sourceTree = "<group>"; };
+		1BD0000926262EB8002223FA /* BuildDatabaseFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildDatabaseFilterTests.swift; sourceTree = "<group>"; };
 		BF8494BE24E68FEB00340D59 /* BuildCodeTabsFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildCodeTabsFilter.swift; sourceTree = "<group>"; };
 		BF98F61D25F92DE700FAC376 /* BuildApiDocFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildApiDocFilter.swift; sourceTree = "<group>"; };
 		BF98F64525FE201500FAC376 /* DocumentFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFilter.swift; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 				BFF465F925E95A7D00A0ED9F /* BuildInfoBoxesFilter.swift */,
 				BF8494BE24E68FEB00340D59 /* BuildCodeTabsFilter.swift */,
 				BF98F61D25F92DE700FAC376 /* BuildApiDocFilter.swift */,
+				1BD0000226262AB0002223FA /* BuildDatabaseFilter.swift */,
 				OBJ_15 /* RemoveUnwantedSectionsFilter.swift */,
 				OBJ_17 /* UpdateDocumentTitlesFilter.swift */,
 				OBJ_18 /* UpdateRepositoryLinksFilter.swift */,
@@ -188,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				BFE0B94F25FE31C1000402F9 /* BuildApiDocFilterTests.swift */,
+				1BD0000926262EB8002223FA /* BuildDatabaseFilterTests.swift */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -453,6 +459,7 @@
 			files = (
 				BFE0B95025FE31C1000402F9 /* BuildApiDocFilterTests.swift in Sources */,
 				OBJ_123 /* MarkdownDocumentTests.swift in Sources */,
+				1BD0001A26262F3D002223FA /* BuildDatabaseFilterTests.swift in Sources */,
 				OBJ_124 /* MarkdownLineTests.swift in Sources */,
 				OBJ_125 /* XCTestManifests.swift in Sources */,
 			);
@@ -488,6 +495,7 @@
 				OBJ_87 /* RepositoryContent.swift in Sources */,
 				OBJ_88 /* Config.swift in Sources */,
 				OBJ_89 /* ConfigLoader.swift in Sources */,
+				1BD0000326262AB0002223FA /* BuildDatabaseFilter.swift in Sources */,
 				OBJ_90 /* DataDocument.swift in Sources */,
 				OBJ_91 /* DocumentSource.swift in Sources */,
 				OBJ_92 /* FileDocument.swift in Sources */,

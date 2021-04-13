@@ -292,3 +292,67 @@ The following sections are recognized inside API metadata tag:
 - `#### Response {STATUS_CODE}` 
   - The endpoint's response section is declared as L4 header with `response` prefix in its title. 
   - The title must contain `{STATUS_CODE}`. 
+
+#### Database Documentation
+
+Use the following syntax to document database schemas:
+
+~~~
+<!-- begin database table es_operation_template -->
+### Enrollment Server Operations
+
+Stores definitions of operations presented via API towards the mobile token app.
+
+#### Columns
+
+| Name | Type | Default | Not Null | Key | Description |
+|---|---|---|---|---|---|
+| `id`          | `bigint`       |  | Y |  Primary  | Primary ID of the record |
+| `placeholder` | `varchar(255)` |  | Y |           | Localization placeholder |
+| `language`    | `varchar(8)`   |  | Y |           | Language (ISO 639-1) |
+| `title`       | `varchar(255)` |  | Y |           | Operation title |
+| `message`     | `text`         |  | Y |           | Operation message |
+| `attributes`  | `text`         |  | N |           | Operation attributes |
+
+#### Keys
+
+| Name | Primary | References | Description |
+|---|---|---|---|
+| `es_operation_template_pkey` | Y | `id` | Primary key for table records |
+
+#### Indexes
+
+| Name | Unique | Columns | Description |
+|---|---|---|---|
+| `es_operation_template_placeholder` | Y | `placeholder, language` | Index for faster localization placeholder lookup |
+
+#### Schema
+
+```sql
+create table es_operation_template (
+  id bigint not null constraint es_operation_template_pkey primary key,
+  placeholder varchar(255) not null,
+  language varchar(8) not null,
+  title varchar(255) not null,
+  message text not null,
+  attributes text
+);
+
+create unique index es_operation_template_placeholder on es_operation_template (placeholder, language);
+```
+<!-- end -->
+~~~
+
+The following sections are recognized inside database metadata tag:
+
+- `<!-- begin DATABASE {OBJECT_TYPE} {OBJECT_NAME} -->` 
+  - `{OBJECT_TYPE}` - use `table`, `index`, `key`, `sequence`, etc.
+  - `{OBJECT_NAME}` - name of the database object
+- `### Title` 
+  - The database object's title is declared as first L3 header 
+- The block of markdown text, up to next L4 header, declares endpoint's description. 
+  - `DocuCheck` prints warning if this section is empty.
+- `#### XXX` 
+  - Any tab describing the database object properties.
+  - Use at least the `### Schema` heading to provide the SQL schema (as an `sql` code snippet).
+  - For other tabs, use mostly table contents to provide database reference.

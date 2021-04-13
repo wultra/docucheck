@@ -24,6 +24,7 @@ extension DocumentationDatabase {
             BuildCodeTabsFilter(),
             BuildInfoBoxesFilter(),
             BuildApiDocFilter(),
+            BuildDatabaseFilter(),
             UpdateRepositoryLinksFilter(),
             UpdateDocumentTitlesFilter()
         ]
