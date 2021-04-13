@@ -242,9 +242,9 @@ fileprivate enum BuildDatabaseFilterState: Equatable {
         case .description:
             return "{% enddatabasedescription %}"
         case .definition:
-            return "{% endenddatabasetabs %}"
+            return "{% enddatabasetabs %}"
         case .definitionTab(_):
-            return "{% endenddatabasetab %}"
+            return "{% enddatabasetab %}"
         }
     }
 }
