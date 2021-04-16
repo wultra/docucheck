@@ -142,13 +142,13 @@ class BuildDatabaseFilter: DocumentFilter {
                     openState(.description)
                     copyLine = false
                 } else {
-                    // #### Response XXX
+                    // #### ${DEFINITION}
                     if state.last == .description {
                         // Close previous description
                         closeState()
                     }
                     if case .definitionTab(_) = state.last {
-                        // Close previously opened response tab.
+                        // Close previously opened definition tab.
                         closeState()
                     }
                     if case .database(_,_,_) = state.last {
@@ -161,7 +161,7 @@ class BuildDatabaseFilter: DocumentFilter {
                         Console.warning(document, header, "Definition header must be Level-4 header.")
                     }
                     if !hasDefinition {
-                        // This is first definition tag, so open whole response wrapping element.
+                        // This is first definition tag, so open whole database definition wrapping element.
                         openState(.definition)
                         hasDefinition = true
                     }

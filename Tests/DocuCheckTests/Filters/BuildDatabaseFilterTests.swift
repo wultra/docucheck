@@ -98,8 +98,8 @@ class BuildDatabaseFilterTests: XCTestCase {
         Console.exitOnError = false
     }
 
-    func testApiGenerator() {
-        let filter = BuildApiDocFilter()
+    func testDatabaseGenerator() {
+        let filter = BuildDatabaseFilter()
         var doc = MarkdownDocument(source: StringDocument(name: "Test1.md", string: document1), repoIdentifier: "test1")
         XCTAssertTrue(doc.load())
         var result = filter.applyFilter(to: doc)
