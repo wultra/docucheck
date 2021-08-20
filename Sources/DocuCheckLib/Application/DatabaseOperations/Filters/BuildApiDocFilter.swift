@@ -204,7 +204,7 @@ class BuildApiDocFilter: DocumentFilter {
                     } else {
                         // Unknown header, print warning only if level is less or equal to 3.
                         if header.level <= 3 {
-                            Console.warning(document, header, "Unrecognized header in API declaration.")
+                            Console.warning(document, header, "Unrecognized header in API declaration: \(header.title)")
                         }
                         copyLine = true
                     }
