@@ -169,6 +169,18 @@ class UpdateDocumentTitlesFilter: DocumentFilter {
                 }
             }
         }
+        
+        // Get the post cover image
+        if let coverImage = document.firstMetadata(withName: "COVER_IMAGE") {
+            if let params = coverImage.parameters {
+                if (params.count == 1) {
+                    let image = params[0];
+                    newLines += [
+                        "coverImage: \(image)"
+                    ]
+                }
+            }
+        }
 
         // Close the Front Matter
         newLines += [
