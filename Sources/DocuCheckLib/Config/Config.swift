@@ -252,7 +252,7 @@ extension Config {
             markdownExtensions: markdownExtensions.sorted(),
             imageExtensions: imageExtensions.sorted(),
             targetHomeFile: gp?.targetHomeFile ?? dp.targetHomeFile!,
-            releaseIdentifier: gp?.releaseIdentifier ?? gp?.releaseIdentifier!
+            releaseIdentifier: gp?.releaseIdentifier ?? dp.releaseIdentifier
         )
     }
 }

@@ -375,7 +375,7 @@ class MarkdownParser {
             return nil
         }
         // Construct entity
-        let range = Range(uncheckedBounds: (lc.index(offsetBy: matchEnd), lc.index(offsetBy: matchStart)))
+        let range = Range(uncheckedBounds: (lc.index(offsetBy: matchStart), lc.index(offsetBy: matchEnd)))
         return MarkdownInlineComment(id: entityIdGenerator.entityId(), range: range, content: content)
     }
     
