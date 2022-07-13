@@ -153,9 +153,9 @@ public class DocuCheckApplication {
         if repoDir == nil {
             repoDir = fixedPaths.repositoriesPath
         }
-        Console.debug("Loaded configuration: \(config)")
+        Console.debug("Loaded configuration: \(config.debugDescription)")
         let finalConfig = patchTestLocalFiles(config: config)
-        Console.debug("Final configuration: \(finalConfig)")
+        Console.debug("Final configuration: \(finalConfig.debugDescription)")
         return finalConfig
     }
     

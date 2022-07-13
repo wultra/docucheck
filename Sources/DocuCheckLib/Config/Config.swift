@@ -17,12 +17,12 @@
 import Foundation
 
 /// The `Config` structure is a model object for configuration loaded from JSON configuration file.
-struct Config: Decodable {
+struct Config: Codable {
     
     /// The `Repository` structure is a model object for git repository
-    struct Repository: Decodable {
+    struct Repository: Codable {
         /// Defines remote providers supported in the tool
-        enum Provider: String, Decodable {
+        enum Provider: String, Codable {
             /// (default) github provider. The "remote" value must contain path
             /// to github project, in "organization/repository" format.
             case github = "github"
@@ -55,7 +55,7 @@ struct Config: Decodable {
 
     /// The `Parameters` structure defines an additional parameters describing how
     /// the documentation should be processed.
-    struct Parameters: Decodable {
+    struct Parameters: Codable {
         /// Defines where, the "docs" folder is located.
         /// If not present in the configuration, then `"docs"` will be used.
         let docsFolder: String?
@@ -92,7 +92,7 @@ struct Config: Decodable {
     }
     
     /// The `Paths` structure contains various configurable paths required for DocuCheck tool.
-    struct Paths: Decodable {
+    struct Paths: Codable {
         /// Path to output folder, where all collected documentation will be stored.
         let outputPath: String?
         
@@ -102,7 +102,7 @@ struct Config: Decodable {
     
     /// The `GlobalParameters` structure contains various configurations affecting a global behavior
     /// of DocuCheck tool.
-    struct GlobalParameters: Decodable {
+    struct GlobalParameters: Codable {
         /// Defines global parameters valid for all repositories. You can override those values
         /// on per-repository basis in `repositoryParameters` dictionary.
         let parameters: Parameters?
@@ -350,5 +350,16 @@ extension Config.Parameters {
     /// Contains true if repository's documentation is composed from a private repository.
     var isPrivateProduct: Bool {
         return !(privateProductWebsite?.isEmpty ?? true)
+    }
+}
+
+extension Config: CustomDebugStringConvertible {
+    var debugDescription: String {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        guard let jsonConfig = try? encoder.encode(self) else {
+            return "Failed to encode config to JSON"
+        }
+        return String(data: jsonConfig, encoding: .utf8) ?? "Failed to convert JSON data to String"
     }
 }
