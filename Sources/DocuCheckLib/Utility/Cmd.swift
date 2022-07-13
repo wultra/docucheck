@@ -43,7 +43,7 @@ class Cmd {
     @discardableResult
 	func run(with arguments: [String], exitOnError: Bool = Console.exitOnError, ignoreOutput: Bool = false, workingDirectory: String? = nil) -> Bool {
         
-        Console.debug("Running: \(commandPath) \(arguments.joined(separator: " "))")
+        Console.debug("Running: \(commandPath), cd:\(workingDirectory ?? "nil"), arguments: \(arguments.joined(separator: " "))")
         
         let task = Process()
         if ignoreOutput {
@@ -79,7 +79,7 @@ class Cmd {
     @discardableResult
     func runAndCapture(with arguments: [String], exitOnError: Bool = Console.exitOnError, ignoreErrorOutput: Bool = false, workingDirectory: String? = nil) -> (result: Bool, content: String) {
         
-        Console.debug("Running: \(commandPath) \(arguments.joined(separator: " "))")
+        Console.debug("Running: \(commandPath), cd:\(workingDirectory ?? "nil"), arguments: \(arguments.joined(separator: " "))")
         
         let pipe = Pipe()
         let task = Process()
@@ -158,6 +158,8 @@ fileprivate class CmdPathResolver {
         }
         resolved = resolved.replacingOccurrences(of: "\n", with: "")
 
+        Console.debug("Command \"\(command)\" found at: \(resolved)")
+        
         // Store result to the cache
         resolvedPaths[command] = resolved
         
