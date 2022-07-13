@@ -28,6 +28,7 @@ class FS {
     ///   - exitOnError: if true then failure causes an immediate exit. Default value is `Console.exitOnError`
     /// - Returns: `DocumentSource` object created from the file
     static func document(at path: String, name: String? = nil, description: String? = nil, exitOnError: Bool = Console.exitOnError) -> DocumentSource? {
+        Console.debug("Loading \(description ?? "document") located at: \"\(path)\"")
         let document: FileDocument
         if let name = name {
             document = FileDocument(path: path, name: name)
@@ -35,11 +36,7 @@ class FS {
             document = FileDocument(path: path)
         }
         if !document.isValid {
-            if let description = description {
-                Console.error("Cannot load \(description) at: \"\(path)\"")
-            } else {
-                Console.error("Cannot load document at: \"\(path)\"")
-            }
+            Console.error("Cannot load \(description ?? "document") at: \"\(path)\"")
             if exitOnError {
                 exit(1)
             }
@@ -76,6 +73,7 @@ class FS {
     @discardableResult
     static func makeDir(at path: String, exitOnError: Bool = Console.exitOnError) -> Bool {
         do {
+            Console.debug("Creating directory at \"\(path)\".")
             try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
         } catch {
             Console.error("Cannot create directory at \"\(path)\".")
@@ -99,6 +97,7 @@ class FS {
     @discardableResult
     static func remove(at path: String, exitOnError: Bool = Console.exitOnError) -> Bool {
         do {
+            Console.debug("Removing item at \"\(path)\".")
             try FileManager.default.removeItem(atPath: path)
         } catch {
             Console.error("Cannot remove item at \"\(path)\".")
@@ -121,6 +120,7 @@ class FS {
     @discardableResult
     static func copy(from: String, to: String, exitOnError: Bool = Console.exitOnError) -> Bool {
         do {
+            Console.debug("Copying item from \"\(from)\" to \"\(to)\".")
             try FileManager.default.copyItem(atPath: from, toPath: to)
         } catch {
             Console.error("Cannot copy item from \"\(from)\" to \"\(to)\".")

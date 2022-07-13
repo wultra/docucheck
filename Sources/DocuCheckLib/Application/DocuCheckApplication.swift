@@ -153,7 +153,10 @@ public class DocuCheckApplication {
         if repoDir == nil {
             repoDir = fixedPaths.repositoriesPath
         }
-        return patchTestLocalFiles(config: config)
+        Console.debug("Loaded configuration: \(config)")
+        let finalConfig = patchTestLocalFiles(config: config)
+        Console.debug("Final configuration: \(finalConfig)")
+        return finalConfig
     }
     
     /// Function update repository definitions in config according to `optTestRepo` array.
