@@ -122,7 +122,7 @@ Our preprocessor cannot automaticaly detect emails in the text, just like GitHub
 
 If you need any assistance, do not hesitate to drop us 
 a line at [hello@wultra.com](mailto:hello@wultra.com) or 
-our official [gitter.im/wultra](https://gitter.im/wultra) channel.
+our official [wultra.com/discord](https://wultra.com/discord) channel.
 ```
 
 ### Link to local source file
