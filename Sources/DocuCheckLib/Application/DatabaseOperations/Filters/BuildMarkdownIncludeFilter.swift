@@ -27,7 +27,7 @@ class BuildMarkdownIncludeFilter: DocumentFilter {
     func applyFilter(to document: MarkdownDocument) -> Bool {
         var result = true
         // Process all <!-- include ... --> metadata objects
-        document.allMetadata(withName: "include", multiline: false).forEach { metadata in
+        document.allMetadata(withName: "INCLUDE", multiline: false).forEach { metadata in
             let partialResult = self.updateMarkdownInclude(document: document, metadata: metadata)
             result = result && partialResult
         }
