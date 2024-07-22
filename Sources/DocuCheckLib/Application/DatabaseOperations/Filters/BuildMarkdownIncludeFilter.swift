@@ -47,22 +47,20 @@ class BuildMarkdownIncludeFilter: DocumentFilter {
     private func updateMarkdownInclude(document: MarkdownDocument, metadata: MarkdownMetadata) -> Bool {
         
         // Check metadata looks valid
-        if (metadata.parameters?.count != 2) {
+        if (metadata.parameters?.count ?? 0 < 2) {
             Console.warning(document, metadata.beginLine, "Metadata marker must have exactly two parameters.")
             return false
         }
         
-        // Get include from the 2nd parameter
+        // Get include from the 1st parameter
         guard let include = metadata.parameters?[0] else {
             Console.warning(document, metadata.beginLine, "'\(metadata.name)' marker has no include specified.")
             return false
         }
         
-        // Get heading from first parameter
-        guard let heading = metadata.parameters?[1] else {
-            Console.warning(document, metadata.beginLine, "'\(metadata.name)' marker has no heading specified.")
-            return false
-        }
+        // Get heading from remaining parameters
+        let headingWords = metadata.parameters?.dropFirst()
+        let heading = headingWords?.joined(separator: " ")
         
         // Get all include content
         guard var newLines = document.getLinesForMetadata(metadata: metadata, includeMarkers: false, removeLines: false) else {
@@ -70,7 +68,7 @@ class BuildMarkdownIncludeFilter: DocumentFilter {
             return false
         }
         // Prepare markers for jekyll plugin
-        let inclBeginEnd = document.prepareLinesForAdd(lines: ["<h1>\(heading)</h1> {% capture cpt %}{% include_relative \(include) %}{% endcapture %} {{ cpt  | split: \"---\" | last }}"])
+        let inclBeginEnd = document.prepareLinesForAdd(lines: ["<h1>\(heading ?? "")</h1> {% capture cpt %}{% include_relative \(include) %}{% endcapture %} {{ cpt  | split: \"---\" | last }}"])
         newLines.insert(inclBeginEnd[0], at: 0)
         newLines.append(inclBeginEnd[1])
         
