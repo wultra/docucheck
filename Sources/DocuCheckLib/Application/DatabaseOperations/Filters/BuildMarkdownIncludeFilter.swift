@@ -62,23 +62,15 @@ class BuildMarkdownIncludeFilter: DocumentFilter {
         let headingWords = metadata.parameters?.dropFirst()
         let heading = headingWords?.joined(separator: " ")
         
-        // Get all include content
-        guard var newLines = document.getLinesForMetadata(metadata: metadata, includeMarkers: false, removeLines: false) else {
-            Console.error(document, metadata.beginLine, "updateMarkdownInclude: Failed to acquire lines for '\(metadata.name)' metadata marker.")
-            return false
-        }
         // Prepare markers for jekyll plugin
-        let inclBeginEnd = document.prepareLinesForAdd(lines: ["<h1>\(heading ?? "")</h1> {% capture cpt %}{% include_relative \(include) %}{% endcapture %} {{ cpt  | split: \"---\" | last }}"])
-        newLines.insert(inclBeginEnd[0], at: 0)
-        newLines.append(inclBeginEnd[1])
+        let inclLine = document.prepareLinesForAdd(lines: ["<h1>\(heading ?? "")</h1> {% capture cpt %}{% include_relative \(include) %}{% endcapture %} {{ cpt  | split: \"---\" | last }}"])
         
         // Apply changes to document
         guard let startLine = document.lineNumber(forLineIdentifier: metadata.beginLine) else {
             Console.error(document, metadata.beginLine, "updateMarkdownInclude: Failed to acquire start line number.")
             return false
         }
-        document.removeLinesForMetadata(metadata: metadata, includeMarkers: true)
-        document.add(lines: newLines, at: startLine)
+        document.add(lines: inclLine, at: startLine)
         return true
     }
 }
