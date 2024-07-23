@@ -70,6 +70,7 @@ class BuildMarkdownIncludeFilter: DocumentFilter {
             Console.error(document, metadata.beginLine, "updateMarkdownInclude: Failed to acquire start line number.")
             return false
         }
+        document.remove(linesFrom: startLine, count: 1)
         document.add(lines: inclLine, at: startLine)
         return true
     }
