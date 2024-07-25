@@ -23,6 +23,7 @@ extension DocumentationDatabase {
             RemoveUnwantedSectionsFilter(),
             BuildCodeTabsFilter(),
             BuildInfoBoxesFilter(),
+            BuildMarkdownIncludeFilter(),
             BuildApiDocFilter(),
             BuildDatabaseFilter(),
             UpdateRepositoryLinksFilter(),
