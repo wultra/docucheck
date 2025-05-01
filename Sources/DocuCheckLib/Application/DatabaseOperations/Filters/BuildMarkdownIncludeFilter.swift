@@ -63,7 +63,7 @@ class BuildMarkdownIncludeFilter: DocumentFilter {
         let heading = headingWords?.joined(separator: " ")
         
         // Prepare markers for jekyll plugin
-        let inclLine = document.prepareLinesForAdd(lines: ["<h1>\(heading ?? "")</h1> {% capture cpt %}{% include_relative \(include) %}{% endcapture %} {% assign res = cpt | split: "---" %} {% if res[0] == '' %} {{ res | slice: 2, 1000 }} {% else %} {{ cpt }} {% endif %}"])
+        let inclLine = document.prepareLinesForAdd(lines: ["<h1>\(heading ?? "")</h1> {% capture cpt %}{% include_relative \(include) %}{% endcapture %} {% assign res = cpt | split: \"---\" %} {% if res[0] == '' %} {{ res | slice: 2, 1000 }} {% else %} {{ cpt }} {% endif %}"])
         
         // Apply changes to document
         guard let startLine = document.lineNumber(forLineIdentifier: metadata.beginLine) else {
