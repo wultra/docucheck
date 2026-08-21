@@ -337,13 +337,18 @@ class UpdateRepositoryLinksFilter: DocumentFilter {
                 validateAnchor(linkedDocument: linkedDocument, sourceDocument: document, link: link, anchorName: anchorName)
             }
         }
-        if globalDestinationFile.hasPrefix(currentDocumentParentDir + "/") {
+        // Recompute the global destination path in case destinationFile was rewritten above
+        // (e.g. a directory link resolved to its index file by appending targetHomeFile).
+        let resolvedGlobalDestinationFile = destinationFile.hasPrefix(document.repoIdentifier)
+            ? destinationFile
+            : document.repoIdentifier.addingPathComponent(destinationFile)
+        if resolvedGlobalDestinationFile.hasPrefix(currentDocumentParentDir + "/") {
             // Destination is in the same directory, so remove the path component
-            destinationFile = String(globalDestinationFile.suffix(from: globalDestinationFile.index(offsetBy: currentDocumentParentDir.count + 1)))
+            destinationFile = String(resolvedGlobalDestinationFile.suffix(from: resolvedGlobalDestinationFile.index(offsetBy: currentDocumentParentDir.count + 1)))
         } else if !currentDocumentParentDir.isEmpty {
             // Destination is in a different directory; compute a proper relative path
             // to avoid producing an absolute path that Jekyll would resolve incorrectly.
-            destinationFile = relativePath(fromDocument: document.source.name, toDocument: globalDestinationFile)
+            destinationFile = relativePath(fromDocument: document.source.name, toDocument: resolvedGlobalDestinationFile)
         }
         if destinationFile.fileExtensionFromPath() == "md" {
             destinationFile.removeSubrange(Range(uncheckedBounds: (destinationFile.index(offsetBy: destinationFile.count - 3), destinationFile.endIndex)))
