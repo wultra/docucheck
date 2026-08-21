@@ -339,7 +339,7 @@ class UpdateRepositoryLinksFilter: DocumentFilter {
         }
         // Recompute the global destination path in case destinationFile was rewritten above
         // (e.g. a directory link resolved to its index file by appending targetHomeFile).
-        let resolvedGlobalDestinationFile = destinationFile.hasPrefix(document.repoIdentifier)
+        let resolvedGlobalDestinationFile = destinationFile.hasPrefix(document.repoIdentifier + "/")
             ? destinationFile
             : document.repoIdentifier.addingPathComponent(destinationFile)
         if resolvedGlobalDestinationFile.hasPrefix(currentDocumentParentDir + "/") {
