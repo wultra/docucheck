@@ -169,6 +169,34 @@ class UpdateDocumentTitlesFilter: DocumentFilter {
                 }
             }
         }
+
+        let breadcrumbs = document.allMetadata(withName: "BREADCRUMB", multiline: false)
+        var breadcrumbItems = [(label: String, href: String?)]()
+        for breadcrumb in breadcrumbs {
+            let parameters = breadcrumb.parameters ?? []
+            let hrefIndex = parameters.firstIndex { $0.hasPrefix("href=") }
+            let labelParameters = hrefIndex.map { Array(parameters[..<$0]) } ?? parameters
+            let label = labelParameters.joined(separator: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !label.isEmpty else {
+                Console.warning(document, breadcrumb.beginLine, "BREADCRUMB metadata requires a label.")
+                continue
+            }
+            if let hrefIndex = hrefIndex, hrefIndex != parameters.count - 1 {
+                Console.warning(document, breadcrumb.beginLine, "The optional href= value must be the last BREADCRUMB parameter.")
+                continue
+            }
+            let href = hrefIndex.map { String(parameters[$0].dropFirst("href=".count)) }.flatMap { $0.isEmpty ? nil : $0 }
+            breadcrumbItems.append((label: label, href: href))
+        }
+        if !breadcrumbItems.isEmpty {
+            newLines.append("breadcrumbs:")
+            for breadcrumb in breadcrumbItems {
+                newLines.append("  - label: \(yamlQuoted(breadcrumb.label))")
+                if let href = breadcrumb.href {
+                    newLines.append("    href: \(yamlQuoted(href))")
+                }
+            }
+        }
         
         // Get the post cover image
         if let coverImage = document.firstMetadata(withName: "COVER_IMAGE") {
@@ -189,6 +217,15 @@ class UpdateDocumentTitlesFilter: DocumentFilter {
         
         // Add the new lines
         document.add(lines: newLines, at: 0)
+    }
+
+    private func yamlQuoted(_ value: String) -> String {
+        let escaped = value
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "\"", with: "\\\"")
+            .replacingOccurrences(of: "\n", with: "\\n")
+            .replacingOccurrences(of: "\r", with: "\\r")
+        return "\"\(escaped)\""
     }
     
     private func updateAuxiliaryDocument(document: MarkdownDocument, repo: RepositoryContent) {
