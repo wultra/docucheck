@@ -186,6 +186,17 @@ In case you would like to include a custom sidebar in the document, you can do s
 
 The first parameter defines a name of the file to include (in the same folder as the main document). The second parameter defines the sidebar position - `sticky` means that the sidebar should remain visible, any other value (or empty parameter) means that the sidebar scrolls with the content. Use `sticky` value with caution for reasonably small sidebars - if the sidebar is too high, content may not be reachable.
 
+#### Add Breadcrumbs
+
+Use one `BREADCRUMB` metadata comment for each breadcrumb item. Items are displayed in the same order as the comments. The label may contain spaces; an optional `href=` value may be added as the last parameter:
+
+```md
+<!-- BREADCRUMB SDK Documentation href=../index -->
+<!-- BREADCRUMB Android href=../PowerAuth-SDK-for-Android -->
+```
+
+If `href=` is omitted, the breadcrumb is displayed without a link. DocuCheck adds the items to the generated page's `breadcrumbs` front matter for the documentation layout to render.
+
 #### Code tabs
 
 You can format code examples written in different languages into tabs, that user can switch between. For example, let say, you want to write the same example in Swift and Objective-C code:
